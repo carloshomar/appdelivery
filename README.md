@@ -28,7 +28,7 @@ Estamos finalizando o desenvolvimento do sistema e estamos abertos a ideias e su
 
 ### Arquitetura:
 
-![image info](./Arquitetura/Diagrama%20de%20Arquitetura-5.drawio.png)
+![image info](./Arquitetura/Diagrama%20de%20Arquitetura-5.drawio-2.png)
 
 _Uma arquitetura baseada em microserviços_
 
