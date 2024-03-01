@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-01-28T15:24:19.940Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.15" etag="LuSp3l3Eyv8fiSkX2iDn" version="23.0.2" type="device">
+<mxfile host="app.diagrams.net" modified="2024-03-01T13:18:01.225Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.15" etag="TK4h3-vkgviQLNisiYU3" version="24.0.0" type="device">
   <diagram name="Página-1" id="nTBrqxnpB3Xi8DOPw0RJ">
-    <mxGraphModel dx="3267" dy="2085" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2899" dy="1948" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -138,7 +138,7 @@
         <mxCell id="QShAf5VT7i_qyNpQsQwI-54" value="" style="sketch=0;html=1;aspect=fixed;strokeColor=none;shadow=0;fillColor=#757575;verticalAlign=top;labelPosition=center;verticalLabelPosition=bottom;shape=mxgraph.gcp2.gear" parent="1" vertex="1">
           <mxGeometry x="575.25" y="71" width="50" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="QShAf5VT7i_qyNpQsQwI-56" value="&lt;span&gt;.Net Core&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#757575;" parent="1" vertex="1">
+        <mxCell id="QShAf5VT7i_qyNpQsQwI-56" value="&lt;span&gt;GoLang&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#757575;" parent="1" vertex="1">
           <mxGeometry x="571.25" y="120" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="QShAf5VT7i_qyNpQsQwI-57" value="&lt;span&gt;DB PostgreSQL&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#757575;" parent="1" vertex="1">
@@ -153,10 +153,10 @@
         <mxCell id="QShAf5VT7i_qyNpQsQwI-61" value="" style="sketch=0;html=1;aspect=fixed;strokeColor=none;shadow=0;fillColor=#757575;verticalAlign=top;labelPosition=center;verticalLabelPosition=bottom;shape=mxgraph.gcp2.gear" parent="1" vertex="1">
           <mxGeometry x="579.25" y="382" width="50" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="QShAf5VT7i_qyNpQsQwI-62" value="&lt;span&gt;.Net Core&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#757575;" parent="1" vertex="1">
+        <mxCell id="QShAf5VT7i_qyNpQsQwI-62" value="GoLang" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#757575;" parent="1" vertex="1">
           <mxGeometry x="575.25" y="431" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="QShAf5VT7i_qyNpQsQwI-63" value="DB &lt;br&gt;Redis" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#757575;" parent="1" vertex="1">
+        <mxCell id="QShAf5VT7i_qyNpQsQwI-63" value="MongoDB" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#757575;" parent="1" vertex="1">
           <mxGeometry x="656.75" y="432" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="QShAf5VT7i_qyNpQsQwI-64" value="AMQP" style="endArrow=classic;startArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontColor=#606060;fillColor=#f5f5f5;strokeColor=#666666;startFill=0;" parent="1" edge="1">
@@ -177,7 +177,7 @@
             <mxPoint x="1" y="-11" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="QShAf5VT7i_qyNpQsQwI-66" value="&lt;h1&gt;Design Arquitetura&lt;/h1&gt;&lt;p&gt;- &lt;b&gt;Tipo de Arquitetura&lt;/b&gt;: Microserviços (simples)&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Containers&lt;/b&gt;: Docker&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Mensageria&lt;/b&gt;: RabbitMQ&lt;/p&gt;&lt;p&gt;- &lt;b&gt;API Gateway: &lt;/b&gt;Nginx&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Serviços&lt;/b&gt;: .NET Core&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Banco de Dados&lt;/b&gt;: PostgreSQL e Redis&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Frontend&lt;/b&gt;: React Native (EXPO) + Tailwind CSS&lt;br&gt;&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Escalabilidade&lt;/b&gt;: Horizontal&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+        <mxCell id="QShAf5VT7i_qyNpQsQwI-66" value="&lt;h1&gt;Design Arquitetura&lt;/h1&gt;&lt;p&gt;- &lt;b&gt;Tipo de Arquitetura&lt;/b&gt;: Microserviços (simples)&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Containers&lt;/b&gt;: Docker&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Mensageria&lt;/b&gt;: RabbitMQ&lt;/p&gt;&lt;p&gt;- &lt;b&gt;API Gateway: &lt;/b&gt;Nginx&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Serviços&lt;/b&gt;: GoLang&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Banco de Dados&lt;/b&gt;: PostgreSQL e MongoDB&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Frontend&lt;/b&gt;: React Native (EXPO)&amp;nbsp;&lt;br&gt;&lt;/p&gt;&lt;p&gt;- &lt;b&gt;Escalabilidade&lt;/b&gt;: Horizontal&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-60" y="-279" width="303.75" height="279" as="geometry" />
         </mxCell>
         <mxCell id="FNPUPzLHhzSrSOBz0yO9-4" value="" style="group;fontStyle=1" parent="1" vertex="1" connectable="0">

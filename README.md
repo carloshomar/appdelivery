@@ -7,7 +7,7 @@ O **App de delivery** é uma plataforma de código aberto que permite a personal
 <img src="./Arquitetura/IMG_9736.PNG" alt="IMG3" width="200"></img>
 <img src="./Arquitetura/IMG_9737.PNG" alt="IMG4" width="200"></img>
 
-<video src="./Arquitetura/video1.mp4" alt="IMG3"  > </video>
+<video src="./Arquitetura/video1.mp4" alt="IMG3" width="400" > </video>
 
 ## Principais Características
 
@@ -28,7 +28,7 @@ Estamos finalizando o desenvolvimento do sistema e estamos abertos a ideias e su
 
 ### Arquitetura:
 
-![image info](./Arquitetura/Diagrama%20de%20Arquitetura.drawio.png)
+![image info](./Arquitetura/Diagrama%20de%20Arquitetura-5.drawio.png)
 
 _Uma arquitetura baseada em microserviços_
 
