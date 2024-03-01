@@ -1,0 +1,18 @@
+suppress_xcode_output(true)
+clean(true)
+
+scheme("app")
+
+export_options({
+  method: "app-store",
+  provisioningProfiles: {
+    "com.expo.eas.builds.test.application" => "dd83ed9c-4f89-462e-b901-60ae7fe6d737"
+  }
+})
+
+export_xcargs "OTHER_CODE_SIGN_FLAGS=\"--keychain /tmp/path/to/keychain\""
+
+disable_xcpretty(true)
+
+output_directory("./build")
+output_name("App")
