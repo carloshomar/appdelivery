@@ -60,7 +60,7 @@ docker compose up
 As credenciais de banco estão presentes no docker-compose.yml.
 
 #### Para rodar um serviço em especifico:
-Para rodar os microserviços você precisa acessar a pasta dele e instalar suas dependências:
+Para rodar os microserviços separadamente você precisa já ter o GoLang instalado em sua maquina, acessar a pasta do microsserviço pelo terminal e utilizar:
 
 ```bash
 go mod tidy
