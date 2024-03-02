@@ -27,6 +27,13 @@ _Contribuições são sempre bem-vindas!_
 
 - **Arquitetura Eficiente:** O servidor foi projetado para suportar um ou mais aplicativos simultaneamente, permitindo a divisão de custos e manutenção simplificada em larga escala.
 
+## Backlog (em desenvolvimento)
+
+- Página WEB de alteração de status de Pedido
+- Página WEB de alteração de Cardápio
+- Página WEB de Relatorio
+- Webhooks para integração (não priorizado)
+
 ## Técnico
 
 Um servidor tem a capacidade de executar simultaneamente _N_ aplicativos. Dessa forma, torna-se viável reduzir os custos do servidor, necessitando apenas de um servidor para sustentar toda a infraestrutura de aplicativos.
