@@ -20,11 +20,9 @@ O **App de delivery** é uma plataforma de código aberto que permite a personal
 
 - **Arquitetura Eficiente:** O servidor foi projetado para suportar um ou mais aplicativos simultaneamente, permitindo a divisão de custos e manutenção simplificada em larga escala.
 
-## Em Desenvolvimento
+## Técnico
 
-Estamos finalizando o desenvolvimento do sistema e estamos abertos a ideias e sugestões para melhorar ainda mais a plataforma.
-
-## Parte Técnica
+Um servidor tem a capacidade de executar simultaneamente _N_ aplicativos. Dessa forma, torna-se viável reduzir os custos do servidor, necessitando apenas de um servidor para sustentar toda a infraestrutura de aplicativos.
 
 ### Arquitetura:
 
@@ -86,7 +84,7 @@ Para rodar:
 npm start
 ```
 
-### Configuração do Estabelecimento
+## Configuração do Estabelecimento
 
 Tendo postman na sua maquina, é só importar a biblioteca de requests presentes na pasta _Backend/docs/delivery.postman_collection.json_ no qual você terá acesso a uma mini documentação dos endpoints e formatos esperados pela API.
 
@@ -97,3 +95,8 @@ Tendo postman na sua maquina, é só importar a biblioteca de requests presentes
 - Product & Order / Products / Create Multi Products
 - Product & Order / Additional / Create Additional
 - Product & Order / Additional / Vinculo Additional Products
+
+#### Geraração de Aplicativo:
+
+- No arquivo _Frontend/config/config.tsx_, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
+- No mesmo arquivo, _Frontend/config/config.tsx_, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.

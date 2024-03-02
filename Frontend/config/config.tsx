@@ -1,5 +1,3 @@
-import Texts from "@/constants/Texts";
-
 const ESTABLISHMENT_ID = 1;
 
 const ESTABLISHMENT = {
