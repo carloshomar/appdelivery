@@ -24,7 +24,7 @@ interface ApiContextProps {
   editCart(item: object): void;
   cleanCart(): void;
   setPaymentMethod(method: object): void;
-  submitCart(valueDelivery: any): void;
+  submitCart(user: any): void;
 
   validDelivery(): boolean;
   paymentMethod: any;
@@ -190,9 +190,19 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
     }
   }
 
-  async function submitCart() {
+  async function submitCart(user: any) {
     if (validDelivery())
-      console.log({ cart, distance, location, paymentMethod, deliveryValue });
+      console.log(
+        JSON.stringify({
+          cart,
+          distance,
+          location,
+          paymentMethod,
+          deliveryValue,
+          user,
+          establishmentId: ESTABLISHMENT.id,
+        })
+      );
   }
 
   useEffect(() => {

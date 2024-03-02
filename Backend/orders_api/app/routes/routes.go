@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"github.com/carloshomar/vercardapio/app/handlers"
+	"github.com/gofiber/fiber/v2"
 )
 
 func SetupRoutes(app *fiber.App) {
@@ -24,5 +24,8 @@ func SetupRoutes(app *fiber.App) {
 
 	app.Post("/delivery/calculate-delivery-value", handlers.CalculateDeliveryValue)
 	app.Post("/delivery", handlers.InsertDelivery)
+
+	app.Post("/orders", handlers.CreateOrder)
+	app.Get("/orders/:establishmentId", handlers.ListOrdersByestablishmentId)
 
 }

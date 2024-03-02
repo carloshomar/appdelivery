@@ -40,7 +40,7 @@ export default function TabOneScreen() {
       showsVerticalScrollIndicator={false}
     >
       <HeaderMain hiddenOpen={true} />
-      {cadProdcts.map((category: any) => (
+      {cadProdcts?.map((category: any) => (
         <View style={{ width: "100%" }}>
           <ProductCategory key={category.Id} category={category} />
         </View>

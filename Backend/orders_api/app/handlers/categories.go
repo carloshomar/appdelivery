@@ -1,20 +1,13 @@
 package handlers
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/carloshomar/vercardapio/app/dto"
 	"github.com/carloshomar/vercardapio/app/models"
+	"github.com/gofiber/fiber/v2"
 )
 
-type CategorieRequest struct {
-	Id              uint             `json:id`
-	Name            string           `json:name`
-	Image           string           `json:image`
-	EstablishmentId uint             `json:establishmentId`
-	Products        []models.Product `json:products`
-}
-
 func CreateCategories(c *fiber.Ctx) error {
-	var request CategorieRequest
+	var request dto.CategorieRequest
 
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -50,7 +43,7 @@ func GetCategories(c *fiber.Ctx) error {
 }
 
 func CreateProductCategorie(c *fiber.Ctx) error {
-	var request CategoryRequest
+	var request dto.CategoryRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
@@ -72,7 +65,7 @@ func GetCategoriesWithProducts(c *fiber.Ctx) error {
 	}
 
 	var categories []models.Category
-	var categoriesWithProducts []CategorieRequest
+	var categoriesWithProducts []dto.CategorieRequest
 
 	models.DB.Where(&models.Category{
 		EstablishmentID: uint(establishmentID),
@@ -88,7 +81,7 @@ func GetCategoriesWithProducts(c *fiber.Ctx) error {
 
 		// Adiciona a categoria e os produtos associados à lista final
 		categoriesWithProducts = append(categoriesWithProducts,
-			CategorieRequest{
+			dto.CategorieRequest{
 				Id:              category.ID,
 				Name:            category.Name,
 				Image:           category.Image,

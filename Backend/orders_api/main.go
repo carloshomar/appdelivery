@@ -18,7 +18,8 @@ func main() {
 	}
 
 	// Configurar o banco de dados
-	models.ConnectDatabase()
+	models.ConnectPostgresDatabase()
+	models.ConnectMongoDatabase()
 
 	app := fiber.New()
 

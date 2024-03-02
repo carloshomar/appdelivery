@@ -18,10 +18,13 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import PaymentComponent from "@/components/PaymentComponent";
+import { useApi } from "@/contexts/ApiContext";
 
 const cart = () => {
   const { setHiddenCart, cart, paymentMethod, submitCart, distance } =
     useCartApi();
+  const { getUserData } = useApi();
+  const [user, _] = useState(getUserData());
   const nav = useNavigation();
   const insets = useSafeAreaInsets();
 
@@ -53,7 +56,7 @@ const cart = () => {
       </ScrollView>
       <TouchableOpacity
         style={{ ...styles.btns, opacity: !distance ? 0.8 : 1 }}
-        onPress={() => submitCart()}
+        onPress={() => submitCart(user)}
         disabled={!distance}
       >
         <Text style={styles.txtFinal}>{Texts.finalizar_pagamento}</Text>

@@ -51,11 +51,14 @@ services:
       context: ./orders_api
       dockerfile: Dockerfile
     container_name: orders-api
+    depends_on:
+      - orders-db
+      - orders-mongo
     environment:
       - DB_CONNECTION_STRING=user=admin password=pass dbname=orders_db sslmode=disable host=orders-db port=5433
       - JWT_SECRET=4fcfc25be07f50a0f0f6214df8b495c0
-    depends_on:
-      - orders-db
+      - MONGO_URI=mongodb://admin:pass@orders-mongo:27017
+      - MONGO_DATABASE=orders_mongo_db
     networks:
       - gateway-network
     ports:
@@ -74,6 +77,18 @@ services:
       - "5433:5433"
     command: -p 5433
 
+  orders-mongo:
+    image: mongo:latest
+    command: mongod --auth
+    container_name: orders-mongo
+    networks:
+      - gateway-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+      - MONGO_INITDB_DATABASE=orders_mongo_db
+    ports:
+      - "27017:27017"
 
 networks:
   gateway-network:

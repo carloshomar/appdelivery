@@ -1,38 +1,10 @@
 package handlers
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/carloshomar/vercardapio/app/dto"
 	"github.com/carloshomar/vercardapio/app/models"
+	"github.com/gofiber/fiber/v2"
 )
-
-type ProductRequest struct {
-	Id              int     `json:id`
-	Name            string  `json:name`
-	Description     string  `json:description`
-	Price           float64 `json:price`
-	Image           string  `json:image`
-	EstablishmentID int     `json:establishmentId`
-}
-
-type AdditionalRequest struct {
-	Id          int     `json:id`
-	Name        string  `json:name`
-	Price       float64 `json:price`
-	Image       string  `json:image`
-	Description string  `json:description`
-}
-
-type AdditionalProductsRequest struct {
-	Id           int  `json:id`
-	ProductID    uint `json:productId"`
-	AdditionalID uint `json:additionalId"`
-}
-
-type CategoryRequest struct {
-	ID         uint `json:id`
-	ProductID  uint `json:productId`
-	CategoryID uint `json:categoryId`
-}
 
 func Ping(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{})
@@ -55,7 +27,7 @@ func GetByEstablishmentId(c *fiber.Ctx) error {
 }
 
 func CreateProduct(c *fiber.Ctx) error {
-	var request ProductRequest
+	var request dto.ProductRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
@@ -73,7 +45,7 @@ func CreateProduct(c *fiber.Ctx) error {
 }
 
 func CreateMultProducts(c *fiber.Ctx) error {
-	var requests []ProductRequest
+	var requests []dto.ProductRequest
 	if err := c.BodyParser(&requests); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
@@ -103,7 +75,7 @@ func CreateMultProducts(c *fiber.Ctx) error {
 }
 
 func CreateAdditional(c *fiber.Ctx) error {
-	var request AdditionalRequest
+	var request dto.AdditionalRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
@@ -121,7 +93,7 @@ func CreateAdditional(c *fiber.Ctx) error {
 }
 
 func CreateProductToAdditional(c *fiber.Ctx) error {
-	var request AdditionalProductsRequest
+	var request dto.AdditionalProductsRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
