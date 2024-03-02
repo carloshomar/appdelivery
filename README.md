@@ -2,8 +2,8 @@
 
 O **App de delivery** é uma plataforma de código aberto que permite a personalização completa com a marca e identidade visual do seu restaurante. Similar aquele outro app, possibilita que restaurantes estabeleçam um canal de vendas diretas, eliminando intermediários e proporcionando uma experiência de compra mais próxima aos usuários. Isso não apenas reduz custos desnecessários, mas também simplifica a gestão do estabelecimento.
 
-*Fique a vontade para Criar, Modificar, Comercializar e Distribuir!* <br/>
-*Contribuições são sempre bem-vindas!*
+_Fique a vontade para Criar, Modificar, Comercializar e Distribuir!_ <br/>
+_Contribuições são sempre bem-vindas!_
 
 #### Imagens
 
@@ -64,7 +64,8 @@ As credenciais de banco estão presentes no docker-compose.yml.
 <br/>
 _Para fazer o deploy é só seguir os passos que o <a href="/Backend/docker-compose.yml">docker-compose.yml</a> faz._
 
-#### Para rodar um serviço em especifico:
+#### Rodar um serviço em especifico:
+
 Para rodar os microserviços separadamente você precisa já ter o GoLang instalado em sua maquina, acessar a pasta do microsserviço pelo terminal e utilizar:
 
 ```bash
@@ -94,7 +95,7 @@ Para rodar:
 npm start
 ```
 
-*Baixe o App do EXPO, no seu celular, pela loja de aplicativos e esteja conectado na mesma rede que o seu computador, o aplicativo será visto por toda rede interna enquando estiver em desenvolvimento.*
+_Baixe o App do EXPO, no seu celular, pela loja de aplicativos e esteja conectado na mesma rede que o seu computador, o aplicativo será visto por toda rede interna enquando estiver em desenvolvimento._
 
 ## Configuração do Estabelecimento
 
