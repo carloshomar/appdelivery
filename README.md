@@ -2,6 +2,9 @@
 
 O **App de delivery** é uma plataforma de código aberto que permite a personalização completa com a marca e identidade visual do seu restaurante. Similar aquele outro app, possibilita que restaurantes estabeleçam um canal de vendas diretas, eliminando intermediários e proporcionando uma experiência de compra mais próxima aos usuários. Isso não apenas reduz custos desnecessários, mas também simplifica a gestão do estabelecimento.
 
+Fique a vontade para Criar, Modificar, Comercializar e Distribuir!
+Contribuições sem bem-vindas!
+
 #### Imagens
 
 <img src="./Arquitetura/IMG_9734.PNG" alt="IMG1" width="200"></img>
