@@ -49,7 +49,7 @@ _Uma arquitetura baseada em microserviços_
 
 ### Backend:
 
-É importante já ter o docker instalado no sistema operacional. Para fazer o deploy é só seguir os passos que o docker-compse.yml faz.
+É importante já ter o docker instalado no sistema operacional. Para fazer o deploy é só seguir os passos que o <a href="/Backend/docker-compose.yml">docker-compose.yml</a> faz.
 
 Após rode no terminal:
 
@@ -102,5 +102,5 @@ Tendo postman na sua maquina, é só importar a biblioteca de requests presentes
 
 #### Geraração de Aplicativo:
 
-- No arquivo _Frontend/config/config.tsx_, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
-- No mesmo arquivo, _Frontend/config/config.tsx_, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
+- No arquivo <a href="Frontend/config/config.tsx">_Frontend/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
+- No mesmo arquivo, <a href="Frontend/config/config.tsx">_Frontend/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
