@@ -49,15 +49,17 @@ _Uma arquitetura baseada em microserviços_
 
 ### Backend:
 
-É importante já ter o docker instalado no sistema operacional. Para fazer o deploy é só seguir os passos que o <a href="/Backend/docker-compose.yml">docker-compose.yml</a> faz.
+_É importante já ter o docker instalado no sistema operacional._
 
-Após rode no terminal:
+Rode no terminal:
 
 ```bash
 docker compose up
 ```
 
 As credenciais de banco estão presentes no docker-compose.yml.
+<br/>
+_Para fazer o deploy é só seguir os passos que o <a href="/Backend/docker-compose.yml">docker-compose.yml</a> faz._
 
 Para rodar os microserviços você precisa acessar a pasta dele e instalar suas dependências:
 
