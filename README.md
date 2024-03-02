@@ -71,7 +71,6 @@ Para rodar:
 ```bash
 go run main.go
 ```
-Baixe o App do EXPO, no seu celular, pela loja de aplicativos e esteja conectado na mesma rede que o seu computador, o aplicativo será visto por toda rede interna enquando estiver em desenvolvimento.
 
 ### Frontend:
 
@@ -88,6 +87,8 @@ Para rodar:
 ```bash
 npm start
 ```
+
+*Baixe o App do EXPO, no seu celular, pela loja de aplicativos e esteja conectado na mesma rede que o seu computador, o aplicativo será visto por toda rede interna enquando estiver em desenvolvimento.*
 
 ## Configuração do Estabelecimento
 
