@@ -7,7 +7,7 @@ interface QuantitySelectorProps {
   quantity?: number;
   onIncrement: () => void;
   onDecrement: () => void;
-
+  disabled?: boolean;
   onDelete?: (item: object) => void;
   mini?: boolean;
 }
@@ -18,42 +18,57 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   onDecrement,
   mini = false,
   onDelete,
+  disabled,
 }) => {
   const fontSizeAlt = mini ? 15 : 18;
   return (
-    <View style={styles.container}>
-      {onDelete && quantity === 1 ? (
-        <TouchableOpacity
-          onPress={onDelete}
-          style={{ ...styles.button, paddingHorizontal: 12 }}
-        >
-          <MaterialIcons
-            name="delete"
-            size={fontSizeAlt}
-            color={Colors.light.tint}
-          />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={onDecrement} style={styles.button}>
-          <Text
-            style={{
-              ...styles.buttonText,
-              fontSize: fontSizeAlt,
-              color:
-                quantity == 1 ? Colors.light.secondaryText : Colors.light.tint,
-            }}
-          >
-            -
-          </Text>
-        </TouchableOpacity>
-      )}
+    <View style={{ ...styles.container, padding: disabled ? 5 : undefined }}>
+      {!disabled ? (
+        <View>
+          {onDelete && quantity === 1 ? (
+            <TouchableOpacity
+              onPress={onDelete}
+              style={{ ...styles.button, paddingHorizontal: 12 }}
+            >
+              <MaterialIcons
+                name="delete"
+                size={fontSizeAlt}
+                color={Colors.light.tint}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={onDecrement} style={styles.button}>
+              <Text
+                style={{
+                  ...styles.buttonText,
+                  fontSize: fontSizeAlt,
+                  color:
+                    quantity == 1
+                      ? Colors.light.secondaryText
+                      : Colors.light.tint,
+                }}
+              >
+                -
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      ) : null}
 
-      <Text style={{ ...styles.quantity, fontSize: fontSizeAlt - 1 }}>
+      <Text
+        style={{
+          ...styles.quantity,
+          fontSize: fontSizeAlt - 1,
+          color: disabled ? Colors.light.secondaryText : undefined,
+        }}
+      >
         {quantity}
       </Text>
-      <TouchableOpacity onPress={onIncrement} style={styles.button}>
-        <Text style={{ ...styles.buttonText, fontSize: fontSizeAlt }}>+</Text>
-      </TouchableOpacity>
+      {!disabled ? (
+        <TouchableOpacity onPress={onIncrement} style={styles.button}>
+          <Text style={{ ...styles.buttonText, fontSize: fontSizeAlt }}>+</Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };

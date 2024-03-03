@@ -118,7 +118,7 @@ func ListOrdersByEstablishmentIDAndPhone(c *fiber.Ctx) error {
 }
 
 func ListOrdersByPhone(c *fiber.Ctx) error {
-	phoneNumberEncoded := c.Params("phoneNumber")
+	phoneNumberEncoded := c.Params("phone")
 
 	phoneNumber, err := url.QueryUnescape(phoneNumberEncoded)
 	filter := bson.M{

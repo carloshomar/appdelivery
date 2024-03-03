@@ -208,6 +208,7 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
 
     try {
       const { data } = await api.post(`/api/order/orders`, body);
+      setCart([]);
       return true;
     } catch (e) {
       Alert.alert("", Texts.erroPedido);

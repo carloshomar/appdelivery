@@ -52,7 +52,8 @@ _Uma arquitetura baseada em microserviços_
 ### Backend:
 
 - Arquitetura baseada em microsserviços, permitindo a adição de novos serviços na linguagem desejada.
-- Utiliza Golang devido à sua performance e baixo consumo de recursos.
+- Utiliza GoLang devido à sua performance e baixo consumo de recursos.
+- O GoLang utiliza também o Fiber como framework API.
 - Implementado em Docker, facilitando a inicialização do servidor sem exigir amplo conhecimento técnico.
 
 ## Como Rodar

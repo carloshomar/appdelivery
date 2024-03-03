@@ -1,15 +1,81 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { Image, ScrollView, StyleSheet } from "react-native";
 
 import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
+import OrderSummaryWithTotal from "@/components/OrderSummaryWithTotal";
+import { useCartApi } from "@/contexts/ApiCartContext";
+import OrderSummary from "@/components/OrderSummary";
+import { ESTABLISHMENT } from "@/config/config";
+import { useEffect, useState } from "react";
+import api from "@/services/api";
+import { useApi } from "@/contexts/ApiContext";
+
+const { logo_uri, name } = ESTABLISHMENT;
 
 export default function TabTwoScreen() {
+  const { cart } = useCartApi();
+  const { getUserData } = useApi();
+  const [myOrders, setMyOrders] = useState([]);
+
+  async function getMyOrders() {
+    try {
+      const userData = await getUserData();
+      if (!userData?.phone) {
+        return;
+      }
+      const { data } = await api.get(
+        "/api/order/orders/list-phone/" + userData.phone
+      );
+      setMyOrders(data);
+
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    getMyOrders();
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
-      <Text className="font-bold text-2xl">Tela Pedidos</Text>
+      <View style={{ alignItems: "center", paddingTop: 10 }}>
+        {myOrders.map((e) => {
+          return (
+            <View style={containerStyle}>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <Image source={{ uri: logo_uri }} style={imageStyle} />
+                <Text>{name}</Text>
+              </View>
+              <OrderSummary disabled={true} data={e.cart} />
+            </View>
+          );
+        })}
+      </View>
     </ScrollView>
   );
 }
+
+const containerStyle = {
+  borderWidth: 1,
+  width: "95%",
+  padding: 10,
+  borderColor: Colors.light.tabIconDefault,
+  borderRadius: 3,
+  marginBottom: 10,
+};
+
+const imageStyle = {
+  width: 50,
+  height: 50,
+  borderRadius: 50,
+  borderWidth: 1,
+  borderColor: Colors.light.tabIconDefault,
+};
 
 const styles = StyleSheet.create({
   container: {

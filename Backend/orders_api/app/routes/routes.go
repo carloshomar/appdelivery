@@ -26,9 +26,8 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/delivery", handlers.InsertDelivery)
 
 	app.Post("/orders", handlers.CreateOrder)
+	app.Get("/orders/list-phone/:phone", handlers.ListOrdersByPhone)
 	app.Get("/orders/:establishmentId", handlers.ListOrdersByEstablishmentID)
 	app.Get("/orders/:establishmentId/:phoneNumber", handlers.ListOrdersByEstablishmentIDAndPhone)
-
-	app.Get("/orders/list-phone/:phoneNumber", handlers.ListOrdersByPhone)
 
 }

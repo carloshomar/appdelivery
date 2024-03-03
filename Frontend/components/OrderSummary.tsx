@@ -7,12 +7,12 @@ import QuantitySelector from "./QuantitySelector";
 import { useCartApi } from "@/contexts/ApiCartContext";
 import { useNavigation } from "@react-navigation/native";
 
-const OrderSummary = ({ data }: any) => {
+const OrderSummary = ({ data, disabled }: any) => {
   const { removeCart, editCart } = useCartApi();
   const navigation = useNavigation();
 
   const renderAdditionalItems = (additionals: any) => {
-    return additionals.map((additional: any, index: number) => (
+    return additionals?.map((additional: any, index: number) => (
       <View key={index} style={styles.additionalItem}>
         <Text style={styles.additionalName}>{additional.Name}</Text>
       </View>
@@ -23,6 +23,7 @@ const OrderSummary = ({ data }: any) => {
     data.map((item: any, index: number) => (
       <TouchableOpacity
         key={index}
+        disabled={disabled}
         style={{
           ...styles.itemContainer,
           borderBottomWidth: index === data.length - 1 ? 0 : 1,
@@ -42,24 +43,26 @@ const OrderSummary = ({ data }: any) => {
           <View style={styles.itemDetails}>
             <View style={{ flexDirection: "row" }}>
               <View style={styles.itemNameContainer}>
-                <Text style={styles.itemName}>{item.item.Name}</Text>
+                <Text style={styles.itemName}>
+                  {item.item.Name ?? item.item.name}
+                </Text>
                 <View style={styles.additionalContainer}>
                   {renderAdditionalItems(
-                    item.item.Additional.filter((e: any) =>
-                      item.additionals.includes(e.ID)
+                    (item.item.Additional ?? item.item.additional)?.filter(
+                      (e: any) => item.additionals.includes(e.ID)
                     )
                   )}
                 </View>
                 <Text style={styles.itemPrice}>
                   {helpers.formatCurrency(
-                    (item.item.Price +
-                      (item.item.Additional.filter((e: any) =>
-                        item.additionals.includes(e.ID)
-                      ).reduce(
-                        (total: number, additional: any) =>
-                          total + additional.Price,
-                        0
-                      ) ?? 0)) *
+                    ((item.item.Price ?? item.item.price) +
+                      ((item.item.Additional ?? item.item.additional)
+                        ?.filter((e: any) => item.additionals.includes(e.ID))
+                        .reduce(
+                          (total: number, additional: any) =>
+                            total + (additional.Price ?? additional.price),
+                          0
+                        ) ?? 0)) *
                       item.quantity
                   )}
                 </Text>
@@ -68,6 +71,7 @@ const OrderSummary = ({ data }: any) => {
 
             <View style={styles.container2}>
               <QuantitySelector
+                disabled={disabled}
                 quantity={item.quantity}
                 mini={true}
                 onDelete={() => removeCart(item)}
@@ -86,7 +90,7 @@ const OrderSummary = ({ data }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{Texts.carrinho}:</Text>
+      {!disabled ? <Text style={styles.title}>{Texts.carrinho}:</Text> : null}
       {renderItems()}
     </View>
   );
