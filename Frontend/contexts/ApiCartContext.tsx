@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
@@ -24,7 +24,7 @@ interface ApiContextProps {
   editCart(item: object): void;
   cleanCart(): void;
   setPaymentMethod(method: object): void;
-  submitCart(user: any): void;
+  submitCart(user: any): boolean;
 
   validDelivery(): boolean;
   paymentMethod: any;
@@ -191,18 +191,28 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
   }
 
   async function submitCart(user: any) {
-    if (validDelivery())
-      console.log(
-        JSON.stringify({
-          cart,
-          distance,
-          location,
-          paymentMethod,
-          deliveryValue,
-          user,
-          establishmentId: ESTABLISHMENT.id,
-        })
-      );
+    if (!validDelivery()) {
+      Alert.alert("", Texts.erroPedido);
+      return false;
+    }
+
+    const body = {
+      cart,
+      distance,
+      location,
+      paymentMethod,
+      deliveryValue,
+      user,
+      establishmentId: ESTABLISHMENT.id,
+    };
+
+    try {
+      const { data } = await api.post(`/api/order/orders`, body);
+      return true;
+    } catch (e) {
+      Alert.alert("", Texts.erroPedido);
+      return false;
+    }
   }
 
   useEffect(() => {

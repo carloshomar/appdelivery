@@ -1,20 +1,19 @@
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import { Text, View } from "@/components/Themed";
+import Colors from "@/constants/Colors";
 
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text className="font-bold text-2xl">Tela Pedidos</Text>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: Colors.light.background,
   },
   title: {
     fontSize: 20,

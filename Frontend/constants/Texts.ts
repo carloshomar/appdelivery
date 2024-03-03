@@ -26,5 +26,6 @@ const Texts = {
   money: "Dinheiro",
   pix: "PIX",
   nome_es: "Nome",
+  erroPedido: "Ouve um erro nao fazer o pedido, tente novamente.",
 };
 export default Texts;
