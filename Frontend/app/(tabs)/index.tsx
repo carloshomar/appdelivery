@@ -41,7 +41,7 @@ function TabTwo() {
     <ScrollView
       style={{
         backgroundColor: Colors.light.background,
-        paddingTop: APP_MODE === APP_MODE_OPTIONS.unique ? insets.top : null,
+        paddingTop: insets.top,
       }}
       showsVerticalScrollIndicator={false}
     >

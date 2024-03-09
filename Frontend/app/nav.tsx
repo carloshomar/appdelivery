@@ -21,7 +21,7 @@ export default function NavStack() {
       <Stack.Screen
         name="(tabs)"
         options={{
-          headerShown: APP_MODE !== APP_MODE_OPTIONS.unique,
+          headerShown: false,
           title: Texts.inicio,
         }}
       />
@@ -29,7 +29,6 @@ export default function NavStack() {
       <Stack.Screen
         name="establishment"
         options={{
-          title: "",
           headerShown: false,
         }}
       />
