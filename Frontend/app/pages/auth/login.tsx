@@ -1,4 +1,3 @@
-import { ESTABLISHMENT } from "@/config/config";
 import Colors from "@/constants/Colors";
 import { useApi } from "@/contexts/ApiContext";
 import helpers from "@/helpers/helpers";
@@ -25,7 +24,7 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={{ uri: ESTABLISHMENT.logo_uri }} style={styles.logo} />
+      <Image source={{ uri: "" }} style={styles.logo} />
       <View style={styles.formContainer}>
         <TextInput style={styles.input} onChangeText={setNome} value={nome} />
         <TextInput

@@ -7,6 +7,7 @@ import { View, Text, StyleSheet } from "react-native";
 import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
 import { useRoute } from "@react-navigation/native";
+import { APP_MODE, APP_MODE_OPTIONS } from "@/config/config";
 
 export default function NavStack() {
   const { isLogged } = useApi();
@@ -20,10 +21,19 @@ export default function NavStack() {
       <Stack.Screen
         name="(tabs)"
         options={{
-          headerShown: false,
+          headerShown: APP_MODE !== APP_MODE_OPTIONS.unique,
           title: Texts.inicio,
         }}
       />
+
+      <Stack.Screen
+        name="establishment"
+        options={{
+          title: "",
+          headerShown: false,
+        }}
+      />
+
       <Stack.Screen
         name="modal"
         options={{ presentation: "modal", headerShown: false }}

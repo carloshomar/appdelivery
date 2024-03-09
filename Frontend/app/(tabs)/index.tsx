@@ -1,31 +1,37 @@
 // TabOneScreen.js
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text } from "react-native";
-import { View } from "@/components/Themed";
-import ProductCategory from "../pages/porducts/ProductCategory"; // Importando o novo componente
+
 import api from "@/services/api";
-import { ESTABLISHMENT, ESTABLISHMENT_ID } from "@/config/config";
-import { useApi } from "@/contexts/ApiContext";
+
 import Colors from "@/constants/Colors";
-import Texts from "@/constants/Texts";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import HeaderMain from "@/components/HeaderMain";
+import { APP_MODE, APP_MODE_OPTIONS } from "@/config/config";
+import EstablishmentView from "@/components/EstablishmentView";
+import Establishment from "../establishment";
+import { useCartApi } from "@/contexts/ApiCartContext";
+import { useNavigation } from "@react-navigation/native";
 
-export default function TabOneScreen() {
-  const [cadProdcts, setData] = useState<any>([]);
-  const { setIsLoading, isLoading } = useApi();
+export default function index() {
+  return (
+    <>{APP_MODE == APP_MODE_OPTIONS.unique ? <Establishment /> : TabTwo()}</>
+  );
+}
+
+function TabTwo() {
+  const [estabelecimentos, setEstabelecimentos] = useState([]);
   const insets = useSafeAreaInsets();
-
-  const init = async () => {
+  const { setEstablishment } = useCartApi();
+  const nav = useNavigation();
+  async function init() {
     try {
-      const { data } = await api.get(
-        "/api/order/categories/product/" + ESTABLISHMENT_ID
-      );
-      setData(data);
+      const { data } = await api.get("/api/auth/establishments");
+      setEstabelecimentos(data);
     } catch (e) {
-      alert(e);
+      console.log(e);
     }
-  };
+  }
 
   useEffect(() => {
     init();
@@ -35,17 +41,19 @@ export default function TabOneScreen() {
     <ScrollView
       style={{
         backgroundColor: Colors.light.background,
-        paddingTop: insets.top,
+        paddingTop: APP_MODE === APP_MODE_OPTIONS.unique ? insets.top : null,
       }}
       showsVerticalScrollIndicator={false}
     >
-      <HeaderMain hiddenOpen={true} />
-      {cadProdcts?.map((category: any) => (
-        <View style={{ width: "100%" }}>
-          <ProductCategory key={category.Id} category={category} />
-        </View>
+      {estabelecimentos.map((e) => (
+        <EstablishmentView
+          item={e}
+          onPress={() => {
+            setEstablishment(e);
+            nav.navigate("establishment");
+          }}
+        />
       ))}
-      <View style={{ height: 50 }}></View>
     </ScrollView>
   );
 }

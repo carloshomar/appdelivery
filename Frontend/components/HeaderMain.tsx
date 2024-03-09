@@ -1,33 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, View, StyleSheet } from "react-native";
 import { Text } from "./Themed";
 import Texts from "@/constants/Texts";
-import { ESTABLISHMENT } from "@/config/config";
+
 import Colors from "@/constants/Colors";
 import { useCartApi } from "@/contexts/ApiCartContext";
+import helpers from "@/helpers/helpers";
 
 function HeaderMain({ hiddenOpen }: any) {
-  const { distance } = useCartApi();
+  const { establishment } = useCartApi();
+  const [distance, setDistance] = useState(null);
+
+  async function init() {
+    const rs = await helpers.calcularDistancia(
+      establishment.lat,
+      establishment.long
+    );
+    setDistance(rs);
+  }
+
+  useEffect(() => {
+    init();
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{ESTABLISHMENT.name}</Text>
+        <Text style={styles.title}>{establishment.name}</Text>
         {hiddenOpen && (
           <View style={styles.infoContainer}>
             <Text style={styles.secondaryText}>
-              {Texts.aberto_ate} {ESTABLISHMENT.horarioFuncionamento}{" "}
+              {Texts.aberto_ate} {establishment.horarioFuncionamento}{" "}
               {distance ? "/ " : null}
             </Text>
-            {distance &&
-            distance < ESTABLISHMENT.coords.max_distancy_delivery ? (
+            {distance && distance < establishment.max_distance_delivery ? (
               <Text style={styles.secondaryText}>
-                {distance?.toFixed(1)} {Texts.km}
+                {distance.toFixed(1)} {Texts.km}
               </Text>
             ) : null}
 
-            {distance &&
-            distance > ESTABLISHMENT.coords.max_distancy_delivery ? (
+            {distance && distance > establishment.max_distance_delivery ? (
               <Text style={styles.secondaryText}>
                 {Texts.fora_area_delivery}
               </Text>
@@ -35,7 +47,7 @@ function HeaderMain({ hiddenOpen }: any) {
           </View>
         )}
       </View>
-      <Image source={{ uri: ESTABLISHMENT.logo_uri }} style={styles.logo} />
+      <Image source={{ uri: establishment.image }} style={styles.logo} />
     </View>
   );
 }

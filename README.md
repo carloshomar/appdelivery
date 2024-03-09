@@ -1,6 +1,6 @@
 # AppDelivery
 
-O **App de delivery** é uma plataforma de código aberto que permite a personalização completa com a marca e identidade visual do seu restaurante. Similar aquele outro app, possibilita que restaurantes estabeleçam um canal de vendas diretas, eliminando intermediários e proporcionando uma experiência de compra mais próxima aos usuários. Isso não apenas reduz custos desnecessários, mas também simplifica a gestão do estabelecimento.
+O **App de delivery** é uma plataforma de código aberto que permite a personalização completa com a marca e identidade visual do seu restaurante ou de mais restaurantes. Similar aquele outro app, possibilita que restaurantes estabeleçam um canal de vendas diretas, eliminando intermediários e proporcionando uma experiência de compra mais próxima aos usuários. Isso não apenas reduz custos desnecessários, mas também simplifica a gestão do estabelecimento.
 
 _Fique a vontade para Criar, Modificar, Comercializar e Distribuir!_ <br/>
 _Contribuições são sempre bem-vindas!_
@@ -17,6 +17,8 @@ _Contribuições são sempre bem-vindas!_
 <a href="./Arquitetura/video1.mp4">Video - Utilizando o App</a>
 
 ## Principais Características
+
+- **Modos de estabelecimentos**: Existe o modo **unique** que deixa o app focado em um estabelecimento e também o modo **multi** que lista os estabelecimentos presentes no servidor, no <a href="Frontend/config/config.tsx">arquivo de configurações</a> você pode selecionar o estilo desejado.
 
 - **Personalização Total:** Coloque sua marca e identidade visual no sistema, transformando-o em uma extensão exclusiva do seu restaurante.
 - **Vendas Diretas:** Elimine intermediários e suas taxas, oferecendo aos clientes uma experiência de compra mais acessível.
@@ -108,6 +110,14 @@ _Baixe o App do EXPO, no seu celular, pela loja de aplicativos e esteja conectad
 ## Configuração do Estabelecimento
 
 Tendo postman na sua maquina, é só importar a biblioteca de requests presentes na pasta _Backend/docs/delivery.postman_collection.json_ no qual você terá acesso a uma mini documentação dos endpoints e formatos esperados pela API.
+
+#### Configure o Modo:
+
+No arquivo <a href="Frontend/config/config.tsx">_Frontend/config/config.tsx_</a> altere a variavel **APP_MODE** para **.unique** ou **.multi**.
+
+- Unique: Para quando o app é voltado somente para 1 unico restaurante, neste caso ele consome da variavel estatica **ESTABLISHMENT**, também presente no arquivo.
+
+- Multi: Para quando o app deve comportar todos os restaurantes cadastrados no servidor, e fornece a possibilidade do usuário selecionar o restaurante que bem deseja.
 
 #### Cadastrar Estabelecimento:
 

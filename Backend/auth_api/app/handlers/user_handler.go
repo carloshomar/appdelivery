@@ -23,6 +23,11 @@ type EstablishmentRequest struct {
 	Image          string `json:image`
 	PrimaryColor   string `json:"primary_color"`
 	SecondaryColor string `json:"secodary_color"`
+
+	HorarioFuncionamento string  `json:"horarioFuncionamento"`
+	Lat                  float64 `json:"lat"`
+	Long                 float64 `json:"long"`
+	MaxDistanceDelivery  float64 `json:"max_distance_delivery"`
 }
 
 type LoginRequest struct {
@@ -31,54 +36,61 @@ type LoginRequest struct {
 }
 
 func CreateUser(c *fiber.Ctx) error {
-	// Parse o corpo da requisição para obter os dados do usuário
+	// Parse the request body to obtain user data
 	var request CreateUserRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
 
-	// Crie o usuário com os dados da requisição
+	// Create the user with the request data
 	user := models.User{
 		Name:  request.Name,
 		Email: request.Email,
 	}
 
-	// Gere o hash da senha usando bcrypt
+	// Generate the password hash using bcrypt
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to hash password"})
 	}
 	user.Password = string(hashedPassword)
 
-	// Insira o usuário no banco de dados
-	models.DB.Create(&user)
-
-	// Crie o estabelecimento com os dados da requisição
-	establishment := models.Establishment{
-		Name:           request.Establishment.Name,
-		Description:    request.Establishment.Description,
-		OwnerID:        user.ID,
-		Image:          request.Establishment.Image,
-		PrimaryColor:   request.Establishment.PrimaryColor,
-		SecondaryColor: request.Establishment.SecondaryColor,
+	// Insert the user into the database
+	if err := models.DB.Create(&user).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create user"})
 	}
 
-	// Insira o estabelecimento no banco de dados
-	models.DB.Create(&establishment)
+	// Create the establishment with the request data
+	establishment := models.Establishment{
+		Name:                request.Establishment.Name,
+		Description:         request.Establishment.Description,
+		OwnerID:             user.ID,
+		Image:               request.Establishment.Image,
+		PrimaryColor:        request.Establishment.PrimaryColor,
+		SecondaryColor:      request.Establishment.SecondaryColor,
+		Lat:                 request.Establishment.Lat,
+		Long:                request.Establishment.Long,
+		MaxDistanceDelivery: request.Establishment.MaxDistanceDelivery,
+	}
 
-	// Alterando o id do estabelecimento do usuário criado.
+	// Insert the establishment into the database
+	if err := models.DB.Create(&establishment).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create establishment"})
+	}
+
+	// Update the user with the establishment ID
 	user.EstablishmentID = establishment.ID
-	request.Id = int(user.ID)
-	request.Establishment.Id = int(establishment.ID)
-	models.DB.Save(&user)
+	if err := models.DB.Save(&user).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update user"})
+	}
 
+	// Generate JWT token
 	tokenString, err := middlewares.GenerateJWT(&user, &establishment)
-
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to generate JWT token"})
 	}
 
-	// Retorne o exemplo do corpo da requisição em formato JSON
+	// Return the response with user data and token
 	request.Password = ""
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"user": request, "token": tokenString})
 }

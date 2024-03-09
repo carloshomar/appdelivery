@@ -11,11 +11,12 @@ import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
 import { useNavigation } from "@react-navigation/native";
 import helpers from "@/helpers/helpers";
-import { ESTABLISHMENT } from "@/config/config";
+
 import * as Location from "expo-location";
 import api from "@/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Strings from "@/constants/Strings";
+import { ESTABLISHMENT, PAYMENT_TYPE } from "@/config/config";
 
 interface ApiContextProps {
   cart: object[];
@@ -31,10 +32,12 @@ interface ApiContextProps {
   deliveryValue: number | null;
 
   setHiddenCart(state: boolean): void;
+  setEstablishment(establishment: any): void;
   getValueDelivery(ns: number): Promise<any>;
   distance: number | null;
   setMyLocation(location: object): void;
   location: any;
+  establishment: any;
 }
 
 const ApiContext = createContext<ApiContextProps | undefined>(undefined);
@@ -52,6 +55,7 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
   const [hiddenCart, setHiddenCart] = useState(false);
   const [distance, setDistance] = useState<null | number>(null);
   const [deliveryValue, setDeliveryValue] = useState<null | number>(0);
+  const [establishment, setEstablishment] = useState(ESTABLISHMENT);
 
   const [location, setLocation] = useState({
     cep: null,
@@ -67,7 +71,7 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
     siafi: null,
   });
 
-  const [paymentMethod, setPaymentMethod] = useState(ESTABLISHMENT.payment[0]);
+  const [paymentMethod, setPaymentMethod] = useState(PAYMENT_TYPE[0]);
 
   const cleanCart = () => {
     setCart([]);
@@ -88,64 +92,10 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
   };
 
   const validDelivery = () => {
-    if (!distance || distance > ESTABLISHMENT.coords.max_distancy_delivery) {
+    if (!distance || distance > establishment.max_distancy_delivery) {
       return false;
     }
     return true;
-  };
-
-  const calcularDistancia = async () => {
-    try {
-      // Solicitar permissão para acessar a localização do dispositivo
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.error("Permissão de localização negada");
-        return null;
-      }
-
-      // Obter a localização atual do usuário
-      const localizacaoAtual = await Location.getCurrentPositionAsync({});
-      const { latitude: origemLatitude, longitude: origemLongitude } =
-        localizacaoAtual.coords;
-
-      // Calcular a distância usando a fórmula de Haversine
-      const distancia = haversineDistancia(
-        origemLatitude,
-        origemLongitude,
-        ESTABLISHMENT.coords.lat,
-        ESTABLISHMENT.coords.long
-      );
-
-      return distancia;
-    } catch (error) {
-      console.error("Erro ao obter a localização:", error);
-      return null;
-    }
-  };
-
-  const haversineDistancia = (
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ) => {
-    const R = 6371; // Raio da Terra em quilômetros
-    const dLat = deg2rad(lat2 - lat1);
-    const dLon = deg2rad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(deg2rad(lat1)) *
-        Math.cos(deg2rad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distancia = R * c; // Distância em quilômetros
-
-    return distancia;
-  };
-
-  const deg2rad = (deg: any) => {
-    return deg * (Math.PI / 180);
   };
 
   const getValueDelivery = async (ns: number) => {
@@ -177,7 +127,10 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
 
   async function init() {
     try {
-      const dist = await calcularDistancia();
+      const dist = await helpers.calcularDistancia(
+        establishment.lat,
+        establishment.long
+      );
       setDistance(dist);
 
       await getMyLocationStorange();
@@ -203,7 +156,7 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
       paymentMethod,
       deliveryValue,
       user,
-      establishmentId: ESTABLISHMENT.id,
+      establishmentId: establishment.id,
     };
 
     try {
@@ -228,6 +181,8 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
         cleanCart,
         removeCart,
         submitCart,
+        establishment,
+        setEstablishment,
         setMyLocation,
         getValueDelivery,
         validDelivery,

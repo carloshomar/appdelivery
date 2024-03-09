@@ -5,17 +5,16 @@ import Colors from "@/constants/Colors";
 import OrderSummaryWithTotal from "@/components/OrderSummaryWithTotal";
 import { useCartApi } from "@/contexts/ApiCartContext";
 import OrderSummary from "@/components/OrderSummary";
-import { ESTABLISHMENT } from "@/config/config";
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 import { useApi } from "@/contexts/ApiContext";
 
-const { logo_uri, name } = ESTABLISHMENT;
-
 export default function TabTwoScreen() {
-  const { cart } = useCartApi();
+  const { establishment } = useCartApi();
   const { getUserData } = useApi();
   const [myOrders, setMyOrders] = useState([]);
+
+  const { image, name } = establishment;
 
   async function getMyOrders() {
     try {
@@ -42,13 +41,13 @@ export default function TabTwoScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={{ alignItems: "center", paddingTop: 10 }}>
-        {myOrders.map((e) => {
+        {myOrders?.map((e) => {
           return (
             <View style={containerStyle}>
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
               >
-                <Image source={{ uri: logo_uri }} style={imageStyle} />
+                <Image source={{ uri: image }} style={imageStyle} />
                 <Text>{name}</Text>
               </View>
               <OrderSummary disabled={true} data={e.cart} />

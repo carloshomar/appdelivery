@@ -4,7 +4,6 @@ import { Item } from "@/types";
 import Texts from "@/constants/Texts";
 import helpers from "@/helpers/helpers";
 import { useCartApi } from "@/contexts/ApiCartContext";
-import { ESTABLISHMENT } from "@/config/config";
 import Colors from "@/constants/Colors";
 
 interface OrderSummaryWithTotalProps {
@@ -14,7 +13,7 @@ interface OrderSummaryWithTotalProps {
 const OrderSummaryWithTotal: React.FC<OrderSummaryWithTotalProps> = ({
   data,
 }) => {
-  const { distance, deliveryValue } = useCartApi();
+  const { distance, deliveryValue, establishment } = useCartApi();
 
   const calculateFinalPrice = ({
     item,
@@ -61,7 +60,7 @@ const OrderSummaryWithTotal: React.FC<OrderSummaryWithTotalProps> = ({
             </Text>
           </>
         ) : null}
-        {distance && distance < ESTABLISHMENT.coords.max_distancy_delivery ? (
+        {distance && distance < establishment.max_distancy_delivery ? (
           <>
             <Text style={styles.textIcons}>{Texts.entrega}:</Text>
             <Text style={styles.textIcons}>
@@ -69,7 +68,7 @@ const OrderSummaryWithTotal: React.FC<OrderSummaryWithTotalProps> = ({
             </Text>
           </>
         ) : null}
-        {distance && distance > ESTABLISHMENT.coords.max_distancy_delivery ? (
+        {distance && distance > establishment.max_distancy_delivery ? (
           <>
             <Text style={styles.textIcons}>{Texts.entrega}:</Text>
             <Text style={styles.textIcons}>{Texts.fora_area}</Text>

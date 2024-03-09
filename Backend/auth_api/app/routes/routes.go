@@ -1,19 +1,19 @@
 package routes
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"github.com/carloshomar/vercardapio/app/handlers"
 	"github.com/carloshomar/vercardapio/app/middlewares"
+	"github.com/gofiber/fiber/v2"
 )
 
 func SetupRoutes(app *fiber.App) {
 	app.Post("/users/register", handlers.CreateUser)
 	app.Post("/users/login", handlers.Login)
-	app.Get("/users/:id", ProtectedRoute, handlers.GetUser)
+	app.Get("/establishments", handlers.ListEstablishments)
 
+	app.Get("/users/:id", ProtectedRoute, handlers.GetUser)
 	app.Get("/establishments/:id", ProtectedRoute, handlers.GetEstablishments)
 	app.Get("/establishments/:id/users", ProtectedRoute, handlers.GetUserByEstablishment)
-	app.Get("/establishments", ProtectedRoute, handlers.ListEstablishments)
 
 }
 

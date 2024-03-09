@@ -1,18 +1,17 @@
 import PaymentComponent from "@/components/PaymentComponent";
-import { ESTABLISHMENT } from "@/config/config";
+import { PAYMENT_TYPE } from "@/config/config";
 import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
 import { useCartApi } from "@/contexts/ApiCartContext";
-import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 function Payments() {
   const nav = useNavigation();
   const { setPaymentMethod } = useCartApi();
   return (
     <View style={styles.container}>
-      {ESTABLISHMENT.payment.map((e) => (
+      {PAYMENT_TYPE.map((e) => (
         <PaymentComponent
           hiddenTitle={false}
           title={Texts[e.type]}

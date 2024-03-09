@@ -35,7 +35,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Yan\",\n    \"email\": \"yanagassi@outlook.com\",\n    \"password\": \"dlksamdnma\",\n    \"establishment\":{\n        \"name\": \"Casa da Carne\",\n        \"description\": \"Uma casa onde se tem carnes.\",\n        \"image\": \"\",\n        \"primary_color\": \"#8B0000\",\n        \"secodary_color\": \"#F0F8FF\"\n    }\n}",
+							"raw": "{\n    \"name\": \"Administrador\",\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\",\n    \"establishment\": {\n        \"name\": \"El Chavo Burritos\",\n        \"image\": \"https://static.vecteezy.com/system/resources/previews/014/971/638/non_2x/food-logo-design-template-restaurant-free-png.png\",\n        \"primary_color\": \"#8B0000\",\n        \"secodary_color\": \"#F0F8FF\",\n        \"description\": \"Uma casa onde se tem carnes.\",\n        \n        \"horarioFuncionamento\": \"22h\",\n        \"lat\": -21.778131,\n        \"long\": -43.367493,\n        \"max_distance_delivery\": 10\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -82,7 +82,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \n    \"email\": \"yanagassi@outlook.com\",\n    \"password\": \"dlksamdnma\"\n}",
+							"raw": "{ \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -99,6 +99,44 @@
 								"auth",
 								"users",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Establishments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AUTH_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_GATEWAY}}/api/auth/establishments",
+							"host": [
+								"{{API_GATEWAY}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"establishments"
 							]
 						}
 					},
@@ -143,44 +181,6 @@
 								"auth",
 								"users",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Establishments",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{API_GATEWAY}}/api/auth/establishments",
-							"host": [
-								"{{API_GATEWAY}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"establishments"
 							]
 						}
 					},
@@ -273,6 +273,173 @@
 				{
 					"name": "Products",
 					"item": [
+						{
+							"name": "products",
+							"item": [
+								{
+									"name": "Create Product",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{AUTH_TOKEN}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Produto Exemplo\",\n  \"description\": \"Uma descrição do produto exemplo.\",\n  \"price\": 29.99,\n  \"image\": \"https://exemplo.com/imagem.jpg\",\n  \"establishmentId\": 1\n}\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_GATEWAY}}/api/order/products/create",
+											"host": [
+												"{{API_GATEWAY}}"
+											],
+											"path": [
+												"api",
+												"order",
+												"products",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Multi Products",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{AUTH_TOKEN}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "[\n    {\n        \"name\": \"Pizza Margherita\",\n        \"description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n        \"price\": 19.99,\n        \"image\": \"https://exemplo.com/pizza_margherita.jpg\",\n        \"establishmentId\": 1\n    },\n    {\n        \"name\": \"Hambúrguer Clássico\",\n        \"description\": \"Um suculento hambúrguer feito com carne de qualidade, queijo cheddar, alface, tomate e maionese especial.\",\n        \"price\": 12.99,\n        \"image\": \"https://exemplo.com/hamburguer_classico.jpg\",\n        \"establishmentId\": 1\n    },\n    {\n        \"name\": \"Salada Caesar\",\n        \"description\": \"Uma salada fresca e crocante com alface romana, croutons, queijo parmesão e molho Caesar cremoso.\",\n        \"price\": 8.99,\n        \"image\": \"https://exemplo.com/salada_caesar.jpg\",\n        \"establishmentId\": 1\n    }\n]",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{API_GATEWAY}}/api/order/products/multi-create",
+											"host": [
+												"{{API_GATEWAY}}"
+											],
+											"path": [
+												"api",
+												"order",
+												"products",
+												"multi-create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Product By EstablishmentID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{AUTH_TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{API_GATEWAY}}/api/order/products/1",
+											"host": [
+												"{{API_GATEWAY}}"
+											],
+											"path": [
+												"api",
+												"order",
+												"products",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Product By",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{AUTH_TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{API_GATEWAY}}/api/order/products/all/1",
+											"host": [
+												"{{API_GATEWAY}}"
+											],
+											"path": [
+												"api",
+												"order",
+												"products",
+												"all",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
 						{
 							"name": "additional",
 							"item": [
@@ -519,173 +686,6 @@
 												"order",
 												"categories",
 												"product",
-												"1"
-											]
-										}
-									},
-									"response": []
-								}
-							]
-						},
-						{
-							"name": "products",
-							"item": [
-								{
-									"name": "Create Product",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"name\": \"Produto Exemplo\",\n  \"description\": \"Uma descrição do produto exemplo.\",\n  \"price\": 29.99,\n  \"image\": \"https://exemplo.com/imagem.jpg\",\n  \"establishmentId\": 1\n}\n",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{API_GATEWAY}}/api/order/products/create",
-											"host": [
-												"{{API_GATEWAY}}"
-											],
-											"path": [
-												"api",
-												"order",
-												"products",
-												"create"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Create Multi Products",
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "[\n    {\n        \"name\": \"Pizza Margherita\",\n        \"description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n        \"price\": 19.99,\n        \"image\": \"https://exemplo.com/pizza_margherita.jpg\",\n        \"establishmentId\": 1\n    },\n    {\n        \"name\": \"Hambúrguer Clássico\",\n        \"description\": \"Um suculento hambúrguer feito com carne de qualidade, queijo cheddar, alface, tomate e maionese especial.\",\n        \"price\": 12.99,\n        \"image\": \"https://exemplo.com/hamburguer_classico.jpg\",\n        \"establishmentId\": 1\n    },\n    {\n        \"name\": \"Salada Caesar\",\n        \"description\": \"Uma salada fresca e crocante com alface romana, croutons, queijo parmesão e molho Caesar cremoso.\",\n        \"price\": 8.99,\n        \"image\": \"https://exemplo.com/salada_caesar.jpg\",\n        \"establishmentId\": 1\n    }\n]",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{API_GATEWAY}}/api/order/products/multi-create",
-											"host": [
-												"{{API_GATEWAY}}"
-											],
-											"path": [
-												"api",
-												"order",
-												"products",
-												"multi-create"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Get Product By EstablishmentID",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"url": {
-											"raw": "{{API_GATEWAY}}/api/order/products/1",
-											"host": [
-												"{{API_GATEWAY}}"
-											],
-											"path": [
-												"api",
-												"order",
-												"products",
-												"1"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Get Product By",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"url": {
-											"raw": "{{API_GATEWAY}}/api/order/products/all/1",
-											"host": [
-												"{{API_GATEWAY}}"
-											],
-											"path": [
-												"api",
-												"order",
-												"products",
-												"all",
 												"1"
 											]
 										}

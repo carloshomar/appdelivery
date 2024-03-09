@@ -1,12 +1,16 @@
 package models
 
 type Establishment struct {
-	ID          uint   `gorm:"primaryKey" json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	OwnerID     uint   `json:"owner_id"`
+	ID                   uint   `gorm:"primaryKey" json:"id"`
+	Name                 string `json:"name"`
+	HorarioFuncionamento string `json:"horarioFuncionamento"`
+	Description          string `json:"description"`
+	OwnerID              uint   `json:"owner_id"`
+	Image                string `json:"image"`
+	PrimaryColor         string `json:"primary_color"`
+	SecondaryColor       string `json:"secondary_color"`
 
-	Image          string `json:image`
-	PrimaryColor   string `json:"primary_color"`
-	SecondaryColor string `json:"secodary_color"`
+	Lat                 float64 `json:"lat"`
+	Long                float64 `json:"long"`
+	MaxDistanceDelivery float64 `json:"max_distance_delivery"`
 }
