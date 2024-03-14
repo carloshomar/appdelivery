@@ -14,7 +14,7 @@ _Contribuições são sempre bem-vindas!_
 
 #### Videos
 
-<a href="./Arquitetura/video1.mp4">Video - Utilizando o App</a>
+<a href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
 
 #### App de Entregas:
 
@@ -24,7 +24,7 @@ _Contribuições são sempre bem-vindas!_
 
 ## Principais Características
 
-- **Modos de estabelecimentos**: Existe o modo **unique** que deixa o app focado em um estabelecimento e também o modo **multi** que lista os estabelecimentos presentes no servidor, no <a href="Frontend/config/config.tsx">arquivo de configurações</a> você pode selecionar o estilo desejado.
+- **Modos de estabelecimentos**: Existe o modo **unique** que deixa o app focado em um estabelecimento e também o modo **multi** que lista os estabelecimentos presentes no servidor, no <a href="Frontend/AppComida/config/config.tsx">arquivo de configurações</a> você pode selecionar o estilo desejado.
 
 - **Personalização Total:** Coloque sua marca e identidade visual no sistema, transformando-o em uma extensão exclusiva do seu restaurante.
 - **Vendas Diretas:** Elimine intermediários e suas taxas, oferecendo aos clientes uma experiência de compra mais acessível.
@@ -98,7 +98,7 @@ go run main.go
 
 ### Frontend:
 
-Tenha o node instalado na sua maquina, no caso eu utilizei a v16.15. na pasta _Frontend/services/api.tsx_ faça alterações para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a prota que está rodando aplicativo e alterar a url.
+Tenha o node instalado na sua maquina, no caso eu utilizei a v16.15. na pasta _Frontend/AppComida/services/api.tsx_ faça alterações para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a prota que está rodando aplicativo e alterar a url.
 
 Instalando dependências.
 
@@ -120,7 +120,7 @@ Tendo postman na sua maquina, é só importar a biblioteca de requests presentes
 
 #### Configure o Modo:
 
-No arquivo <a href="Frontend/config/config.tsx">_Frontend/config/config.tsx_</a> altere a variavel **APP_MODE** para **.unique** ou **.multi**.
+No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a> altere a variavel **APP_MODE** para **.unique** ou **.multi**.
 
 - Unique: Para quando o app é voltado somente para 1 unico restaurante, neste caso ele consome da variavel estatica **ESTABLISHMENT**, também presente no arquivo.
 
@@ -136,5 +136,5 @@ No arquivo <a href="Frontend/config/config.tsx">_Frontend/config/config.tsx_</a>
 
 #### Geraração de Aplicativo:
 
-- No arquivo <a href="Frontend/config/config.tsx">_Frontend/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
-- No mesmo arquivo, <a href="Frontend/config/config.tsx">_Frontend/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
+- No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
+- No mesmo arquivo, <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
