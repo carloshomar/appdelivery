@@ -14,13 +14,13 @@ _Contribuições são sempre bem-vindas!_
 
 #### Videos
 
-<img src="./Arquitetura/IMG_9963.jpg" alt="IMG2" width="200"></img>
-<img src="./Arquitetura/IMG_9966.jpg" alt="IMG4" width="200"></img>
-<img src="./Arquitetura/IMG_9964.jpg" alt="IMG3" width="200"></img>
+<a href="./Arquitetura/video1.mp4">Video - Utilizando o App</a>
 
 #### App de Entregas:
 
-<a href="./Arquitetura/video1.mp4">Video - Utilizando o App</a>
+<img src="./Arquitetura/IMG_9963.jpg" alt="IMG2" width="200"></img>
+<img src="./Arquitetura/IMG_9966.jpg" alt="IMG4" width="200"></img>
+<img src="./Arquitetura/IMG_9964.jpg" alt="IMG3" width="200"></img>
 
 ## Principais Características
 
@@ -37,6 +37,7 @@ _Contribuições são sempre bem-vindas!_
 
 ## Backlog (em desenvolvimento)
 
+- App do entregador
 - Página WEB de alteração de status de Pedido
 - Página WEB de alteração de Cardápio
 - Página WEB de Relatorio
