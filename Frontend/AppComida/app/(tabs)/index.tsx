@@ -1,12 +1,11 @@
 // TabOneScreen.js
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView } from "react-native";
 
 import api from "@/services/api";
 
 import Colors from "@/constants/Colors";
-
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useIsFocused } from "@react-navigation/native";
 import { APP_MODE, APP_MODE_OPTIONS } from "@/config/config";
 import EstablishmentView from "@/components/EstablishmentView";
 import Establishment from "../establishment";
@@ -21,9 +20,11 @@ export default function index() {
 
 function TabTwo() {
   const [estabelecimentos, setEstabelecimentos] = useState([]);
-  const insets = useSafeAreaInsets();
-  const { setEstablishment } = useCartApi();
+
+  const { setEstablishment, cleanCart } = useCartApi();
   const nav = useNavigation();
+  const isFocused = useIsFocused();
+
   async function init() {
     try {
       const { data } = await api.get("/api/auth/establishments");
@@ -34,6 +35,12 @@ function TabTwo() {
   }
 
   useEffect(() => {
+    if (isFocused) {
+      cleanCart();
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
     init();
   }, []);
 
@@ -41,7 +48,7 @@ function TabTwo() {
     <ScrollView
       style={{
         backgroundColor: Colors.light.background,
-        paddingTop: insets.top,
+        paddingTop: 10,
       }}
       showsVerticalScrollIndicator={false}
     >

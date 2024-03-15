@@ -92,7 +92,7 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
   };
 
   const validDelivery = () => {
-    if (!distance || distance > establishment.max_distancy_delivery) {
+    if (!distance || distance > establishment.max_distance_delivery) {
       return false;
     }
     return true;

@@ -54,8 +54,14 @@ type RequestPayload struct {
 	Cart            []CartItem    `json:"cart"`
 	Distance        float64       `json:"distance"`
 	Location        Location      `json:"location"`
+	Status          string        `json:"status"`
 	PaymentMethod   PaymentMethod `json:"paymentMethod"`
 	DeliveryValue   float64       `json:"deliveryValue"`
 	User            User          `json:"user"`
 	EstablishmentId int64         `json:"establishmentId"`
+}
+
+type UpdateOrderStatusRequest struct {
+	ID     string `json:"id"`
+	Status string `json:"status"`
 }

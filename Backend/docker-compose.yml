@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   api-gateway:
@@ -14,7 +14,7 @@ services:
     depends_on:
       - auth-api
       - orders-api
-    build: 
+    build:
       dockerfile: Dockerfile
       args:
         - JWT_SECRET=4fcfc25be07f50a0f0f6214df8b495c0
@@ -52,13 +52,16 @@ services:
       dockerfile: Dockerfile
     container_name: orders-api
     depends_on:
-      - orders-db
       - orders-mongo
+      - orders-db
+      - rabbitmq
     environment:
       - DB_CONNECTION_STRING=user=admin password=pass dbname=orders_db sslmode=disable host=orders-db port=5433
       - JWT_SECRET=4fcfc25be07f50a0f0f6214df8b495c0
       - MONGO_URI=mongodb://admin:pass@orders-mongo:27017
       - MONGO_DATABASE=orders_mongo_db
+      - RABBIT_CONNECTION=amqp://guest:guest@rabbitmq:5672/
+      - RABBIT_DELIVERY_QUEUE=MS_DELIVERY_QUEUE
     networks:
       - gateway-network
     ports:
@@ -89,6 +92,15 @@ services:
       - MONGO_INITDB_DATABASE=orders_mongo_db
     ports:
       - "27017:27017"
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    networks:
+      - gateway-network
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
 networks:
   gateway-network:

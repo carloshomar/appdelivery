@@ -17,6 +17,7 @@
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/native": "^6.0.2",
     "axios": "^1.6.7",
+    "base-64": "^1.0.0",
     "buffer": "^6.0.3",
     "expo": "~50.0.4",
     "expo-barcode-scanner": "^12.9.3",

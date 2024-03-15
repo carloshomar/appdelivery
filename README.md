@@ -65,6 +65,10 @@ _Uma arquitetura baseada em microserviços_
 - O GoLang utiliza também o Fiber como framework API.
 - Implementado em Docker, facilitando a inicialização do servidor sem exigir amplo conhecimento técnico.
 
+### App Delivery:
+
+- Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variavel de ambiente: `RABBIT_DELIVERY_QUEUE`.
+
 ## Como Rodar
 
 ### Backend:

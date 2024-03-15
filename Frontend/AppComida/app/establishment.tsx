@@ -1,20 +1,16 @@
 // TabOneScreen.js
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView } from "react-native";
 import { View } from "@/components/Themed";
 import api from "@/services/api";
-import { useApi } from "@/contexts/ApiContext";
 import Colors from "@/constants/Colors";
-import Texts from "@/constants/Texts";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import HeaderMain from "@/components/HeaderMain";
 import { useCartApi } from "@/contexts/ApiCartContext";
-import { APP_MODE, APP_MODE_OPTIONS } from "@/config/config";
-import EstablishmentView from "@/components/EstablishmentView";
 import ProductCategory from "./pages/porducts/ProductCategory";
 
 export default function Establishment() {
-  const [cadProdcts, setData] = useState<any>([]);
+  const [cadProdcts, setCadProdcts] = useState<any>([]);
   const { establishment } = useCartApi();
   const insets = useSafeAreaInsets();
 
@@ -23,9 +19,9 @@ export default function Establishment() {
       const { data } = await api.get(
         "/api/order/categories/product/" + establishment.id
       );
-      setData(data);
+      setCadProdcts(data);
     } catch (e) {
-      alert(e);
+      console.log(e);
     }
   };
 
@@ -41,7 +37,7 @@ export default function Establishment() {
       }}
       showsVerticalScrollIndicator={false}
     >
-      <HeaderMain hiddenOpen={true} />
+      <HeaderMain hiddenOpen={true} hiddenBack={false} />
       {cadProdcts?.map((category: any) => (
         <View style={{ width: "100%" }}>
           <ProductCategory key={category.Id} category={category} />

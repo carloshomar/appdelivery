@@ -31,8 +31,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Início",
-          headerShown: false,
+          title: "Restaurantes",
+
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
 
           // tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,

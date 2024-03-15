@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"net/url"
 	"strconv"
@@ -10,6 +11,7 @@ import (
 	"github.com/carloshomar/vercardapio/app/models"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func CreateOrder(c *fiber.Ctx) error {
@@ -17,9 +19,12 @@ func CreateOrder(c *fiber.Ctx) error {
 
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "",
+			"error": "Erro ao fazer parsing do corpo da requisição",
 		})
 	}
+
+	// Definir o status padrão
+	request.Status = "AWAIT_APROVE"
 
 	collection := models.MongoDabase.Collection("orders")
 
@@ -29,6 +34,59 @@ func CreateOrder(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(&insertResult)
+}
+
+func UpdateOrderStatus(c *fiber.Ctx) error {
+	var requestBody dto.UpdateOrderStatusRequest
+	if err := c.BodyParser(&requestBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Erro ao fazer parsing do corpo da requisição",
+		})
+	}
+
+	orderID, err := primitive.ObjectIDFromHex(requestBody.ID)
+	filter := bson.M{"_id": orderID}
+
+	collection := models.MongoDabase.Collection("orders")
+
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "ID inválido",
+		})
+	}
+
+	if requestBody.Status == "APPROVED" {
+		var order dto.RequestPayload
+		collection.FindOne(context.Background(), filter).Decode(&order)
+		orderBytes, _ := json.Marshal(&order)
+		PublishMessage(orderBytes)
+	}
+
+	update := bson.M{
+		"$set": bson.M{
+			"status": requestBody.Status,
+		},
+		"$currentDate": bson.M{
+			"lastModified": true,
+		},
+	}
+
+	updateResult, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Verificar se algum documento foi atualizado
+	if updateResult.ModifiedCount == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"error": "Nenhum pedido encontrado com o ID fornecido",
+		})
+	}
+
+	// Retornar resposta de sucesso
+	return c.JSON(fiber.Map{
+		"message": "Status do pedido atualizado com sucesso",
+	})
 }
 
 func ListOrdersByEstablishmentID(c *fiber.Ctx) error {

@@ -82,11 +82,12 @@ func GetCategoriesWithProducts(c *fiber.Ctx) error {
 		// Adiciona a categoria e os produtos associados à lista final
 		categoriesWithProducts = append(categoriesWithProducts,
 			dto.CategorieRequest{
-				Id:              category.ID,
-				Name:            category.Name,
-				Image:           category.Image,
-				EstablishmentId: category.EstablishmentID,
-				Products:        products,
+				Id:                  category.ID,
+				Name:                category.Name,
+				Image:               category.Image,
+				MaxDistanceDelivery: 50,
+				EstablishmentId:     category.EstablishmentID,
+				Products:            products,
 			},
 		)
 	}

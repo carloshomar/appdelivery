@@ -27,5 +27,6 @@ const Texts = {
   pix: "PIX",
   nome_es: "Nome",
   erroPedido: "Ouve um erro nao fazer o pedido, tente novamente.",
+  calculando: "Calculando...",
 };
 export default Texts;

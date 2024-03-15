@@ -15,7 +15,7 @@ const ESTABLISHMENT = {
   horarioFuncionamento: "22h",
   lat: -21.778131,
   long: -43.367493,
-  max_distancy_delivery: 10, // km
+  max_distance_delivery: 10, // km
 };
 
 const PAYMENT_TYPE = [

@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Image, View, StyleSheet } from "react-native";
+import {
+  Image,
+  View,
+  StyleSheet,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
 import { Text } from "./Themed";
 import Texts from "@/constants/Texts";
 
 import Colors from "@/constants/Colors";
 import { useCartApi } from "@/contexts/ApiCartContext";
 import helpers from "@/helpers/helpers";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-function HeaderMain({ hiddenOpen }: any) {
+function HeaderMain({ hiddenOpen, hiddenBack = true }: any) {
   const { establishment } = useCartApi();
   const [distance, setDistance] = useState(null);
+  const nav = useNavigation();
 
   async function init() {
     const rs = await helpers.calcularDistancia(
@@ -25,6 +34,18 @@ function HeaderMain({ hiddenOpen }: any) {
 
   return (
     <View style={styles.container}>
+      {!hiddenBack ? (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => nav.goBack()}
+        >
+          <MaterialIcons
+            size={18}
+            color={Colors.light.tint}
+            name="arrow-back-ios"
+          />
+        </TouchableOpacity>
+      ) : null}
       <View style={styles.textContainer}>
         <Text style={styles.title}>{establishment.name}</Text>
         {hiddenOpen && (
@@ -57,13 +78,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    padding: 5,
     paddingBottom: 0,
     borderBottomColor: Colors.light.tabIconDefault,
     borderBottomWidth: 1,
   },
+  backButton: {
+    padding: 5,
+    paddingTop: 0,
+    marginTop: -25,
+  },
   textContainer: {
     flex: 1,
+    padding: 0,
   },
   title: {
     fontSize: 23,

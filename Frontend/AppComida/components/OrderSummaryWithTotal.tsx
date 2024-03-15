@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Item } from "@/types";
 import Texts from "@/constants/Texts";
@@ -56,11 +56,12 @@ const OrderSummaryWithTotal: React.FC<OrderSummaryWithTotalProps> = ({
           <>
             <Text style={styles.textIcons}>{Texts.entrega}:</Text>
             <Text style={{ ...styles.textIcons, fontSize: 12 }}>
-              Calculando...
+              {Texts.calculando}
             </Text>
           </>
         ) : null}
-        {distance && distance < establishment.max_distancy_delivery ? (
+        {/* <Text>{JSON.stringify(establishment)}</Text> */}
+        {distance && distance < establishment.max_distance_delivery ? (
           <>
             <Text style={styles.textIcons}>{Texts.entrega}:</Text>
             <Text style={styles.textIcons}>
@@ -68,7 +69,7 @@ const OrderSummaryWithTotal: React.FC<OrderSummaryWithTotalProps> = ({
             </Text>
           </>
         ) : null}
-        {distance && distance > establishment.max_distancy_delivery ? (
+        {distance && distance > establishment.max_distance_delivery ? (
           <>
             <Text style={styles.textIcons}>{Texts.entrega}:</Text>
             <Text style={styles.textIcons}>{Texts.fora_area}</Text>

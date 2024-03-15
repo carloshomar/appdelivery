@@ -712,7 +712,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"establishmentId\": 1,\n  \"fixedTaxa\": 9.0,\n  \"perKm\": 9.0\n}\n",
+									"raw": "{\n  \"establishmentId\": 1,\n  \"fixedTaxa\": 2.5,\n  \"perKm\": 0.50\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -924,6 +924,41 @@
 										"api",
 										"order",
 										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Status Order",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"65f34c97accba48a4c88d22c\",\n    \"status\": \"IN_PRODUCTION\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/order/orders/status",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"order",
+										"orders",
+										"status"
 									]
 								}
 							},

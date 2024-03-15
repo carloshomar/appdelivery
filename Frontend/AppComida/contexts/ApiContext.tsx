@@ -19,7 +19,7 @@ interface User {
 interface ApiContextProps {
   login(token: any): void;
   isLogged: boolean;
-  getUserData(): object;
+  getUserData(): any;
   isLoading: boolean;
   setIsLoading(status: boolean): void;
   logout(): void;
@@ -56,10 +56,10 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({ children }) => {
     setIsLogged(false);
   };
 
-  const getUserData = async () => {
+  async function getUserData() {
     const token = await AsyncStorage.getItem(Strings.token_jwt);
-    return JSON.parse(token);
-  };
+    return await JSON.parse(token);
+  }
 
   const login = async (token: any) => {
     if (token) {
