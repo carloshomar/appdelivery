@@ -5,7 +5,7 @@ O **Delivery** é uma plataforma de código aberto que permite a personalizaçã
 _Fique a vontade para Criar, Modificar, Comercializar e Distribuir!_ <br/>
 _Contribuições são sempre bem-vindas!_
 
-##### <a href="https://github.com/carloshomar/appdelivery/issues">Backlog e andamento do Projeto</a>
+##### <a href="https://github.com/carloshomar/appdelivery/issues">Backlog e Andamento do Projeto</a>
 
 
 #### App de Comida
