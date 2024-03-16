@@ -26,6 +26,11 @@ type CartItem struct {
 	ID          string `json:"id"`
 }
 
+type Coords struct {
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
+}
+
 type Location struct {
 	Cep         string `json:"cep"`
 	Logradouro  string `json:"logradouro"`
@@ -38,6 +43,7 @@ type Location struct {
 	DDD         string `json:"ddd"`
 	Siafi       string `json:"siafi"`
 	Numero      string `json:"numero"`
+	Coords      Coords `json:"coords"`
 }
 
 type User struct {
@@ -50,6 +56,19 @@ type PaymentMethod struct {
 	Icon string `json:"icon"`
 }
 
+type Establishment struct {
+	HorarioFuncionamento string
+	Id                   int64
+	Image                string
+	Latitude             float64 `json:"lat"`
+	Longitude            float64 `json:"long"`
+	MaxDistanceDelivery  float64 `json:"max_distance_delivery"`
+	Name                 string  `json:"name"`
+	OwnerId              int64   `json:"owner_id"`
+	PrimaryCollor        string  `json:"primary_color"`
+	SecondaryCollor      string  `json:"secondary_color"`
+}
+
 type RequestPayload struct {
 	Cart            []CartItem    `json:"cart"`
 	Distance        float64       `json:"distance"`
@@ -59,6 +78,7 @@ type RequestPayload struct {
 	DeliveryValue   float64       `json:"deliveryValue"`
 	User            User          `json:"user"`
 	EstablishmentId int64         `json:"establishmentId"`
+	Establishment   Establishment `json:"establishment"`
 }
 
 type UpdateOrderStatusRequest struct {

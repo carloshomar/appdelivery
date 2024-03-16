@@ -65,19 +65,22 @@ const deg2rad = (deg: any) => {
   return deg * (Math.PI / 180);
 };
 
+const getLocationDistance = async () => {
+  let { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== "granted") {
+    console.error("Permissão de localização negada");
+    return null;
+  }
+
+  const localizacaoAtual = await Location.getCurrentPositionAsync({});
+
+  return localizacaoAtual.coords;
+};
+
 const calcularDistancia = async (lat: number, long: number) => {
   try {
-    // Solicitar permissão para acessar a localização do dispositivo
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      console.error("Permissão de localização negada");
-      return null;
-    }
-
-    // Obter a localização atual do usuário
-    const localizacaoAtual = await Location.getCurrentPositionAsync({});
     const { latitude: origemLatitude, longitude: origemLongitude } =
-      localizacaoAtual.coords;
+      await getLocationDistance();
 
     // Calcular a distância usando a fórmula de Haversine
     const distancia = haversineDistancia(
@@ -100,4 +103,5 @@ export default {
   removePhoneNumberMask,
   generateId,
   calcularDistancia,
+  getLocationDistance,
 };
