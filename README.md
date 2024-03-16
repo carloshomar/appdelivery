@@ -103,8 +103,14 @@ go run main.go
 ### Frontend:
 
 Tenha o node instalado na sua maquina, no caso eu utilizei a v16.15. 
+
 <br/>
+<br/>
+
 No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/services/api.tsx_</a> faça alterações da URL para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a prota que está rodando aplicativo e alterar a url.
+
+<br/>
+<br/>
 
 Instalando dependências.
 
