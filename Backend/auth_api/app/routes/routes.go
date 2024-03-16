@@ -12,8 +12,11 @@ func SetupRoutes(app *fiber.App) {
 	app.Get("/establishments", handlers.ListEstablishments)
 
 	app.Get("/users/:id", ProtectedRoute, handlers.GetUser)
-	app.Get("/establishments/:id", ProtectedRoute, handlers.GetEstablishments)
+	app.Get("/establishments/:id", handlers.GetEstablishments)
 	app.Get("/establishments/:id/users", ProtectedRoute, handlers.GetUserByEstablishment)
+
+	app.Post("/delivery-man/login", handlers.LoginDeliveryMan)
+	app.Post("/delivery-man/register", handlers.CreateDeliveryMan)
 
 }
 

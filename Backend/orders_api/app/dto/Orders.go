@@ -67,6 +67,7 @@ type Establishment struct {
 	OwnerId              int64   `json:"owner_id"`
 	PrimaryCollor        string  `json:"primary_color"`
 	SecondaryCollor      string  `json:"secondary_color"`
+	LocationString       string  `json:"location_string"`
 }
 
 type RequestPayload struct {
@@ -79,6 +80,7 @@ type RequestPayload struct {
 	User            User          `json:"user"`
 	EstablishmentId int64         `json:"establishmentId"`
 	Establishment   Establishment `json:"establishment"`
+	OrderId         string        `json:"order_id" `
 }
 
 type UpdateOrderStatusRequest struct {

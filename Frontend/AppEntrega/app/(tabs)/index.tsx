@@ -24,12 +24,13 @@ import api from "@/services/api";
 import Strings from "@/constants/Strings";
 
 export default function Home() {
-  const [mylocation, setLocation] = useState<any | null>(null);
+  const [mylocation, setMyLocation] = useState<any | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const nav = useNavigation();
   const [loading, setLoading] = useState(false);
   const [disponivel, setDisponivel] = useState(false);
   const [markers, setMarkers] = useState<any>([]);
+
   const mapViewRef = React.useRef(null);
   const isAndroid = Platform.OS === "android";
 
@@ -45,34 +46,6 @@ export default function Home() {
     }
   };
 
-  const generateMarkers = async (
-    latitude: number,
-    longitude: number,
-    numMarkers: number
-  ) => {
-    const generatedMarkers = [];
-
-    for (let i = 1; i <= numMarkers; i++) {
-      const newLocation = await helper.calculateNewCoordinates(
-        latitude,
-        longitude,
-        i * 50
-      );
-
-      generatedMarkers.push({
-        id: i,
-        name: `Burger Shop - Matriz ${i}`,
-        location: "Rua Dona Joana de Paiva Gusmão, 43, jardim",
-        coordinates: newLocation,
-        isEstablishment: true,
-        valueDelivery: (i / 12.8) * 25,
-        distance: (i / 12) * 10,
-      });
-    }
-
-    return generatedMarkers;
-  };
-
   async function start() {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
@@ -81,7 +54,7 @@ export default function Home() {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    setLocation({
+    setMyLocation({
       ...location,
       coords: {
         ...location.coords,
@@ -93,8 +66,8 @@ export default function Home() {
 
   function getMarkerUser() {
     return {
-      id: 3,
-      title: "Marker 2",
+      id: 999999,
+      title: "Usuário",
       coordinates: {
         latitude: mylocation.coords.latitude,
         longitude: mylocation.coords.longitude,
@@ -114,7 +87,7 @@ export default function Home() {
         return {
           id: mak.establishmentId,
           name: mak.establishment.name,
-          location: "Rua Dona Joana de Paiva Gusmão, 43, jardim",
+          location_string: mak.establishment.location_string,
           coordinates: {
             latitude: mak.establishment.lat,
             longitude: mak.establishment.long,
@@ -122,9 +95,10 @@ export default function Home() {
           isEstablishment: true,
           valueDelivery: mak.deliveryValue,
           distance: mak.distance,
+          order_id: mak.order_id,
         };
       });
-      console.log(marks);
+
       const final = [...marks, getMarkerUser()];
 
       setMarkers(final);

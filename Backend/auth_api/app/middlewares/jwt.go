@@ -5,9 +5,9 @@ import (
 	"os"
 	"time"
 
+	"github.com/carloshomar/vercardapio/app/models"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"github.com/carloshomar/vercardapio/app/models"
 )
 
 func ValidateJWT(c *fiber.Ctx) (*jwt.Token, error) {
@@ -49,6 +49,26 @@ func GenerateJWT(user *models.User, establishment *models.Establishment) (string
 		"email":         user.Email,
 		"establishment": establishment,
 		"exp":           expirationTime,
+	})
+
+	// Assine o token com a chave secreta
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
+}
+
+func GenerateJWTDeliveryMan(user *models.DeliveryMan) (string, error) {
+	// Defina a expiração para 7 dias a partir de agora (hora UTC)
+	expirationTime := time.Now().UTC().Add(time.Hour * 24 * 7).Unix()
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"id":    user.ID,
+		"name":  user.Name,
+		"email": user.Email,
+		"exp":   expirationTime,
 	})
 
 	// Assine o token com a chave secreta

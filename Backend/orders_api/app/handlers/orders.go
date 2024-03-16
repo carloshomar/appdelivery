@@ -3,8 +3,11 @@ package handlers
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
+	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 
 	"github.com/carloshomar/vercardapio/app/dto"
@@ -24,16 +27,60 @@ func CreateOrder(c *fiber.Ctx) error {
 	}
 
 	// Definir o status padrão
-	request.Status = "AWAIT_APROVE"
+	request.Status = "AWAIT_APPROVE"
+
+	// Obter detalhes do estabelecimento
+	establishment, err := GetEstablishment(request.EstablishmentId)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Erro ao obter detalhes do estabelecimento",
+		})
+	}
+
+	request.Establishment = *establishment
 
 	collection := models.MongoDabase.Collection("orders")
 
 	insertResult, err := collection.InsertOne(context.Background(), request)
 	if err != nil {
-		log.Fatal(err)
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Erro ao inserir a ordem no banco de dados",
+		})
 	}
 
-	return c.JSON(&insertResult)
+	return c.JSON(fiber.Map{
+		"message": "Ordem criada com sucesso",
+		"orderId": insertResult.InsertedID,
+	})
+}
+
+func GetEstablishment(establishmentID int64) (*dto.Establishment, error) {
+	urlEnv := os.Getenv("URL_GET_ESTABLISHMENT_ID")
+	if urlEnv == "" {
+		panic("URL_GET_ESTABLISHMENT_ID não configurado.")
+	}
+
+	url := fmt.Sprintf(urlEnv, establishmentID)
+	log.Println(url)
+	response, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	// Verifique o status da resposta
+	if response.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("API retornou status não OK: %d", response.StatusCode)
+	}
+
+	// Decodifique a resposta para o objeto DTO
+	var establishmentDTO dto.Establishment
+	if err := json.NewDecoder(response.Body).Decode(&establishmentDTO); err != nil {
+		return nil, err
+	}
+
+	// Retorne o objeto Establishment mapeado para DTO
+	return &establishmentDTO, nil
 }
 
 func UpdateOrderStatus(c *fiber.Ctx) error {
@@ -58,7 +105,9 @@ func UpdateOrderStatus(c *fiber.Ctx) error {
 	if requestBody.Status == "APPROVED" {
 		var order dto.RequestPayload
 		collection.FindOne(context.Background(), filter).Decode(&order)
+		order.OrderId = orderID.Hex()
 		orderBytes, _ := json.Marshal(&order)
+		order.Status = requestBody.Status
 		PublishMessage(orderBytes)
 	}
 

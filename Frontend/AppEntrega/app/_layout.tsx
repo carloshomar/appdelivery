@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { useColorScheme } from "@/components/useColorScheme";
 import Texts from "@/constants/Texts";
 import Colors from "@/constants/Colors";
+import { AuthProvider } from "@/contexts/AuthContext";
+import StackNav from "./nav";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -54,26 +56,10 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{
-            headerTitle: Texts.coleta,
-            headerBackTitleVisible: false,
-            headerTintColor: Colors.light.tint,
-          }}
-        />
-        <Stack.Screen
-          name="notifications"
-          options={{ presentation: "modal", title: Texts.notificacoes }}
-        />
-        <Stack.Screen
-          name="perfil"
-          options={{ presentation: "modal", title: Texts.perfil }}
-        />
-      </Stack>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider value={DefaultTheme}>
+        <StackNav />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }

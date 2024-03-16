@@ -1,5 +1,5 @@
 const Strings = {
-  token_jwt: "",
+  token_jwt: "JWT-TOKENIZED",
   distance_delivery_distance: 50,
 };
 
