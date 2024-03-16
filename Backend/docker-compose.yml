@@ -14,6 +14,7 @@ services:
     depends_on:
       - auth-api
       - orders-api
+      - delivery-api
     build:
       dockerfile: Dockerfile
       args:
@@ -92,6 +93,37 @@ services:
       - MONGO_INITDB_DATABASE=orders_mongo_db
     ports:
       - "27017:27017"
+
+  delivery-api:
+    build:
+      context: ./delivery_api
+      dockerfile: Dockerfile
+    container_name: delivery-api
+    depends_on:
+      - delivery-mongo
+      - rabbitmq
+    environment:
+      - RABBIT_CONNECTION=amqp://guest:guest@rabbitmq:5672/
+      - RABBIT_DELIVERY_QUEUE=MS_DELIVERY_QUEUE
+      - MONGO_URI=mongodb://admin:pass@delivery-mongo:27017
+      - MONGO_DATABASE=delivery_mongo_db
+    networks:
+      - gateway-network
+    ports:
+      - "3000"
+
+  delivery-mongo:
+    image: mongo:latest
+    command: mongod --auth
+    container_name: delivery-mongo
+    networks:
+      - gateway-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+      - MONGO_INITDB_DATABASE=delivery_mongo_db
+    ports:
+      - "27018:27017"
 
   rabbitmq:
     image: rabbitmq:management

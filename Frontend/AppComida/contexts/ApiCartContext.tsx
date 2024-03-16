@@ -148,17 +148,24 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
       Alert.alert("", Texts.erroPedido);
       return false;
     }
-
+    const coords_location = await helpers.getLocationDistance();
     const body = {
       cart,
       distance,
-      location,
+      location: {
+        ...location,
+        coords: coords_location,
+      },
       paymentMethod,
       deliveryValue,
       user,
       establishmentId: establishment.id,
+      establishment: {
+        ...establishment,
+      },
     };
 
+    console.log(body);
     try {
       const { data } = await api.post(`/api/order/orders`, body);
       setCart([]);

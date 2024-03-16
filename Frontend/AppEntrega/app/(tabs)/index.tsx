@@ -20,6 +20,8 @@ import helper from "@/helpers/helper";
 import HeaderDelivery from "@/componentes/HeaderDelivery";
 import { useNavigation } from "expo-router";
 import Texts from "@/constants/Texts";
+import api from "@/services/api";
+import Strings from "@/constants/Strings";
 
 export default function Home() {
   const [mylocation, setLocation] = useState<any | null>(null);
@@ -83,8 +85,8 @@ export default function Home() {
       ...location,
       coords: {
         ...location.coords,
-        latitude: location.coords.latitude + 1.5,
-        longitude: location.coords.longitude + 1,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
       },
     });
   }
@@ -104,14 +106,26 @@ export default function Home() {
   async function disponify(focused = true) {
     setLoading(true);
     try {
-      const final = [
-        ...(await generateMarkers(
-          mylocation.coords.latitude,
-          mylocation.coords.longitude,
-          5
-        )),
-        getMarkerUser(),
-      ];
+      const { data } = await api.get(
+        `/api/delivery/solicitation-orders?latitude=${mylocation.coords.latitude}&longitude=${mylocation.coords.longitude}&limitDistance=${Strings.distance_delivery_distance}`
+      );
+
+      const marks = data.map((mak: any) => {
+        return {
+          id: mak.establishmentId,
+          name: mak.establishment.name,
+          location: "Rua Dona Joana de Paiva Gusmão, 43, jardim",
+          coordinates: {
+            latitude: mak.establishment.lat,
+            longitude: mak.establishment.long,
+          },
+          isEstablishment: true,
+          valueDelivery: mak.deliveryValue,
+          distance: mak.distance,
+        };
+      });
+      console.log(marks);
+      const final = [...marks, getMarkerUser()];
 
       setMarkers(final);
       if (focused) {
@@ -119,6 +133,7 @@ export default function Home() {
       }
     } catch (e) {
       console.log(e);
+      setMarkers([getMarkerUser()]);
     }
     setLoading(false);
   }
