@@ -35,13 +35,8 @@ _Contribuições são sempre bem-vindas!_
 
 - **Arquitetura Eficiente:** O servidor foi projetado para suportar um ou mais aplicativos simultaneamente, permitindo a divisão de custos e manutenção simplificada em larga escala.
 
-## Backlog (em desenvolvimento)
+## <a href="https://github.com/carloshomar/appdelivery/issues">Backlog e andamento do Projeto</a>
 
-- App do entregador
-- Página WEB de alteração de status de Pedido
-- Página WEB de alteração de Cardápio
-- Página WEB de Relatorio
-- Webhooks para integração (não priorizado)
 
 ## Técnico
 
