@@ -44,6 +44,12 @@ type Establishment struct {
 	LocationString       string  `json:"location_string"`
 }
 
+type DeliveryMan struct {
+	Email string `json:"email"`
+	Id    int64  `json:"id"`
+	Name  string `json:"name"`
+}
+
 type OrderDTO struct {
 	Distance        float64       `json:"distance"`
 	Location        Location      `json:"location"`
@@ -53,5 +59,6 @@ type OrderDTO struct {
 	User            User          `json:"user"`
 	EstablishmentID int           `json:"establishmentId"`
 	Establishment   Establishment `json:"establishment"`
-	OrderId         string        `json:"order_id" `
+	OrderId         string        `json:"order_id"`
+	DeliveryMan     DeliveryMan   `json:"deliveryman"`
 }

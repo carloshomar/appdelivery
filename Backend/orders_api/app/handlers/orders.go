@@ -102,12 +102,12 @@ func UpdateOrderStatus(c *fiber.Ctx) error {
 		})
 	}
 
-	if requestBody.Status == "APPROVED" {
+	if requestBody.Status != "REQUEST_APPROVE" {
 		var order dto.RequestPayload
 		collection.FindOne(context.Background(), filter).Decode(&order)
 		order.OrderId = orderID.Hex()
-		orderBytes, _ := json.Marshal(&order)
 		order.Status = requestBody.Status
+		orderBytes, _ := json.Marshal(&order)
 		PublishMessage(orderBytes)
 	}
 

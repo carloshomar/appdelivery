@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
@@ -47,9 +48,15 @@ func startQueueListener() {
 	dsn := os.Getenv("RABBIT_CONNECTION")
 	queueName := os.Getenv("RABBIT_DELIVERY_QUEUE")
 
-	conn, err := amqp.Dial(dsn)
-	if err != nil {
-		log.Fatalf("Erro ao conectar ao servidor de mensagens: %s", err)
+	var conn *amqp.Connection
+	var err error
+	for {
+		conn, err = amqp.Dial(dsn)
+		if err == nil {
+			break
+		}
+		log.Printf("Erro ao conectar ao servidor de mensagens: %s. Tentando novamente em 5 segundos...", err)
+		time.Sleep(5 * time.Second)
 	}
 	defer conn.Close()
 

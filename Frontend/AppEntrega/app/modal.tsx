@@ -11,25 +11,32 @@ import { useRoute } from "@react-navigation/native";
 import { useEffect, useRef } from "react";
 import helper from "@/helpers/helper";
 import SwipeButtonDelivery from "@/componentes/SwipButton";
+import { useAuthApi } from "@/contexts/AuthContext";
+import { useNavigation } from "expo-router";
 
 export default function ModalScreen() {
   const insets = useSafeAreaInsets();
+  const nav = useNavigation();
   const route = useRoute();
   const { establishment }: any = route.params;
   const mapViewRef = useRef(null);
+  const { user, isLoading, setIsLoading } = useAuthApi();
 
   const centerMapOnUser = async () => {
     const { latitude, longitude } = establishment.coordinates;
     mapViewRef.current?.animateToRegion({
       latitude,
       longitude,
-      latitudeDelta: 0.002,
+      latitudeDelta: 0.05,
       longitudeDelta: 0.003,
     });
   };
 
   const acceptEntrega = () => {
-    console.log(establishment);
+    nav.navigate("confirm", {
+      order: establishment,
+      delivery: user,
+    });
   };
 
   const openMap = () => {

@@ -16,8 +16,13 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isLogged: boolean;
+  disponivel: boolean;
+  setDisponivel: (a: boolean) => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  inWork: boolean;
+  setIsLoading: (a: boolean) => void;
+  isActiveOrder: () => Promise<void>;
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -25,6 +30,26 @@ const AuthProvider: React.FC<any> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
+  const [disponivel, setDisponivel] = useState(false);
+
+  const [inWork, setInWork] = useState({ status: false, order: null });
+
+  const isActiveOrder = async () => {
+    if (!user || !user.id) {
+      setInWork({ status: false, order: null });
+    }
+
+    try {
+      const { data } = await api.get(
+        "/api/delivery/deliveryman/has-active/" + user?.id
+      );
+      setInWork({ status: data !== null, order: data });
+
+      setDisponivel(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const login = async (email: string, password: string) => {
     try {
@@ -110,6 +135,7 @@ const AuthProvider: React.FC<any> = ({ children }) => {
 
   useEffect(() => {
     setIsLogged(user != null);
+    isActiveOrder();
   }, [user]);
 
   return (
@@ -117,9 +143,14 @@ const AuthProvider: React.FC<any> = ({ children }) => {
       value={{
         user,
         isLoading,
+        setIsLoading,
         isLogged,
         login,
         logout,
+        inWork,
+        disponivel,
+        setDisponivel,
+        isActiveOrder,
       }}
     >
       {children}

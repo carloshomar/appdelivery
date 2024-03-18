@@ -165,7 +165,6 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
       },
     };
 
-    console.log(body);
     try {
       const { data } = await api.post(`/api/order/orders`, body);
       setCart([]);

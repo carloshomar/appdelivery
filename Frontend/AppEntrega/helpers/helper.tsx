@@ -93,4 +93,64 @@ function formatCurrency(value: number): string {
   }
 }
 
-export default { calculateNewCoordinates, calcularDistancia, formatCurrency };
+function calcularDistanciaMediaDeBike(km: number) {
+  // Média de velocidade para ciclistas em km/h
+  const mediaVelocidadeBikeKmh = 15;
+
+  // Converter a distância de km para metros
+  const distanciaMetros = km * 1000;
+
+  // Calcular o tempo médio em horas (tempo = distância / velocidade)
+  const tempoHoras = distanciaMetros / (mediaVelocidadeBikeKmh * 1000);
+
+  // Calcular a distância média em minutos (1 hora = 60 minutos)
+  const tempoMinutos = tempoHoras * 60;
+
+  return tempoMinutos;
+}
+
+function getMarkerUser(mylocation: any) {
+  return {
+    id: 999999,
+    title: "Usuário",
+    coordinates: {
+      latitude: mylocation.coords.latitude,
+      longitude: mylocation.coords.longitude,
+    },
+    icon: require("../assets/images/deliveryman_icon.png"),
+  };
+}
+
+function getMarkerEstablishment(latitude: number, longitude: number) {
+  return {
+    id: 999998,
+    title: "Estabelecimento",
+    coordinates: {
+      latitude: latitude,
+      longitude: longitude,
+    },
+    icon: require("../assets/images/restaurant_icon.png"),
+  };
+}
+
+function getMarkerClient(latitude: number, longitude: number) {
+  return {
+    id: 999997,
+    title: "Casa do Cliente",
+    coordinates: {
+      latitude: latitude,
+      longitude: longitude,
+    },
+    icon: require("../assets/images/house_icon.png"),
+  };
+}
+
+export default {
+  getMarkerEstablishment,
+  calculateNewCoordinates,
+  getMarkerClient,
+  calcularDistancia,
+  formatCurrency,
+  getMarkerUser,
+  calcularDistanciaMediaDeBike,
+};

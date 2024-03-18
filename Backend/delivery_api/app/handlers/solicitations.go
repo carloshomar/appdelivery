@@ -11,6 +11,7 @@ import (
 	"github.com/carloshomar/vercardapio/app/models"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func CreateSolicitation(msg string) {
@@ -24,11 +25,87 @@ func CreateSolicitation(msg string) {
 
 	collection := models.MongoDabase.Collection("solicitations")
 
+	filter := bson.M{"orderid": orderDTO.OrderId}
+
+	existingSolicitation := collection.FindOne(context.Background(), filter)
+	if existingSolicitation.Err() != nil {
+		if existingSolicitation.Err() != mongo.ErrNoDocuments {
+			log.Printf("Erro ao buscar a solicitação existente: %s", existingSolicitation.Err())
+			return
+		}
+	} else {
+		// Se a solicitação já existir, atualize apenas o status
+		update := bson.M{"$set": bson.M{"status": orderDTO.Status}}
+		log.Printf("Atualizando pedido %s", orderDTO.OrderId)
+		log.Printf("Para Status: %s", orderDTO.Status)
+		_, err := collection.UpdateOne(context.Background(), filter, update)
+		if err != nil {
+			log.Printf("Erro ao atualizar a solicitação: %s", err)
+			return
+		}
+		return
+	}
+
+	// Se a solicitação não existir, insira-a no banco de dados
 	_, err = collection.InsertOne(context.Background(), &orderDTO)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
 
+func HandShakeDeliveryman(c *fiber.Ctx) error {
+	var orderDTO dto.OrderDTO
+	if err := c.BodyParser(&orderDTO); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Erro ao fazer parsing do corpo da requisição",
+		})
+	}
+
+	// Conectar ao banco de dados
+	collection := models.MongoDabase.Collection("solicitations")
+
+	// Definir o filtro para encontrar o pedido com base no OrderId
+	filter := bson.M{"orderid": orderDTO.OrderId}
+
+	// Verificar se o pedido existe e se o campo deliveryman já está preenchido
+	var existingOrder dto.OrderDTO
+	err := collection.FindOne(context.Background(), filter).Decode(&existingOrder)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Pedido não encontrado",
+			})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Erro ao consultar o pedido",
+		})
+	}
+
+	if existingOrder.DeliveryMan != (dto.DeliveryMan{}) {
+		// Já existe um deliveryman atribuído a este pedido
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "O deliveryman já foi atribuído a este pedido",
+		})
+	}
+
+	// Se o campo deliveryman ainda não estiver preenchido, atribua o novo valor
+	existingOrder.DeliveryMan = orderDTO.DeliveryMan
+
+	// Definir os dados de atualização
+	update := bson.M{"$set": bson.M{"deliveryman": orderDTO.DeliveryMan}}
+
+	// Executar a operação de atualização no banco de dados
+	_, err = collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Erro ao atualizar a solicitação",
+		})
+	}
+
+	// Responder com sucesso
+	return c.JSON(fiber.Map{
+		"message": "Pedido atualizado com sucesso",
+	})
 }
 
 func GetApprovedSolicitations(c *fiber.Ctx) error {
@@ -57,8 +134,10 @@ func GetApprovedSolicitations(c *fiber.Ctx) error {
 
 	collection := models.MongoDabase.Collection("solicitations")
 
-	// Definindo um filtro para buscar solicitações com status "APPROVED"
-	filter := bson.M{"status": "APPROVED"}
+	filter := bson.M{
+		"status":      bson.M{"$in": []string{"APPROVED", "DONE"}},
+		"deliveryman": nil,
+	}
 
 	// Realizando a consulta ao banco de dados
 	cur, err := collection.Find(context.Background(), filter)
