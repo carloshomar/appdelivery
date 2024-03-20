@@ -6,6 +6,8 @@ import { Pressable } from "react-native";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import Texts from "@/constants/Texts";
+import Strings from "@/constants/Strings";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -31,7 +33,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Inicio",
+          title: Strings.inicio,
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
@@ -39,7 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: "Extrato",
+          title: Strings.extrato,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="file-text-o" color={color} />
           ),
@@ -48,7 +50,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="help"
         options={{
-          title: "Ajuda",
+          title: Strings.ajuda,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="question-circle" color={color} />
           ),

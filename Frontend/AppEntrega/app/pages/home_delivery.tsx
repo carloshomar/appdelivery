@@ -10,18 +10,22 @@ import {
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import HeaderDelivery from "@/componentes/HeaderDelivery";
 import { useAuthApi } from "@/contexts/AuthContext";
 import helper from "@/helpers/helper";
+import MinimizableModal from "@/componentes/ModalMinimize";
+import { useIsFocused } from "@react-navigation/native";
 
 function HomeDelivery() {
   const mapViewRef = useRef(null);
-  const [mylocation, setMyLocation] = useState(null);
-  const { inWork, disponivel } = useAuthApi();
+
+  const { inWork, disponivel, isActiveOrder, mylocation, setMyLocation } =
+    useAuthApi();
   const [markers, setMarkers] = useState<any>([]);
   const isAndroid = Platform.OS === "android";
+  const isFocused = useIsFocused();
 
   const centerMapOnUser = async () => {
     if (mylocation) {
@@ -74,6 +78,12 @@ function HomeDelivery() {
     }, 400);
   }, [mylocation]);
 
+  useEffect(() => {
+    if (isFocused) {
+      isActiveOrder();
+    }
+  }, [isFocused]);
+
   return (
     <View style={styles.container}>
       <HeaderDelivery
@@ -83,6 +93,7 @@ function HomeDelivery() {
         disabled={true}
         onDisponivel={(disp: boolean) => {}}
       />
+
       <MapView
         ref={mapViewRef}
         style={styles.map}
@@ -106,8 +117,15 @@ function HomeDelivery() {
           </Marker>
         ))}
       </MapView>
+      <MinimizableModal />
 
-      <TouchableOpacity style={styles.centerButton} onPress={centerMapOnUser}>
+      <TouchableOpacity
+        style={styles.centerButton}
+        onPress={() => {
+          centerMapOnUser();
+          isActiveOrder();
+        }}
+      >
         <MaterialIcons name="my-location" size={24} color="white" />
       </TouchableOpacity>
     </View>
@@ -128,7 +146,8 @@ const styles = StyleSheet.create({
   },
   centerButton: {
     position: "absolute",
-    bottom: 16,
+    bottom: "15%",
+    marginBottom: 15,
     right: 16,
     backgroundColor: Colors.light.tint,
     borderRadius: 50,

@@ -36,7 +36,8 @@
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
     "react-native-swipeable": "^0.6.0",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "socket.io-client": "^4.7.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

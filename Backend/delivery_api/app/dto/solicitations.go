@@ -45,9 +45,10 @@ type Establishment struct {
 }
 
 type DeliveryMan struct {
-	Email string `json:"email"`
-	Id    int64  `json:"id"`
-	Name  string `json:"name"`
+	Email  string `json:"email"`
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
 }
 
 type OrderDTO struct {

@@ -11,4 +11,6 @@ func SetupRoutes(app *fiber.App) {
 
 	app.Get("/deliveryman/has-active/:id", handlers.GetOrdersByDeliverymanID)
 
+	app.Post("/deliveryman/status", handlers.UpdateOrderStatusByDeliverymanID)
+
 }

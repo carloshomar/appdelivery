@@ -97,7 +97,7 @@ const ConfirmScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.light.tintHard,
+    backgroundColor: Colors.light.tint,
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.white,
   },
   rejectButton: {
-    backgroundColor: Colors.light.tintHard,
+    backgroundColor: Colors.light.tint,
     borderWidth: 1,
     borderColor: Colors.light.white,
     color: Colors.light.white,

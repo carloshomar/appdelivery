@@ -41,6 +41,25 @@ export default function StackNav() {
           name="perfil"
           options={{ presentation: "modal", title: Texts.perfil }}
         />
+
+        <Stack.Screen
+          name="delivery_mode"
+          options={{
+            title: "",
+            headerBackTitleVisible: false,
+            headerTintColor: Colors.light.tint,
+          }}
+        />
+
+        <Stack.Screen
+          name="confirm_generical"
+          options={{
+            title: "",
+            headerBackTitleVisible: false,
+            headerShown: false,
+            presentation: "modal",
+          }}
+        />
       </Stack>
     </>
   );

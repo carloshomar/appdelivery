@@ -13,7 +13,7 @@ import (
 )
 
 func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
-	// Extrair o ID do deliveryman dos parâmetros da rota
+
 	deliverymanIDStr := c.Params("id")
 	deliverymanID, err := strconv.ParseInt(deliverymanIDStr, 10, 64)
 	if err != nil {
@@ -22,7 +22,6 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 		})
 	}
 
-	// Conectar ao banco de dados
 	collection := models.MongoDabase.Collection("solicitations")
 
 	// Definir o filtro para encontrar os pedidos com base no ID do deliveryman e no status diferente de "FINISHED"
@@ -62,6 +61,45 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 		})
 	}
 
-	// Responder com os pedidos encontrados
 	return c.JSON(orders)
+}
+
+func UpdateOrderStatusByDeliverymanID(c *fiber.Ctx) error {
+
+	var request struct {
+		OrderID     string `json:"order_id"`
+		Deliveryman struct {
+			Id     int64  `json:"id"`
+			Status string `json:"status"`
+		} `json:"deliveryman"`
+	}
+
+	if err := c.BodyParser(&request); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Erro ao fazer parsing do corpo da requisição",
+		})
+	}
+
+	collection := models.MongoDabase.Collection("solicitations")
+
+	// Definir o filtro para encontrar o pedido com base no ID do pedido e no ID do entregador
+	filter := bson.M{
+		"orderid":        request.OrderID,
+		"deliveryman.id": request.Deliveryman.Id, // Adicionar verificação do ID do entregador
+	}
+
+	// Definir os dados de atualização para o status do entregador
+	update := bson.M{"$set": bson.M{"deliveryman.status": request.Deliveryman.Status}}
+
+	// Executar a operação de atualização no banco de dados
+	_, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Erro ao atualizar o status do pedido",
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "Status do pedido atualizado com sucesso",
+	})
 }

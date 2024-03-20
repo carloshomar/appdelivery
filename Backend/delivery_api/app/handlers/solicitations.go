@@ -61,7 +61,6 @@ func HandShakeDeliveryman(c *fiber.Ctx) error {
 		})
 	}
 
-	// Conectar ao banco de dados
 	collection := models.MongoDabase.Collection("solicitations")
 
 	// Definir o filtro para encontrar o pedido com base no OrderId
@@ -89,10 +88,10 @@ func HandShakeDeliveryman(c *fiber.Ctx) error {
 	}
 
 	// Se o campo deliveryman ainda não estiver preenchido, atribua o novo valor
+	orderDTO.DeliveryMan.Status = "IN_ROUTE_COLECT"
 	existingOrder.DeliveryMan = orderDTO.DeliveryMan
 
-	// Definir os dados de atualização
-	update := bson.M{"$set": bson.M{"deliveryman": orderDTO.DeliveryMan}}
+	update := bson.M{"$set": bson.M{"deliveryman": existingOrder.DeliveryMan}}
 
 	// Executar a operação de atualização no banco de dados
 	_, err = collection.UpdateOne(context.Background(), filter, update)
@@ -163,7 +162,6 @@ func GetApprovedSolicitations(c *fiber.Ctx) error {
 		}
 	}
 
-	// Enviar os DTOs aprovados como resposta
 	return c.JSON(approvedSolicitations)
 }
 

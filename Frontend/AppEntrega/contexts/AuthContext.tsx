@@ -22,6 +22,8 @@ interface AuthContextType {
   logout: () => Promise<void>;
   inWork: boolean;
   setIsLoading: (a: boolean) => void;
+  mylocation: boolean;
+  setMyLocation: (a: boolean) => void;
   isActiveOrder: () => Promise<void>;
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,6 +33,8 @@ const AuthProvider: React.FC<any> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
   const [disponivel, setDisponivel] = useState(false);
+
+  const [mylocation, setMyLocation] = useState<any | null>(null);
 
   const [inWork, setInWork] = useState({ status: false, order: null });
 
@@ -151,6 +155,8 @@ const AuthProvider: React.FC<any> = ({ children }) => {
         disponivel,
         setDisponivel,
         isActiveOrder,
+        mylocation,
+        setMyLocation,
       }}
     >
       {children}

@@ -26,9 +26,15 @@ import { useIsFocused } from "@react-navigation/native";
 import { useAuthApi } from "@/contexts/AuthContext";
 
 export default function Home() {
-  const { disponivel, setDisponivel, inWork } = useAuthApi();
+  const {
+    disponivel,
+    setDisponivel,
+    isActiveOrder,
+    inWork,
+    mylocation,
+    setMyLocation,
+  } = useAuthApi();
 
-  const [mylocation, setMyLocation] = useState<any | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const nav = useNavigation();
 
@@ -195,7 +201,13 @@ export default function Home() {
           </Marker>
         ))}
       </MapView>
-      <TouchableOpacity style={styles.centerButton} onPress={centerMapOnUser}>
+      <TouchableOpacity
+        style={styles.centerButton}
+        onPress={() => {
+          centerMapOnUser();
+          isActiveOrder();
+        }}
+      >
         <MaterialIcons name="my-location" size={24} color="white" />
       </TouchableOpacity>
     </View>
