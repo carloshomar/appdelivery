@@ -56,13 +56,24 @@ const Task = ({ task, index, key }) => {
               {showItems ? "Ocultar Itens" : "Visualizar Itens"}
             </button>
             {showItems ? (
-              <div style={{ overflowY: "auto", padding: 15 }}>
+              <div
+                style={{
+                  overflowY: "auto",
+                  paddingLeft: 15,
+                  paddingTop: 5,
+                  paddingBottom: 10,
+                }}
+              >
                 {task.data.cart.map((item, idx) => (
                   <div key={idx}>
-                    <div>Item: {item.item.name}</div>
-                    <div>Quantidade: {item.quantity}</div>
-                    <div>Descrição: {item.item.description}</div>
-                    <div>Preço Unitário: R$ {item.item.price.toFixed(2)}</div>
+                    <div>
+                      {item.quantity}x <b>{item.item.name}</b>
+                    </div>
+                    <div style={{}}>
+                      {item.item.additional.map((additional) => (
+                        <span>{additional.name}</span>
+                      ))}
+                    </div>
                     {idx != task.data.cart.length - 1 ? <hr /> : null}
                   </div>
                 ))}

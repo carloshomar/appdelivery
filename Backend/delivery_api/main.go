@@ -35,7 +35,6 @@ func main() {
 func startHTTPServer() {
 	app := fiber.New()
 
-	// Configurar rotas
 	routes.SetupRoutes(app)
 	models.ConnectMongoDatabase()
 

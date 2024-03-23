@@ -5,23 +5,25 @@ import Task from "./Task";
 
 const Column = ({ column, tasks }) => {
   return (
-    <div className="flex-1 p-4 bg-gray-100 rounded-md ml-4  ">
+    <div className="flex-1 p-4 bg-gray-200 rounded-md ml-4 mr-2 shadow-lg">
       <h3 className="text-lg font-semibold mb-4 ">{column.title}</h3>
-      <Droppable droppableId={column.id} key={column.id}>
-        {(provided) => (
-          <div
-            className="flex flex-col   "
-            style={{ minHeight: "65vh" }}
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {tasks.map((task, index) => (
-              <Task key={task.id} task={task} index={index} />
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <div style={{ overflowY: "auto" }}>
+        <Droppable droppableId={column.id} key={column.id}>
+          {(provided) => (
+            <div
+              className="flex flex-col   "
+              ref={provided.innerRef}
+              style={{ height: "68vh" }}
+              {...provided.droppableProps}
+            >
+              {tasks.map((task, index) => (
+                <Task key={task.id} task={task} index={index} />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </div>
     </div>
   );
 };

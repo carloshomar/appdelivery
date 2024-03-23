@@ -6,7 +6,7 @@ import Column from "./Column";
 const Board = ({ columns, tasks, onDragEnd }) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex p-8 min-h-10 ">
+      <div className="flex p-1 min-h-10">
         {columns.map((column) => (
           <Column
             key={column.id}

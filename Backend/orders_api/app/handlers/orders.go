@@ -17,7 +17,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func CreateOrder(c *fiber.Ctx) error {
+func CreateOrder(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
 	var request dto.RequestPayload
 
 	if err := c.BodyParser(&request); err != nil {
@@ -46,6 +46,12 @@ func CreateOrder(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Erro ao inserir a ordem no banco de dados",
 		})
+	}
+
+	jsonData, _ := json.Marshal(request)
+
+	if err := sendMessageToClient(request.EstablishmentId, jsonData); err != nil {
+		return err
 	}
 
 	return c.JSON(fiber.Map{
@@ -83,7 +89,7 @@ func GetEstablishment(establishmentID int64) (*dto.Establishment, error) {
 	return &establishmentDTO, nil
 }
 
-func UpdateOrderStatus(c *fiber.Ctx) error {
+func UpdateOrderStatus(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
 	var requestBody dto.UpdateOrderStatusRequest
 	if err := c.BodyParser(&requestBody); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -102,13 +108,19 @@ func UpdateOrderStatus(c *fiber.Ctx) error {
 		})
 	}
 
+	var order dto.RequestPayload
+	collection.FindOne(context.Background(), filter).Decode(&order)
 	if requestBody.Status != "REQUEST_APPROVE" {
-		var order dto.RequestPayload
-		collection.FindOne(context.Background(), filter).Decode(&order)
 		order.OrderId = orderID.Hex()
 		order.Status = requestBody.Status
 		orderBytes, _ := json.Marshal(&order)
 		PublishMessage(orderBytes)
+	}
+
+	jsonData, _ := json.Marshal(requestBody)
+
+	if err := sendMessageToClient(order.EstablishmentId, jsonData); err != nil {
+		return err
 	}
 
 	update := bson.M{

@@ -1,8 +1,14 @@
-// src/App.js
-import React, { useState } from "react";
-import Home from "./pages/home";
+import Routes from "./Routes";
+import { AuthProvider } from "./context/AuthContext";
+import "./index.css";
+import React, { useEffect } from "react";
+
 const App = () => {
-  return <Home />;
+  return (
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
+  );
 };
 
 export default App;

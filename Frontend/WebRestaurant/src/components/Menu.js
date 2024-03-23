@@ -3,16 +3,21 @@ import {
   FiBox,
   FiHardDrive,
   FiHome,
+  FiLogOut,
   FiMenu,
   FiPaperclip,
   FiX,
 } from "react-icons/fi";
+import { useAuth } from "../context/AuthContext";
 
 const TopMenu = ({ toggleMenu, isOpen }) => {
+  const { user } = useAuth();
   return (
-    <div className="bg-customRed text-white py-4">
+    <div className="bg-customRed2 text-white py-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-xl font-bold ml-4">El Chavo Burritos</div>
+        <div className="text-xl font-bold ml-4">
+          {user?.establishment?.name}
+        </div>
         <div className="flex items-center">
           {isOpen ? (
             <FiX className="h-6 w-6 mr-4 cursor-pointer" onClick={toggleMenu} />
@@ -29,6 +34,7 @@ const TopMenu = ({ toggleMenu, isOpen }) => {
 };
 
 const SideMenu = ({ isOpen }) => {
+  const { logout } = useAuth();
   const MENUS = [
     {
       title: "Inicio",
@@ -50,6 +56,15 @@ const SideMenu = ({ isOpen }) => {
         />
       ),
     },
+    {
+      title: "Sair",
+      icon: (
+        <FiLogOut
+          className={`h-6 w-6 ${isOpen ? "mr-4" : ""} cursor-pointer`}
+        />
+      ),
+      onPress: logout,
+    },
   ];
   return (
     <div
@@ -64,6 +79,7 @@ const SideMenu = ({ isOpen }) => {
             className={`mb-6 flex  items-center ${
               !isOpen ? "justify-center" : "justify-start ml-4"
             }`}
+            onClick={() => (i.onPress ? i.onPress() : null)}
           >
             {i.icon}
             {isOpen ? (
@@ -79,14 +95,14 @@ const SideMenu = ({ isOpen }) => {
 };
 
 const MenuLayout = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div className="flex">
+    <div className="flex ">
       <SideMenu isOpen={isOpen} />
       <div className="flex-grow">
         <TopMenu toggleMenu={toggleMenu} isOpen={isOpen} />
