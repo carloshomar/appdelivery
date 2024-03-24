@@ -14,13 +14,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func CreateSolicitation(msg string) {
+func CreateSolicitation(msg string, sendMessageToClient func(clientID int64, message []byte) error) error {
 	var orderDTO dto.OrderDTO
 
 	err := json.Unmarshal([]byte(msg), &orderDTO)
 	if err != nil {
 		log.Printf("Erro ao decodificar a mensagem JSON: %s", err)
-		return
+		return nil
 	}
 
 	collection := models.MongoDabase.Collection("solicitations")
@@ -31,19 +31,29 @@ func CreateSolicitation(msg string) {
 	if existingSolicitation.Err() != nil {
 		if existingSolicitation.Err() != mongo.ErrNoDocuments {
 			log.Printf("Erro ao buscar a solicitação existente: %s", existingSolicitation.Err())
-			return
+			return nil
 		}
 	} else {
-		// Se a solicitação já existir, atualize apenas o status
 		update := bson.M{"$set": bson.M{"status": orderDTO.Status}}
+
 		log.Printf("Atualizando pedido %s", orderDTO.OrderId)
 		log.Printf("Para Status: %s", orderDTO.Status)
+
 		_, err := collection.UpdateOne(context.Background(), filter, update)
 		if err != nil {
 			log.Printf("Erro ao atualizar a solicitação: %s", err)
-			return
+			return nil
 		}
-		return
+
+		var solicitationExistent dto.OrderDTO
+		existingSolicitation.Decode(&solicitationExistent)
+
+		orderDTO.DeliveryMan = solicitationExistent.DeliveryMan
+
+		jsonData, _ := json.Marshal(&orderDTO)
+		sendMessageToClient(orderDTO.DeliveryMan.Id, jsonData)
+
+		return nil
 	}
 
 	// Se a solicitação não existir, insira-a no banco de dados
@@ -51,6 +61,7 @@ func CreateSolicitation(msg string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	return nil
 }
 
 func HandShakeDeliveryman(c *fiber.Ctx) error {
@@ -134,8 +145,11 @@ func GetApprovedSolicitations(c *fiber.Ctx) error {
 	collection := models.MongoDabase.Collection("solicitations")
 
 	filter := bson.M{
-		"status":      bson.M{"$in": []string{"APPROVED", "DONE"}},
-		"deliveryman": nil,
+		"status": bson.M{"$in": []string{"APPROVED", "DONE"}},
+		"$or": []bson.M{
+			{"deliveryman": nil},
+			{"deliveryman.id": 0},
+		},
 	}
 
 	// Realizando a consulta ao banco de dados

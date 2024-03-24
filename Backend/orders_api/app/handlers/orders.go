@@ -49,7 +49,6 @@ func CreateOrder(c *fiber.Ctx, sendMessageToClient func(clientID int64, message 
 	}
 
 	jsonData, _ := json.Marshal(request)
-
 	if err := sendMessageToClient(request.EstablishmentId, jsonData); err != nil {
 		return err
 	}
@@ -113,8 +112,10 @@ func UpdateOrderStatus(c *fiber.Ctx, sendMessageToClient func(clientID int64, me
 	if requestBody.Status != "REQUEST_APPROVE" {
 		order.OrderId = orderID.Hex()
 		order.Status = requestBody.Status
-		orderBytes, _ := json.Marshal(&order)
-		PublishMessage(orderBytes)
+		orderBytes, err := json.Marshal(&order)
+		if err == nil {
+			PublishMessage(orderBytes)
+		}
 	}
 
 	jsonData, _ := json.Marshal(requestBody)

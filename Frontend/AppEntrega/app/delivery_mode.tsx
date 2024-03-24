@@ -7,7 +7,7 @@ import Texts from "@/constants/Texts";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MapView, { Marker } from "react-native-maps";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useAuthApi } from "@/contexts/AuthContext";
 import { useNavigation } from "expo-router";
@@ -20,43 +20,11 @@ export default function DeliveryMode({ showIcon }: any) {
   const insets = useSafeAreaInsets();
   const nav = useNavigation();
   const mapViewRef = useRef(null);
-  const { user, inWork, isActiveOrder } = useAuthApi();
-  const order = inWork.order[0];
+  const { user, inWork, isActiveOrder, socketMessage } = useAuthApi();
+  const [order, setOrder] = useState(inWork.order[0]);
 
   const establishment = order.establishment;
   const deliveryman = order.deliveryman;
-
-  const handlerStatus = async () => {
-    let newStatus;
-
-    switch (deliveryman.status) {
-      case Strings.status_array.IN_ROUTE_COLECT:
-        newStatus = Strings.status_array.AWAIT_COLECT;
-        break;
-      case Strings.status_array.AWAIT_COLECT:
-        newStatus = Strings.status_array.IN_ROUTE_DELIVERY;
-        break;
-      case Strings.status_array.IN_ROUTE_DELIVERY:
-        newStatus = Strings.status_array.FINISH;
-        break;
-      default:
-        console.log("Status não reconhecido:", deliveryman.status);
-        return;
-    }
-
-    try {
-      const { data } = await api.post("/api/delivery/deliveryman/status", {
-        order_id: order.order_id,
-        deliveryman: {
-          id: deliveryman.id,
-          status: newStatus,
-        },
-      });
-      await isActiveOrder();
-    } catch (error) {
-      console.error("Erro ao atualizar o status do entregador:", error);
-    }
-  };
 
   const onConfirm = () => {
     nav.navigate("confirm_generical");
@@ -80,6 +48,10 @@ export default function DeliveryMode({ showIcon }: any) {
     nav.setOptions({ title: Strings.status_title?.[deliveryman.status] });
   }, [deliveryman.status]);
 
+  useEffect(() => {
+    setOrder(inWork.order[0]);
+  }, [inWork]);
+
   return (
     <View
       style={{
@@ -96,6 +68,7 @@ export default function DeliveryMode({ showIcon }: any) {
             <Text style={styles.locationText}>
               {establishment.location_string}
             </Text>
+            <Text style={{ marginTop: 10 }}>{order.status}</Text>
           </View>
           <TouchableOpacity style={styles.btnMap} onPress={openMap}>
             <FontAwesome name="map" size={25} color={Colors.light.tint} />

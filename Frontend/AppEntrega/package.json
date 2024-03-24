@@ -37,6 +37,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-swipeable": "^0.6.0",
     "react-native-web": "~0.19.6",
+    "react-use-websocket": "^4.8.1",
     "socket.io-client": "^4.7.5"
   },
   "devDependencies": {

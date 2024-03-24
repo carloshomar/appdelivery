@@ -21,8 +21,15 @@ import { useIsFocused } from "@react-navigation/native";
 function HomeDelivery() {
   const mapViewRef = useRef(null);
 
-  const { inWork, disponivel, isActiveOrder, mylocation, setMyLocation } =
-    useAuthApi();
+  const {
+    inWork,
+    disponivel,
+    isActiveOrder,
+    mylocation,
+    setMyLocation,
+    socketMessage,
+  } = useAuthApi();
+
   const [markers, setMarkers] = useState<any>([]);
   const isAndroid = Platform.OS === "android";
   const isFocused = useIsFocused();

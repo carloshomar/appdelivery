@@ -64,7 +64,7 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 	return c.JSON(orders)
 }
 
-func UpdateOrderStatusByDeliverymanID(c *fiber.Ctx) error {
+func UpdateOrderStatusByDeliverymanID(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
 
 	var request struct {
 		OrderID     string `json:"order_id"`

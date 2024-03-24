@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import api from "@/services/api";
 import { Buffer } from "buffer";
-
+import useWebSocket from "react-use-websocket";
 import Strings from "@/constants/Strings";
 
 interface User {
@@ -33,10 +33,39 @@ const AuthProvider: React.FC<any> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
   const [disponivel, setDisponivel] = useState(false);
-
+  const [socketMessage, setSocketMessage] = useState<any>([]);
   const [mylocation, setMyLocation] = useState<any | null>(null);
 
   const [inWork, setInWork] = useState({ status: false, order: null });
+
+  const { sendJsonMessage, lastMessage, lastJsonMessage } = useWebSocket(
+    api.getUri().replace("http", "ws") + "/api/delivery/ws/" + user?.id,
+    {
+      reconnectInterval: 1000,
+      retryOnError: true,
+    }
+  );
+
+  useEffect(() => {
+    if (user) sendSocketMessage("connect", user);
+  }, [user]);
+
+  useEffect(() => {
+    if (lastJsonMessage) {
+      setSocketMessage([...socketMessage, lastJsonMessage]);
+    }
+  }, [lastJsonMessage]);
+
+  const sendSocketMessage = (type: string, data: any) => {
+    try {
+      sendJsonMessage({
+        type,
+        data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const isActiveOrder = async () => {
     if (!user || !user.id) {
@@ -102,45 +131,49 @@ const AuthProvider: React.FC<any> = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const token = await AsyncStorage.getItem(Strings.token_jwt);
-        if (token) {
-          // Decodifica o token para obter os dados do usuário
+  const getUser = async () => {
+    try {
+      const token = await AsyncStorage.getItem(Strings.token_jwt);
+      if (token) {
+        // Decodifica o token para obter os dados do usuário
 
-          // Decodifica o token para obter os dados do usuário
-          const parts = token
-            .split(".")
-            .map((part) =>
-              Buffer.from(
-                part.replace(/-/g, "+").replace(/_/g, "/"),
-                "base64"
-              ).toString()
-            );
+        // Decodifica o token para obter os dados do usuário
+        const parts = token
+          .split(".")
+          .map((part) =>
+            Buffer.from(
+              part.replace(/-/g, "+").replace(/_/g, "/"),
+              "base64"
+            ).toString()
+          );
 
-          const decodedToken = JSON.parse(parts[1]) as {
-            email: string;
-            name: string;
-            id: number;
-          };
-
-          setUser(decodedToken);
-        }
-      } catch (error) {
-        console.error("Erro ao verificar autenticação:", error);
-      } finally {
-        setIsLoading(false);
+        const decodedToken = (await JSON.parse(parts[1])) as {
+          email: string;
+          name: string;
+          id: number;
+        };
+        return decodedToken;
       }
-    };
+      return null;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  };
+  const checkAuth = async () => {
+    const decodedToken = await getUser();
+    setUser(decodedToken);
+    setIsLoading(false);
+  };
 
+  useEffect(() => {
     checkAuth();
   }, []);
 
   useEffect(() => {
     setIsLogged(user != null);
     isActiveOrder();
-  }, [user]);
+  }, [user, socketMessage]);
 
   return (
     <AuthContext.Provider
@@ -157,6 +190,8 @@ const AuthProvider: React.FC<any> = ({ children }) => {
         isActiveOrder,
         mylocation,
         setMyLocation,
+        sendSocketMessage,
+        socketMessage,
       }}
     >
       {children}

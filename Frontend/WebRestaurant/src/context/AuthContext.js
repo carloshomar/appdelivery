@@ -18,7 +18,8 @@ export const AuthProvider = ({ children }) => {
       ? api.getUri().replace("http", "ws") +
           "/api/order/ws/" +
           user?.establishment?.id
-      : null
+      : null,
+    { reconnectInterval: 1000, retryOnError: true }
   );
 
   const getUser = () => {
