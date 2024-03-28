@@ -49,19 +49,19 @@ Um servidor tem a capacidade de executar simultaneamente _N_ aplicativos. Dessa 
 
 _Uma arquitetura baseada em microserviços_
 
-### Frontend:
-
-- Desenvolvido em React Native e Expo, possibilitando a publicação na App Store e Google Play.
-- Utiliza o Expo para construção gratuita na nuvem, dispensando a necessidade de um computador ou MacBook, especialmente para iOS.
-
-### Backend:
+### Back-end / Infra:
 
 - Arquitetura baseada em microsserviços, permitindo a adição de novos serviços na linguagem desejada.
 - Utiliza GoLang devido à sua performance e baixo consumo de recursos.
 - O GoLang utiliza também o Fiber como framework API.
 - Implementado em Docker, facilitando a inicialização do servidor sem exigir amplo conhecimento técnico.
 
-### App Delivery:
+### App Entregas:
+
+- Desenvolvido em React Native e Expo, possibilitando a publicação na App Store e Google Play.
+- Utiliza o Expo para construção gratuita na nuvem, dispensando a necessidade de um computador ou MacBook, especialmente para iOS.
+
+### App Comida:
 
 - Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variavel de ambiente: `RABBIT_DELIVERY_QUEUE`.
 

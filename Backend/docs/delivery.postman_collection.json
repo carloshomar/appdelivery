@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "aeab5683-f087-4971-beee-c144941bca68",
-		"name": "DeliveryApp",
+		"name": "Appp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9997540",
 		"_collection_link": "https://dark-meteor-405549.postman.co/workspace/Team-Workspace~6d1b17f9-4e26-4980-8d0d-1fcd60eead13/collection/9997540-aeab5683-f087-4971-beee-c144941bca68?action=share&source=collection_link&creator=9997540"
@@ -11,259 +11,345 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Create User & Establishment",
-					"event": [
+					"name": "Establishment",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									" ",
-									"const resp = pm.response.json()",
-									"",
-									"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Administrador\",\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\",\n    \"establishment\": {\n        \"name\": \"El Chavo Burritos\",\n        \"image\": \"https://static.vecteezy.com/system/resources/previews/014/971/638/non_2x/food-logo-design-template-restaurant-free-png.png\",\n        \"primary_color\": \"#8B0000\",\n        \"secodary_color\": \"#F0F8FF\",\n        \"description\": \"Uma casa onde se tem carnes.\",\n        \n        \"horarioFuncionamento\": \"22h\",\n        \"lat\": -21.778131,\n        \"long\": -43.367493,\n        \"max_distance_delivery\": 10\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"name": "Create User & Establishment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											" ",
+											"const resp = pm.response.json()",
+											"",
+											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "{{API_GATEWAY}}/api/auth/users/register",
-							"host": [
-								"{{API_GATEWAY}}"
 							],
-							"path": [
-								"api",
-								"auth",
-								"users",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									" ",
-									"const resp = pm.response.json()",
-									"",
-									"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Administrador\",\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\",\n    \"establishment\": {\n        \"name\": \"El Chavo Burritos\",\n        \"image\": \"https://static.vecteezy.com/system/resources/previews/014/971/638/non_2x/food-logo-design-template-restaurant-free-png.png\",\n        \"primary_color\": \"#8B0000\",\n        \"secodary_color\": \"#F0F8FF\",\n        \"description\": \"Uma casa onde se tem carnes.\",\n        \n        \"horarioFuncionamento\": \"22h\",\n        \"lat\": -21.778131,\n        \"long\": -43.367493,\n        \"max_distance_delivery\": 10\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/auth/users/register",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"users",
+										"register"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{API_GATEWAY}}/api/auth/users/login",
-							"host": [
-								"{{API_GATEWAY}}"
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											" ",
+											"const resp = pm.response.json()",
+											"",
+											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"path": [
-								"api",
-								"auth",
-								"users",
-								"login"
-							]
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/auth/users/login",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Establishments",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{AUTH_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/auth/establishments",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"establishments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											" ",
+											"const resp = pm.response.json()",
+											"",
+											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{AUTH_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/auth/users/1",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Establishment by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{AUTH_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/auth/establishments/1",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"establishments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Users by Establishment Id Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{AUTH_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/auth/establishments/1/users",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"establishments",
+										"1",
+										"users"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get Establishments",
-					"event": [
+					"name": "DeliveryMan",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{API_GATEWAY}}/api/auth/establishments",
-							"host": [
-								"{{API_GATEWAY}}"
+							"name": "Login Deliveryman",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											" ",
+											"const resp = pm.response.json()",
+											"",
+											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"path": [
-								"api",
-								"auth",
-								"establishments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User by Id",
-					"event": [
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/auth/delivery-man/login",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"delivery-man",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									" ",
-									"const resp = pm.response.json()",
-									"",
-									"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
+							"name": "Register Deliveryman",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \n    \"email\": \"admin1@admin.com\",\n    \"password\": \"admin123\",\n    \"name\":\"Yan\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/auth/delivery-man/register",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"delivery-man",
+										"register"
+									]
+								}
+							},
+							"response": []
 						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{API_GATEWAY}}/api/auth/users/1",
-							"host": [
-								"{{API_GATEWAY}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"users",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Establishment by Id",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{API_GATEWAY}}/api/auth/establishments/1",
-							"host": [
-								"{{API_GATEWAY}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"establishments",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Users by Establishment Id Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{API_GATEWAY}}/api/auth/establishments/1/users",
-							"host": [
-								"{{API_GATEWAY}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"establishments",
-								"1",
-								"users"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -908,7 +994,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"cart\": [\n        {\n            \"item\": {\n                \"ID\": 1,\n                \"Name\": \"Pizza Margherita\",\n                \"Description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n                \"Price\": 19.99,\n                \"Image\": \"https://exemplo.com/pizza_margherita.jpg\",\n                \"EstablishmentID\": 1,\n                \"Categories\": null,\n                \"Additional\": [\n                    {\n                        \"ID\": 1,\n                        \"Name\": \"HASES\",\n                        \"Price\": 0.5,\n                        \"Image\": \"dsadsad.png\",\n                        \"Description\": \"descriptinosdnaspdna n aosdin aonss\"\n                    }\n                ]\n            },\n            \"additionals\": [],\n            \"quantity\": 1,\n            \"id\": \"UTG5ksjsMUNBcqZ\"\n        }\n    ],\n    \"distance\": 1.1365938003231386,\n    \"location\": {\n        \"cep\": \"01001-000\",\n        \"logradouro\": \"Praça da Sé\",\n        \"complemento\": null,\n        \"bairro\": \"Sé\",\n        \"localidade\": \"São Paulo\",\n        \"uf\": \"SP\",\n        \"ibge\": \"3550308\",\n        \"gia\": \"1004\",\n        \"ddd\": \"11\",\n        \"siafi\": \"7107\",\n        \"numero\": \"6\"\n    },\n    \"paymentMethod\": {\n        \"type\": \"credit\",\n        \"icon\": \"credit-score\"\n    },\n    \"deliveryValue\": null,\n    \"user\": {     \n        \"phone\": \"(11) 98844-4499\",\n        \"nome\": \"André Silva\" \n    },\n    \"establishmentId\" : 1\n}",
+									"raw": "{\n    \"cart\": [\n        {\n            \"item\": {\n                \"ID\": 1,\n                \"Name\": \"Pizza Margherita\",\n                \"Description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n                \"Price\": 19.99,\n                \"Image\": \"https://exemplo.com/pizza_margherita.jpg\",\n                \"EstablishmentID\": 1,\n                \"Categories\": null,\n                \"Additional\": [\n                    {\n                        \"ID\": 1,\n                        \"Name\": \"HASES\",\n                        \"Price\": 0.5,\n                        \"Image\": \"dsadsad.png\",\n                        \"Description\": \"descriptinosdnaspdna n aosdin aonss\"\n                    }\n                ]\n            },\n            \"additionals\": [],\n            \"quantity\": 1,\n            \"id\": \"UTG5ksjsMUNBcqZ\"\n        }\n    ],\n    \"distance\": 1.1365938003231386,\n    \"location\": {\n        \"cep\": \"01001-000\",\n        \"logradouro\": \"Praça da Sé\",\n        \"complemento\": null,\n        \"bairro\": \"Sé\",\n        \"localidade\": \"São Paulo\",\n        \"uf\": \"SP\",\n        \"ibge\": \"3550308\",\n        \"gia\": \"1004\",\n        \"ddd\": \"11\",\n        \"siafi\": \"7107\",\n        \"numero\": \"6\",\n        \"coords\":{\n            \"latitude\": -22.745589467912965,\n            \"longitude\": -41.322124539284329\n        }\n    },\n    \"paymentMethod\": {\n        \"type\": \"credit\",\n        \"icon\": \"credit-score\"\n    },\n    \"deliveryValue\": 3.12,\n    \"user\": {     \n        \"phone\": \"(11) 98844-4499\",\n        \"nome\": \"André Silva\" \n    },\n    \"establishmentId\" : 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -942,7 +1028,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": \"65f34c97accba48a4c88d22c\",\n    \"status\": \"IN_PRODUCTION\"\n}",
+									"raw": "{\n    \"id\": \"65f5ea0a2652dc9424efb023\",\n    \"status\": \"APPROVED\" // REQUEST_APPROVE, APPROVED, DONE, IN_COLECT, IN_DELIVERY, FINSIHED\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -965,6 +1051,140 @@
 							"response": []
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Delivery",
+			"item": [
+				{
+					"name": "HandShake",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": \"65f5ea0a2652dc9424efb023\",\n    \"deliveryman\":{\"email\": \"admin@admin.com\", \"exp\": 1711215384, \"id\": 1, \"name\": \"DeliveryMan\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_GATEWAY}}/api/delivery/solicitation-orders/hand-shake",
+							"host": [
+								"{{API_GATEWAY}}"
+							],
+							"path": [
+								"api",
+								"delivery",
+								"solicitation-orders",
+								"hand-shake"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Orders by EstablishmentId Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_GATEWAY}}/api/delivery/solicitation-orders?latitude=-23.778131&longitude=-43.367493&limitDistance=5000",
+							"host": [
+								"{{API_GATEWAY}}"
+							],
+							"path": [
+								"api",
+								"delivery",
+								"solicitation-orders"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "-23.778131"
+								},
+								{
+									"key": "longitude",
+									"value": "-43.367493"
+								},
+								{
+									"key": "limitDistance",
+									"value": "5000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Has Active",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_GATEWAY}}/api/delivery/deliveryman/has-active/1",
+							"host": [
+								"{{API_GATEWAY}}"
+							],
+							"path": [
+								"api",
+								"delivery",
+								"deliveryman",
+								"has-active",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

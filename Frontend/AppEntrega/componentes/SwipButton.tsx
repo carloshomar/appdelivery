@@ -4,15 +4,30 @@ import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { SwipeButton } from "react-native-expo-swipe-button";
 
-export default function SwipeButtonDelivery({ title, onComplete }: any) {
+export default function SwipeButtonDelivery({
+  title,
+  onComplete,
+  disabled,
+}: any) {
   return (
     <SwipeButton
       onComplete={onComplete}
       title={title}
       titleStyle={styles.switTextStyle}
       circleBackgroundColor={Colors.light.tint}
+      borderRadius={5}
       containerStyle={styles.swipContainer}
-      underlayStyle={{ backgroundColor: Colors.light.tint }}
+      goBackToStart={true}
+      underlayStyle={{
+        backgroundColor: Colors.light.tint,
+        borderRadius: 5,
+      }}
+      titleContainerStyle={{
+        backgroundColor: Colors.light.tint,
+        borderRadius: 5,
+      }}
+      disabled={disabled}
+      underlayTitleContainerStyle={{ borderRadius: 5 }}
       Icon={<AntDesign size={20} name="check" color={Colors.light.white} />}
     />
   );
@@ -20,14 +35,23 @@ export default function SwipeButtonDelivery({ title, onComplete }: any) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.tint,
     height: "100%",
     padding: 10,
+    borderRadius: 5,
+
     justifyContent: "space-between",
   },
-  switTextStyle: { color: Colors.light.tint, fontWeight: "600", fontSize: 16 },
+  switTextStyle: {
+    color: Colors.light.white,
+    fontWeight: "600",
+    borderRadius: 5,
+
+    fontSize: 16,
+  },
   swipContainer: {
     borderWidth: 0.8,
     borderColor: Colors.light.tint,
+    borderRadius: 5,
   },
 });

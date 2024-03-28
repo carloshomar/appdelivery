@@ -41,6 +41,14 @@ type Establishment struct {
 	OwnerID              int     `json:"owner_id"`
 	PrimaryColor         string  `json:"primary_color"`
 	SecondaryColor       string  `json:"secondary_color"`
+	LocationString       string  `json:"location_string"`
+}
+
+type DeliveryMan struct {
+	Email  string `json:"email"`
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
 }
 
 type OrderDTO struct {
@@ -52,5 +60,6 @@ type OrderDTO struct {
 	User            User          `json:"user"`
 	EstablishmentID int           `json:"establishmentId"`
 	Establishment   Establishment `json:"establishment"`
-	Id              string        `json:"id"`
+	OrderId         string        `json:"order_id"`
+	DeliveryMan     DeliveryMan   `json:"deliveryman"`
 }

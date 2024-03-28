@@ -4,40 +4,14 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 
+	"github.com/carloshomar/vercardapio/app/dto"
 	"github.com/carloshomar/vercardapio/app/middlewares"
 	"github.com/carloshomar/vercardapio/app/models"
 )
 
-type CreateUserRequest struct {
-	Id            int                  `json:"id"`
-	Name          string               `json:"name"`
-	Email         string               `json:"email"`
-	Password      string               `json:"password"`
-	Establishment EstablishmentRequest `json:"establishment"`
-}
-
-type EstablishmentRequest struct {
-	Id             int    `json:"id"`
-	Name           string `json:"name"`
-	Description    string `json:"description"`
-	Image          string `json:image`
-	PrimaryColor   string `json:"primary_color"`
-	SecondaryColor string `json:"secodary_color"`
-
-	HorarioFuncionamento string  `json:"horarioFuncionamento"`
-	Lat                  float64 `json:"lat"`
-	Long                 float64 `json:"long"`
-	MaxDistanceDelivery  float64 `json:"max_distance_delivery"`
-}
-
-type LoginRequest struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
 func CreateUser(c *fiber.Ctx) error {
 	// Parse the request body to obtain user data
-	var request CreateUserRequest
+	var request dto.CreateUserRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
@@ -71,6 +45,7 @@ func CreateUser(c *fiber.Ctx) error {
 		Lat:                 request.Establishment.Lat,
 		Long:                request.Establishment.Long,
 		MaxDistanceDelivery: request.Establishment.MaxDistanceDelivery,
+		LocationString:      request.Establishment.LocationString,
 	}
 
 	// Insert the establishment into the database
@@ -96,7 +71,7 @@ func CreateUser(c *fiber.Ctx) error {
 }
 
 func Login(c *fiber.Ctx) error {
-	var request LoginRequest
+	var request dto.LoginRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}

@@ -14,6 +14,8 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  Platform,
+  ActivityIndicator,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -24,18 +26,26 @@ const cart = () => {
   const { setHiddenCart, cart, paymentMethod, submitCart, distance } =
     useCartApi();
 
+  const [load, setLoad] = useState(false);
+
   const { getUserData } = useApi();
 
   const nav = useNavigation();
   const insets = useSafeAreaInsets();
 
   async function handlerSubmit() {
-    const res = await submitCart(await getUserData());
+    setLoad(true);
+    try {
+      const res = await submitCart(await getUserData());
 
-    if (res) {
-      nav.goBack();
-      nav.navigate("orders");
+      if (res) {
+        nav.goBack();
+        nav.navigate("orders");
+      }
+    } catch (e) {
+      console.log(e);
     }
+    setLoad(false);
   }
 
   useEffect(() => {
@@ -52,7 +62,12 @@ const cart = () => {
   }, [cart]);
 
   return (
-    <View style={{ ...styles.container, paddingBottom: insets.bottom }}>
+    <View
+      style={{
+        ...styles.container,
+        paddingBottom: Platform.OS === "android" ? 10 : insets.bottom,
+      }}
+    >
       <ScrollView style={{ height: "95%" }}>
         <HeaderMain />
 
@@ -65,12 +80,25 @@ const cart = () => {
         />
       </ScrollView>
       <TouchableOpacity
-        style={{ ...styles.btns, opacity: !distance ? 0.8 : 1 }}
+        style={{ ...styles.btns, opacity: !distance || load ? 0.8 : 1 }}
         onPress={() => handlerSubmit()}
-        disabled={!distance}
+        disabled={!distance || load}
       >
-        <Text style={styles.txtFinal}>{Texts.finalizar_pagamento}</Text>
-        <MaterialIcons name="check" size={20} color={Colors.light.white} />
+        {!load ? (
+          <>
+            <Text style={styles.txtFinal}>{Texts.finalizar_pagamento}</Text>
+            <MaterialIcons name="check" size={20} color={Colors.light.white} />
+          </>
+        ) : (
+          <>
+            <Text style={styles.txtFinal}>{Texts.finalizando_pedido}</Text>
+            <ActivityIndicator
+              size={20}
+              color={Colors.light.white}
+              style={{ alignSelf: "center" }}
+            />
+          </>
+        )}
       </TouchableOpacity>
     </View>
   );

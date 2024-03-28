@@ -9,6 +9,7 @@ const Texts = {
   inicio: "Início",
   subtotal: "Subtotal",
   finalizar_pagamento: "Finalizar Pedido",
+  finalizando_pedido: "Finalizando Pedido...",
   resumo_valores: "Resumo de Valores",
   entrega: "Entrega",
   km: "km",

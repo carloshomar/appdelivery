@@ -39,5 +39,8 @@ func ConnectDatabase() {
 	database.AutoMigrate(&User{})
 
 	database.AutoMigrate(&Establishment{})
+
+	database.AutoMigrate(&DeliveryMan{})
+
 	DB = database
 }
