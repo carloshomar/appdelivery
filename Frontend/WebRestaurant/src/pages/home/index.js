@@ -6,10 +6,10 @@ import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 
 const columns = [
-  { id: "AWAIT_APPROVE", title: "Aguardando Aprovação" },
-  { id: "APPROVED", title: "Aprovado" },
-  { id: "DONE", title: "Pronto para entrega" },
-  { id: "FINSIHED", title: "Entregue" },
+  { id: "AWAIT_APPROVE", title: "Em análise", background: "#fb6f2d" },
+  { id: "APPROVED", title: "Em produção", background: "#fc9f2c" },
+  { id: "DONE", title: "Pronto p/ entrega", background: "#279348" },
+  // { id: "FINSIHED", title: "Entregue" },
 ];
 
 const Home = () => {
@@ -24,15 +24,24 @@ const Home = () => {
         "/api/order/orders/" + user.establishment.id
       );
       setTasks(
-        data.map((e) => {
-          return {
-            id: e._id,
-            column: e.status,
-            data: {
-              ...e,
-            },
-          };
-        })
+        data
+          .filter((e) => {
+            if (!e.deliveryman) {
+              return e;
+            }
+            if (e.deliveryman?.status !== "FINISHED") {
+              return e;
+            }
+          })
+          .map((e) => {
+            return {
+              id: e._id,
+              column: e.status,
+              data: {
+                ...e,
+              },
+            };
+          })
       );
     } catch (e) {
       console.log(e);
