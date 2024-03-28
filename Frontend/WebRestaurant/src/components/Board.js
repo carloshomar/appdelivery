@@ -12,7 +12,6 @@ const Board = ({ columns, tasks, onDragEnd }) => {
             key={column.id}
             column={column}
             tasks={tasks.filter((task) => task.column === column.id)}
-            // Passar a função onDragEnd para o componente Column
             onDragEnd={onDragEnd}
           />
         ))}

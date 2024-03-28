@@ -3,7 +3,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import LoginPage from "./pages/login";
 import Home from "./pages/home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import EditMenuPage from "./pages/cardapio/products/EditMenuPage";
+import Cardapio from "./pages/cardapio/products/Cardapio";
 
 const router = createBrowserRouter([
   {
@@ -11,8 +11,8 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/cardaipo/produtos",
-    element: <EditMenuPage />,
+    path: "/gestor-cardapio",
+    element: <Cardapio />,
   },
 ]);
 

@@ -4,7 +4,11 @@ import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { SwipeButton } from "react-native-expo-swipe-button";
 
-export default function SwipeButtonDelivery({ title, onComplete }: any) {
+export default function SwipeButtonDelivery({
+  title,
+  onComplete,
+  disabled,
+}: any) {
   return (
     <SwipeButton
       onComplete={onComplete}
@@ -22,6 +26,7 @@ export default function SwipeButtonDelivery({ title, onComplete }: any) {
         backgroundColor: Colors.light.tint,
         borderRadius: 5,
       }}
+      disabled={disabled}
       underlayTitleContainerStyle={{ borderRadius: 5 }}
       Icon={<AntDesign size={20} name="check" color={Colors.light.white} />}
     />

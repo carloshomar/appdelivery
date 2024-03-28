@@ -5,7 +5,14 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Platform,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
@@ -205,7 +212,10 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
       {children}
       {!hiddenCart && cart.length !== 0 && (
         <TouchableOpacity
-          style={{ ...styles.cartContainer, paddingBottom: insets.bottom }}
+          style={{
+            ...styles.cartContainer,
+            paddingBottom: Platform.OS === "android" ? 15 : insets.bottom,
+          }}
           onPress={() => nav.navigate("cart")}
         >
           <Text

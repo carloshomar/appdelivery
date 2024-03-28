@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"strconv"
 
@@ -28,6 +29,9 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 	filter := bson.M{
 		"deliveryman.id": deliverymanID,
 		"status": bson.M{
+			"$ne": "FINISHED",
+		},
+		"deliveryman.status": bson.M{
 			"$ne": "FINISHED",
 		},
 	}
@@ -64,6 +68,23 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 	return c.JSON(orders)
 }
 
+func GetOrderByID(orderID string) (*dto.OrderDTO, error) {
+	collection := models.MongoDabase.Collection("solicitations")
+
+	// Definir o filtro para encontrar o pedido com base no ID do pedido
+	filter := bson.M{"orderid": orderID}
+
+	// Consultar o banco de dados para obter o pedido
+	var order dto.OrderDTO
+	err := collection.FindOne(context.Background(), filter).Decode(&order)
+	if err != nil {
+		log.Printf("Erro ao consultar o pedido: %s", err)
+		return nil, err
+	}
+
+	return &order, nil
+}
+
 func UpdateOrderStatusByDeliverymanID(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
 
 	var request struct {
@@ -98,6 +119,11 @@ func UpdateOrderStatusByDeliverymanID(c *fiber.Ctx, sendMessageToClient func(cli
 			"error": "Erro ao atualizar o status do pedido",
 		})
 	}
+
+	order, _ := GetOrderByID(request.OrderID)
+	orderBytes, _ := json.Marshal(order)
+
+	PublishMessage(orderBytes)
 
 	return c.JSON(fiber.Map{
 		"message": "Status do pedido atualizado com sucesso",

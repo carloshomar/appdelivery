@@ -21,13 +21,44 @@ export default function DeliveryMode({ showIcon }: any) {
   const nav = useNavigation();
   const mapViewRef = useRef(null);
   const { user, inWork, isActiveOrder, socketMessage } = useAuthApi();
-  const [order, setOrder] = useState(inWork.order[0]);
+  const [order, setOrder] = useState(inWork?.order[0]);
 
   const establishment = order.establishment;
   const deliveryman = order.deliveryman;
 
+  const awaitCollect = async () => {
+    let status = "IN_ROUTE_COLECT";
+
+    switch (deliveryman.status) {
+      case "IN_ROUTE_COLECT":
+        status = "AWAIT_COLECT";
+        break;
+      case "AWAIT_COLECT":
+        status = "IN_ROUTE_DELIVERY";
+        break;
+      case "IN_ROUTE_DELIVERY":
+        status = "FINISHED";
+        break;
+    }
+
+    const { data } = await api.post("/api/delivery/deliveryman/status", {
+      order_id: order.order_id,
+      deliveryman: {
+        id: deliveryman.id,
+        status: status,
+      },
+    });
+    if (status == "FINISHED") {
+      nav.goBack();
+      return;
+    }
+    await isActiveOrder();
+  };
+
   const onConfirm = () => {
-    nav.navigate("confirm_generical");
+    nav.navigate("confirm_generical", {
+      onConfirm: awaitCollect,
+    });
   };
 
   const openMap = () => {
@@ -102,6 +133,10 @@ export default function DeliveryMode({ showIcon }: any) {
       </View>
 
       <SwipeButtonDelivery
+        disabled={
+          (deliveryman.status == "AWAIT_COLECT" && order.status !== "DONE") ||
+          order.status == "AWAIT_APPROVE"
+        }
         title={Texts[deliveryman.status] ?? deliveryman.status}
         onComplete={() => onConfirm()}
       />

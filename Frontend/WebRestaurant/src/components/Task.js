@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import helper from "../helpers/helper";
+import Strings from "../constants/Strings";
+import Texts from "../constants/Texts";
 const Task = ({ task, index, key }) => {
   const [showItems, setShowItems] = useState(false);
 
@@ -47,10 +49,26 @@ const Task = ({ task, index, key }) => {
             Total:{" "}
             <span className="font-bold">{helper.formatCurrency(subTotal)}</span>
           </div>
+
+          {task.data?.deliveryman && task.data?.deliveryman?.id != 0 ? (
+            <div className="mt-2 grid">
+              <span>Entregador: {task.data?.deliveryman?.name}</span>
+              {task.data?.deliveryman?.phone ? (
+                <span>Telefone: {task.data?.deliveryman?.phone}</span>
+              ) : null}
+              <span>
+                Status:{" "}
+                <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                  {Texts[task.data?.deliveryman?.status]}
+                </span>
+              </span>
+            </div>
+          ) : null}
+
           <div className="mt-2">
             Itens no Carrinho:
             <button
-              className="text-blue-500 underline p-1"
+              className="text-blue-500 font-bold underline p-1"
               onClick={toggleItems}
             >
               {showItems ? "Ocultar Itens" : "Visualizar Itens"}
@@ -59,23 +77,24 @@ const Task = ({ task, index, key }) => {
               <div
                 style={{
                   overflowY: "auto",
-                  paddingLeft: 15,
+
                   paddingTop: 5,
-                  paddingBottom: 10,
                 }}
               >
                 {task.data.cart.map((item, idx) => (
-                  <div key={idx}>
-                    <div>
-                      {item.quantity}x <b>{item.item.name}</b>
-                    </div>
-                    <div style={{}}>
-                      {item.item.additional.map((additional) => (
-                        <span>{additional.name}</span>
-                      ))}
+                  <>
+                    <div key={idx} className="p-1">
+                      <div>
+                        {item.quantity}x <b>{item.item.name}</b>
+                      </div>
+                      <div>
+                        {item.item.additional.map((additional) => (
+                          <span>{additional.name}</span>
+                        ))}
+                      </div>
                     </div>
                     {idx != task.data.cart.length - 1 ? <hr /> : null}
-                  </div>
+                  </>
                 ))}
               </div>
             ) : null}

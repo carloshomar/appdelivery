@@ -112,6 +112,11 @@ func HandShakeDeliveryman(c *fiber.Ctx) error {
 		})
 	}
 
+	order, _ := GetOrderByID(orderDTO.OrderId)
+	orderBytes, _ := json.Marshal(order)
+
+	PublishMessage(orderBytes)
+
 	// Responder com sucesso
 	return c.JSON(fiber.Map{
 		"message": "Pedido atualizado com sucesso",

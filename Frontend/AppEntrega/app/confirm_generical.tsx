@@ -1,12 +1,15 @@
-import { View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import DeliveryHappy from "../assets/images/deliveryman_happy.png";
 import Texts from "@/constants/Texts";
 import { useNavigation } from "expo-router";
+import { useRoute } from "@react-navigation/native";
 
 export default function ConfirmGenerical() {
   const nav = useNavigation();
+  const route = useRoute();
+
+  const { onConfirm } = route.params;
 
   return (
     <View style={styles.containers}>
@@ -19,7 +22,10 @@ export default function ConfirmGenerical() {
 
       <View style={styles.buttons}>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => {
+            onConfirm();
+            nav.goBack();
+          }}
           style={{ ...styles.button, ...styles.acceptButton }}
         >
           <Text style={{ ...styles.buttonText, color: Colors.light.tint }}>

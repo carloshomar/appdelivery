@@ -63,6 +63,7 @@ services:
       - MONGO_DATABASE=orders_mongo_db
       - RABBIT_CONNECTION=amqp://guest:guest@rabbitmq:5672/
       - RABBIT_DELIVERY_QUEUE=MS_DELIVERY_QUEUE
+      - RABBIT_ORDER_QUEUE=RABBIT_ORDER_QUEUE
       - URL_GET_ESTABLISHMENT_ID=http://api-gateway/api/auth/establishments/%d
     networks:
       - gateway-network
@@ -106,6 +107,7 @@ services:
     environment:
       - RABBIT_CONNECTION=amqp://guest:guest@rabbitmq:5672/
       - RABBIT_DELIVERY_QUEUE=MS_DELIVERY_QUEUE
+      - RABBIT_ORDER_QUEUE=RABBIT_ORDER_QUEUE
       - MONGO_URI=mongodb://admin:pass@delivery-mongo:27017
       - MONGO_DATABASE=delivery_mongo_db
     networks:

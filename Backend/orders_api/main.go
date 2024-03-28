@@ -2,13 +2,17 @@ package main
 
 import (
 	"log"
+	"os"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
+	"github.com/streadway/amqp"
 
+	"github.com/carloshomar/vercardapio/app/handlers"
 	"github.com/carloshomar/vercardapio/app/models"
 	"github.com/carloshomar/vercardapio/app/routes"
 )
@@ -26,12 +30,64 @@ func sendMessageToClient(clientID int64, message []byte) error {
 	return nil
 }
 
-func main() {
-	// Carregar variáveis de ambiente
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Erro ao carregar arquivo .env")
+func startQueueListener() {
+	dsn := os.Getenv("RABBIT_CONNECTION")
+	queueName := os.Getenv("RABBIT_ORDER_QUEUE")
+
+	var conn *amqp.Connection
+	var err error
+	for {
+		conn, err = amqp.Dial(dsn)
+		if err == nil {
+			break
+		}
+		log.Printf("Erro ao conectar ao servidor de mensagens: %s. Tentando novamente em 5 segundos...", err)
+		time.Sleep(5 * time.Second)
 	}
+	defer conn.Close()
+
+	ch, err := conn.Channel()
+	if err != nil {
+		log.Fatalf("Erro ao abrir canal: %s", err)
+	}
+	defer ch.Close()
+
+	queue, err := ch.QueueDeclare(
+		queueName,
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		log.Fatalf("Erro ao declarar a fila: %s", err)
+	}
+
+	// Loop infinito para consumir mensagens continuamente
+	for {
+		msgs, err := ch.Consume(
+			queue.Name,
+			"orders_api", // Consumer
+			true,         // Auto-ack
+			false,        // Exclusive
+			false,        // No-local
+			false,        // No-wait
+			nil,          // Arguments
+		)
+		if err != nil {
+			log.Fatalf("Erro ao registrar o consumidor: %s", err)
+		}
+
+		// Processar mensagens recebidas
+		for msg := range msgs {
+			bodyStr := string(msg.Body)
+			handlers.ReceiveMessage(bodyStr, sendMessageToClient)
+		}
+	}
+}
+
+func startHTTPServer() {
 
 	// Configurar o banco de dados
 	models.ConnectPostgresDatabase()
@@ -92,4 +148,22 @@ func main() {
 
 	// Iniciar o servidor
 	app.Listen(":3000")
+}
+
+func main() {
+	// Carregar variáveis de ambiente
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Erro ao carregar arquivo .env")
+	}
+
+	go startHTTPServer()
+
+	// Iniciar o servidor que escuta a fila
+	startQueueListener()
+
+	// Mantém a aplicação em execução indefinidamente
+	// até que seja explicitamente encerrada
+	<-make(chan struct{})
+
 }

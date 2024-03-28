@@ -70,6 +70,13 @@ type Establishment struct {
 	LocationString       string  `json:"location_string"`
 }
 
+type DeliveryMan struct {
+	Email  string `json:"email"`
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
+}
+
 type RequestPayload struct {
 	Cart            []CartItem    `json:"cart"`
 	Distance        float64       `json:"distance"`
@@ -81,6 +88,7 @@ type RequestPayload struct {
 	EstablishmentId int64         `json:"establishmentId"`
 	Establishment   Establishment `json:"establishment"`
 	OrderId         string        `json:"order_id" `
+	DeliveryMan     DeliveryMan   `json:"deliveryman"`
 }
 
 type UpdateOrderStatusRequest struct {

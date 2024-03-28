@@ -24,6 +24,7 @@ import api from "@/services/api";
 import Strings from "@/constants/Strings";
 import { useIsFocused } from "@react-navigation/native";
 import { useAuthApi } from "@/contexts/AuthContext";
+import Config from "@/constants/Config";
 
 export default function Home() {
   const {
@@ -41,11 +42,12 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [markers, setMarkers] = useState<any>([]);
   const isFocused = useIsFocused();
+  const [hasStart, setHasStart] = useState(false);
 
   const mapViewRef = React.useRef(null);
   const isAndroid = Platform.OS === "android";
 
-  const centerMapOnUser = async () => {
+  const centerMapOnUser = () => {
     if (mylocation) {
       const { latitude, longitude } = mylocation.coords;
       mapViewRef.current?.animateToRegion({
@@ -105,7 +107,6 @@ export default function Home() {
         centerMapOnUser();
       }
     } catch (e) {
-      console.log(e);
       setMarkers([helper.getMarkerUser(mylocation)]);
     }
     if (loader) setLoading(false);
@@ -117,6 +118,10 @@ export default function Home() {
 
   useEffect(() => {
     start();
+    setInterval(() => {
+      start();
+      disponify(false, false);
+    }, Config.msUpdateOffDelivery);
   }, []);
 
   useEffect(() => {
@@ -127,11 +132,14 @@ export default function Home() {
 
   useEffect(() => {
     setTimeout(() => {
-      centerMapOnUser();
+      if (!hasStart && mylocation?.coords) {
+        centerMapOnUser();
+        setHasStart(true);
+      }
       if (disponivel) {
         disponify(false, false);
       }
-    }, 400);
+    }, 500);
   }, [mylocation]);
 
   return (
@@ -168,11 +176,11 @@ export default function Home() {
                 ? nav.navigate("modal", { establishment: marker })
                 : null
             }
-            image={isAndroid ? marker?.icon : null}
           >
-            {!isAndroid && (
+            {marker?.icon ? (
               <Image source={marker?.icon} style={styles.markerImage} />
-            )}
+            ) : null}
+
             {marker.isEstablishment ? (
               <TouchableOpacity style={styles.calloutContainer}>
                 <View style={styles.calloutRow}>

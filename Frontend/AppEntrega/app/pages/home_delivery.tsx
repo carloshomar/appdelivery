@@ -17,6 +17,7 @@ import { useAuthApi } from "@/contexts/AuthContext";
 import helper from "@/helpers/helper";
 import MinimizableModal from "@/componentes/ModalMinimize";
 import { useIsFocused } from "@react-navigation/native";
+import Config from "@/constants/Config";
 
 function HomeDelivery() {
   const mapViewRef = useRef(null);
@@ -33,6 +34,7 @@ function HomeDelivery() {
   const [markers, setMarkers] = useState<any>([]);
   const isAndroid = Platform.OS === "android";
   const isFocused = useIsFocused();
+  const [hasFirst, setHasFirst] = useState(false);
 
   const centerMapOnUser = async () => {
     if (mylocation) {
@@ -77,12 +79,16 @@ function HomeDelivery() {
 
   useEffect(() => {
     start();
+    setInterval(() => {
+      isActiveOrder();
+    }, Config.msUpdateInDelivery);
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
+    if (!hasFirst && mylocation?.coords) {
       centerMapOnUser();
-    }, 400);
+      setHasFirst(true);
+    }
   }, [mylocation]);
 
   useEffect(() => {
@@ -116,11 +122,10 @@ function HomeDelivery() {
             key={marker.id}
             coordinate={marker.coordinates}
             onPress={() => {}}
-            image={isAndroid ? marker?.icon : null}
           >
-            {!isAndroid && (
+            {marker?.icon ? (
               <Image source={marker?.icon} style={styles.markerImage} />
-            )}
+            ) : null}
           </Marker>
         ))}
       </MapView>

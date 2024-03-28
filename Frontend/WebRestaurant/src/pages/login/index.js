@@ -11,6 +11,7 @@ const LoginPage = () => {
 
     try {
       await login(email, password);
+      window.location = "/";
     } catch (error) {
       console.error("Erro de login:", error);
     }
@@ -63,10 +64,7 @@ const LoginPage = () => {
 
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-customRed2 hover:text-customRed"
-              >
+              <a href="#" className="font-medium text-menu1 hover:text-menu2">
                 Esqueceu sua senha?
               </a>
             </div>
@@ -75,7 +73,7 @@ const LoginPage = () => {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-customRed2 hover:bg-customRed focus:outline-none focus:ring-2 focus:ring-offset-2 "
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-menu1 hover:bg-menu2 focus:outline-none focus:ring-2 focus:ring-offset-2 "
             >
               Entrar
             </button>
