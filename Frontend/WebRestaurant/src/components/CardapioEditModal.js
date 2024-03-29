@@ -95,7 +95,11 @@ const CardapioEditModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} className="modal bg-white">
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      className="modal bg-white h-full overflow-hidden"
+    >
       <MenuLayout>
         <h2 className="font-bold text-lg pl-6 mb-2">{Texts.editar_itens}</h2>
         <div className="flex flex-col items-center">

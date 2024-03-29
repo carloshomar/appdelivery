@@ -118,7 +118,7 @@ const SideMenu = ({ isOpen }) => {
     <div
       className={`bg-menu2 text-white h-screen  ${
         isOpen ? "w-60" : "w-25"
-      } flex flex-col   }`}
+      } flex flex-col`}
     >
       <div className="text-xl font-bold py-4 px-6"></div>
       <ul className="mt-8">
@@ -152,10 +152,14 @@ const MenuLayout = ({ children }) => {
   };
 
   return (
-    <div className="flex ">
-      <SideMenu isOpen={isOpen} />
-      <div className="flex-grow">
-        <TopMenu toggleMenu={toggleMenu} isOpen={isOpen} />
+    <div className="flex row ">
+      <div className="fixed">
+        <SideMenu isOpen={isOpen} />
+      </div>
+      <div className={`flex-grow ${isOpen ? "ml-60" : "ml-25"}`}>
+        <div>
+          <TopMenu toggleMenu={toggleMenu} isOpen={isOpen} />
+        </div>
         <div className="container mx-auto mt-4">{children}</div>
       </div>
     </div>

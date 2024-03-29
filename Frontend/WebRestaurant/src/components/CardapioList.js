@@ -18,7 +18,7 @@ const MenuList = ({
   };
 
   return (
-    <ul className="pl-4 pr-4" style={{ overflowY: "auto" }}>
+    <ul className="pl-4 pr-4">
       {items.map((item, index) => (
         <li
           key={item.ID}
@@ -28,7 +28,9 @@ const MenuList = ({
           onClick={() => handleEditClick(item)}
         >
           <div className="flex space-x-3 ">
-            <img src={item.Image} className=" h-20 w-20 rounded-md" />
+            {item.Image ? (
+              <img src={item.Image} className=" h-20 w-20 rounded-md" />
+            ) : null}
             <div className="flex-1 space-y-1">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-medium">{item?.Name}</h3>
