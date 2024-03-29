@@ -5,7 +5,7 @@ const SearchInput = ({ onSearch }) => {
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    // Chame a função de busca passada como propriedade sempre que o termo de busca mudar
+
     onSearch(event.target.value);
   };
 

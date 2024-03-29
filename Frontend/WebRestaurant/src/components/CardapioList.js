@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import helper from "../helpers/helper";
 import CardapioEditModal from "../components/CardapioEditModal";
 
-const MenuList = ({ items }) => {
-  const [editModalOpen, setEditModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+const MenuList = ({
+  items,
+  onSave,
+  editModalOpen,
+  setEditModalOpen,
+  selectedItem,
+  setSelectedItem,
 
+  onRefreshItens,
+}) => {
   const handleEditClick = (item) => {
     setSelectedItem(item);
     setEditModalOpen(true);
@@ -39,7 +45,8 @@ const MenuList = ({ items }) => {
         isOpen={editModalOpen}
         onClose={() => setEditModalOpen(false)}
         item={selectedItem}
-        onSave={() => {}}
+        onSave={onSave}
+        onRefreshItens={onRefreshItens}
       />
     </ul>
   );

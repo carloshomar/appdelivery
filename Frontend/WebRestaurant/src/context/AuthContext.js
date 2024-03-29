@@ -11,6 +11,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [openEstablishment, setOpenEstablishment] = useState(false);
+
   const [socketMessage, setSocketMessage] = useState([]);
 
   const { sendJsonMessage, lastMessage } = useWebSocket(
@@ -84,6 +86,25 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const refreshOpen = async () => {
+    const id = getUser().id;
+    if (!id) return;
+
+    try {
+      const { data } = await api.get(
+        "/api/auth/establishments/" + getUser().id
+      );
+
+      setOpenEstablishment(data?.open_data ?? false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    refreshOpen();
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -94,6 +115,9 @@ export const AuthProvider = ({ children }) => {
         getUser,
         sendSocketMessage,
         socketMessage,
+        openEstablishment,
+        setOpenEstablishment,
+        refreshOpen,
       }}
     >
       {children}

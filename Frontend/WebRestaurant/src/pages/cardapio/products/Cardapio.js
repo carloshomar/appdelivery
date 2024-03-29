@@ -5,11 +5,15 @@ import SearchInput from "../../../components/SearchInput";
 import AddButton from "../../../components/AddButton";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
+import Strings from "../../../constants/Strings";
+import Texts from "../../../constants/Texts";
 
 const Cardapio = () => {
   const { user } = useAuth();
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   async function start() {
     try {
@@ -22,6 +26,23 @@ const Cardapio = () => {
     }
   }
 
+  async function save(item) {
+    const value = items.map((e) => {
+      if (e.ID === item.id) {
+        return {
+          ...e,
+          Name: item.name,
+          Description: item.description,
+          Price: item.price,
+          Image: item.image,
+        };
+      }
+      return e;
+    });
+
+    setItems(value);
+  }
+
   useEffect(() => {
     start();
   }, []);
@@ -30,20 +51,31 @@ const Cardapio = () => {
     setSearchTerm(term);
   };
 
-  const filteredItems = items.filter((item) =>
-    item.Name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
     <MenuLayout>
-      <h2 className="font-bold text-lg pl-4 mb-4">Gestor de Cardápio</h2>
+      <h2 className="font-bold text-lg pl-4 mb-4">{Texts.gestor_cardapio}</h2>
 
       <div className="mb-6 ml-4 pr-6 mt-6 flex row-auto gap-2 w-full justify-between">
         <SearchInput onSearch={handleSearch} />
-        <AddButton onClick={() => {}} />
+        <AddButton
+          onClick={() => {
+            setEditModalOpen(true);
+            setSelectedItem(Strings.initial_order);
+          }}
+        />
       </div>
 
-      <CardapioList items={filteredItems} />
+      <CardapioList
+        items={items.filter((item) =>
+          item?.Name?.toLowerCase().includes(searchTerm.toLowerCase())
+        )}
+        editModalOpen={editModalOpen}
+        selectedItem={selectedItem}
+        setEditModalOpen={setEditModalOpen}
+        setSelectedItem={setSelectedItem}
+        onSave={save}
+        onRefreshItens={start}
+      />
     </MenuLayout>
   );
 };

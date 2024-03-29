@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import Texts from "../../constants/Texts";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -22,7 +23,7 @@ const LoginPage = () => {
       <div className="max-w-md w-full">
         <div>
           <h2 className="text-center text-3xl font-extrabold text-gray-900">
-            Faça login na sua conta
+            {Texts.text_login}
           </h2>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -30,7 +31,7 @@ const LoginPage = () => {
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email-address" className="sr-only">
-                Endereço de e-mail
+                {Texts.email_end}
               </label>
               <input
                 id="email-address"
@@ -46,7 +47,7 @@ const LoginPage = () => {
             </div>
             <div>
               <label htmlFor="password" className="sr-only">
-                Senha
+                {Texts.password}
               </label>
               <input
                 id="password"
@@ -65,7 +66,7 @@ const LoginPage = () => {
           <div className="flex items-center justify-between">
             <div className="text-sm">
               <a href="#" className="font-medium text-menu1 hover:text-menu2">
-                Esqueceu sua senha?
+                {Texts.esqueceu_senha}
               </a>
             </div>
           </div>
@@ -75,7 +76,7 @@ const LoginPage = () => {
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-menu1 hover:bg-menu2 focus:outline-none focus:ring-2 focus:ring-offset-2 "
             >
-              Entrar
+              {Texts.entrar}
             </button>
           </div>
         </form>

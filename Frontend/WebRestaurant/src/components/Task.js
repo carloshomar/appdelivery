@@ -43,8 +43,14 @@ const Task = ({ task, index, key }) => {
           {...provided.dragHandleProps}
         >
           <div className="font-bold">{task.data.user.nome}</div>
-          <div>Telefone: {task.data.user.phone}</div>
-          <div>Forma de Pagamento: {task.data.paymentmethod.type}</div>
+          <div>
+            {Texts.phone}: {task.data.user.phone}
+          </div>
+          <div>
+            {Texts.forma_pay}:{" "}
+            {Texts[task.data.paymentmethod.type] ??
+              task.data.paymentmethod.type}
+          </div>
           <div className="mt-1">
             Total:{" "}
             <span className="font-bold">{helper.formatCurrency(subTotal)}</span>
@@ -52,12 +58,16 @@ const Task = ({ task, index, key }) => {
 
           {task.data?.deliveryman && task.data?.deliveryman?.id != 0 ? (
             <div className="mt-2 grid">
-              <span>Entregador: {task.data?.deliveryman?.name}</span>
+              <span>
+                {Texts.entregador}: {task.data?.deliveryman?.name}
+              </span>
               {task.data?.deliveryman?.phone ? (
-                <span>Telefone: {task.data?.deliveryman?.phone}</span>
+                <span>
+                  {Texts.phone}: {task.data?.deliveryman?.phone}
+                </span>
               ) : null}
               <span>
-                Status:{" "}
+                {Texts.status}:{" "}
                 <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
                   {Texts[task.data?.deliveryman?.status]}
                 </span>
@@ -66,12 +76,12 @@ const Task = ({ task, index, key }) => {
           ) : null}
 
           <div className="mt-2">
-            Itens no Carrinho:
+            {Texts.itens_carrinho}:
             <button
               className="text-blue-500 font-bold underline p-1"
               onClick={toggleItems}
             >
-              {showItems ? "Ocultar Itens" : "Visualizar Itens"}
+              {showItems ? Texts.ocultar_itens : Texts.vizualizar_itens}
             </button>
             {showItems ? (
               <div

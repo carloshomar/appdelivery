@@ -1,29 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  FiBellOff,
   FiBox,
+  FiEye,
+  FiEyeOff,
   FiHardDrive,
   FiHome,
   FiLogOut,
   FiMenu,
   FiPaperclip,
+  FiPhoneOutgoing,
   FiSettings,
   FiX,
 } from "react-icons/fi";
+import { FaStore, FaStoreSlash } from "react-icons/fa";
+
 import { useAuth } from "../context/AuthContext";
+import ToggleSwitch from "../components/ToggleSwitch";
+import { toast } from "react-toastify";
+import Texts from "../constants/Texts";
+
+import api from "../services/api";
 
 const TopMenu = ({ toggleMenu, isOpen }) => {
-  const { getUser } = useAuth();
+  const { getUser, openEstablishment, refreshOpenawait } = useAuth();
+  const user = getUser();
+  const handlerBnt = async (res) => {
+    try {
+      const { data } = await api.put(
+        "/api/auth/establishments/status/handler/" + user.id
+      );
+      await refreshOpenawait();
+    } catch (e) {
+      console.log(e);
+    }
+    if (res && openEstablishment) toast.success(Texts.establishment_open);
+    else toast.error("Seu estabelecimento foi fechado.");
+  };
+
   return (
     <div className="bg-menu1 text-white py-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-xl font-bold ml-4">
-          {getUser()?.establishment?.name}
+        <div className="flex row item-center justify-center align-middle gap-4">
+          <div className="text-xl font-bold ml-4">
+            {user?.establishment?.name}
+          </div>
         </div>
-        <div className="flex items-center">
-          <FiSettings
-            className="h-6 w-6 mr-4 cursor-pointer"
-            onClick={toggleMenu}
-          />
+        <div className="flex items-center w-auto gap-16">
+          <div className="flex row justify-center items-center gap-2 w-20">
+            <div>
+              <FaStoreSlash color={"white"} size={24} />
+            </div>
+            <div className="ml-2">
+              <ToggleSwitch checked={openEstablishment} onChange={handlerBnt} />
+            </div>
+            <div>
+              <FaStore color="white" size={24} />
+            </div>
+          </div>
+
+          <div>
+            {isOpen ? (
+              <FiEye
+                className="h-6 w-6 mr-4 cursor-pointer"
+                onClick={toggleMenu}
+              />
+            ) : (
+              <FiEyeOff
+                className="h-6 w-6 mr-4 cursor-pointer"
+                onClick={toggleMenu}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

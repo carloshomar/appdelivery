@@ -4,6 +4,7 @@ import Board from "../../components/Board";
 import MenuLayout from "../../components/Menu";
 import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
+import Texts from "../../constants/Texts";
 
 const columns = [
   { id: "AWAIT_APPROVE", title: "Em análise", background: "#fb6f2d" },
@@ -78,7 +79,7 @@ const Home = () => {
 
   return (
     <MenuLayout>
-      <h2 className=" font-bold text-lg pl-6 mb-2">Meus Pedido</h2>
+      <h2 className=" font-bold text-lg pl-6 mb-2">{Texts.meus_pedidos}</h2>
       <Board tasks={tasks} columns={columns} onDragEnd={onDragEnd} />
     </MenuLayout>
   );
