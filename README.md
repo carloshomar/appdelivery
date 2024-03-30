@@ -32,7 +32,7 @@ _Gestor de cardápio para criação e alteração de produtos._
 #### App de Entregas:
 
 <img src="./Arquitetura/IMG_9967.PNG" alt="IMG2" width="200"></img>
-<img src="./Arquitetura/IMG_9966.png" alt="IMG4" width="200"></img>
+<img src="./Arquitetura/IMG_9966.PNG" alt="IMG4" width="200"></img>
 <img src="./Arquitetura/IMG_9964.PNG" alt="IMG3" width="200"></img>
 <img src="./Arquitetura/IMG_0164.PNG" alt="IMG3" width="200"></img>
 <img src="./Arquitetura/IMG_0165.PNG" alt="IMG3" width="200"></img>
