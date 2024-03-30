@@ -15,14 +15,12 @@ export const AuthProvider = ({ children }) => {
 
   const [socketMessage, setSocketMessage] = useState([]);
 
-  const { sendJsonMessage, lastMessage } = useWebSocket(
-    user?.establishment?.id
-      ? api.getUri().replace("http", "ws") +
-          "/api/order/ws/" +
-          user?.establishment?.id
-      : null,
-    { reconnectInterval: 1000, retryOnError: true }
-  );
+  const url = api.getUri().replace("http", "ws") + "/api/order/ws/1";
+
+  const { sendJsonMessage, lastMessage } = useWebSocket(url, {
+    reconnectInterval: 1000,
+    retryOnError: true,
+  });
 
   const getUser = () => {
     const storedToken = localStorage.getItem(Strings.token_jwt);
@@ -87,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const refreshOpen = async () => {
-    const id = getUser().id;
+    const id = getUser()?.id;
     if (!id) return;
 
     try {

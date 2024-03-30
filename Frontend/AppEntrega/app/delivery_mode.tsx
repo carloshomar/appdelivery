@@ -15,6 +15,7 @@ import Strings from "@/constants/Strings";
 import api from "@/services/api";
 import { SwipeButton } from "react-native-expo-swipe-button";
 import SwipeButtonDelivery from "@/componentes/SwipButton";
+import helper from "@/helpers/helper";
 
 export default function DeliveryMode({ showIcon }: any) {
   const insets = useSafeAreaInsets();
@@ -95,11 +96,16 @@ export default function DeliveryMode({ showIcon }: any) {
       <View>
         <View style={styles.boxOne}>
           <View style={styles.nameContainer}>
-            <Text style={{ fontSize: 20 }}>{establishment.name}</Text>
-            <Text style={styles.locationText}>
-              {establishment.location_string}
+            <Text style={{ fontSize: 20 }}>
+              {deliveryman.status === "IN_ROUTE_DELIVERY"
+                ? order?.user?.nome
+                : establishment.name}
             </Text>
-            <Text style={{ marginTop: 10 }}>{order.status}</Text>
+            <Text style={styles.locationText}>
+              {deliveryman.status === "IN_ROUTE_DELIVERY"
+                ? helper.formatLocationInfo(order.location)
+                : establishment.location_string}
+            </Text>
           </View>
           <TouchableOpacity style={styles.btnMap} onPress={openMap}>
             <FontAwesome name="map" size={25} color={Colors.light.tint} />
@@ -115,8 +121,15 @@ export default function DeliveryMode({ showIcon }: any) {
             style={styles.mapView}
             ref={mapViewRef}
             initialRegion={{
-              latitude: establishment.lat | 0,
-              longitude: establishment.long | 0,
+              latitude:
+                (deliveryman.status === "IN_ROUTE_DELIVERY"
+                  ? establishment.lat
+                  : order.location.coords.latitude) || 0,
+
+              longitude:
+                (deliveryman.status === "IN_ROUTE_DELIVERY"
+                  ? establishment.long
+                  : order.location.coords.longitude) || 0,
               latitudeDelta: 0.001,
               longitudeDelta: 0.01,
             }}

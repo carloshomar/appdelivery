@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import Texts from "../../constants/Texts";
+import SignupPage from "./signup";
 
 const LoginPage = () => {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
+  const [cadastro, setCadastro] = useState(false);
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
@@ -17,6 +19,8 @@ const LoginPage = () => {
       console.error("Erro de login:", error);
     }
   };
+
+  if (cadastro) return <SignupPage />;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-300 px-4 sm:px-6 ">
@@ -70,7 +74,6 @@ const LoginPage = () => {
               </a>
             </div>
           </div>
-
           <div>
             <button
               type="submit"

@@ -21,9 +21,7 @@ const Home = () => {
   async function init() {
     if (!user) return;
     try {
-      const { data } = await api.get(
-        "/api/order/orders/" + user.establishment.id
-      );
+      const { data } = await api.get("/api/order/orders/" + getUser()?.id);
       setTasks(
         data
           .filter((e) => {

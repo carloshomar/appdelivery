@@ -1,6 +1,6 @@
 // TabOneScreen.js
 import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, Text } from "react-native";
 
 import api from "@/services/api";
 
@@ -11,6 +11,8 @@ import EstablishmentView from "@/components/EstablishmentView";
 import Establishment from "../establishment";
 import { useCartApi } from "@/contexts/ApiCartContext";
 import { useNavigation } from "@react-navigation/native";
+import { View } from "@/components/Themed";
+import Texts from "@/constants/Texts";
 
 export default function index() {
   return (
@@ -52,6 +54,20 @@ function TabTwo() {
       }}
       showsVerticalScrollIndicator={false}
     >
+      {estabelecimentos.length === 0 ? (
+        <View
+          style={{
+            marginTop: "20%",
+            alignContent: "center",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ fontSize: 14, fontWeight: "300" }}>
+            {Texts.nenhum_estabelecimento_aberto}
+          </Text>
+        </View>
+      ) : null}
       {estabelecimentos.map((e) => (
         <EstablishmentView
           item={e}
