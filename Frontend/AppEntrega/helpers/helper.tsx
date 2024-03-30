@@ -145,11 +145,18 @@ function getMarkerClient(latitude: number, longitude: number) {
   };
 }
 
+const formatLocationInfo = (locationInfo: any) => {
+  return `${locationInfo.logradouro}, ${locationInfo.numero}, ${
+    locationInfo.complemento + locationInfo.complemento ? "," : ""
+  } ${locationInfo.bairro}, ${locationInfo.localidade} - ${locationInfo.uf}`;
+};
+
 export default {
   getMarkerEstablishment,
   calculateNewCoordinates,
   getMarkerClient,
   calcularDistancia,
+  formatLocationInfo,
   formatCurrency,
   getMarkerUser,
   calcularDistanciaMediaDeBike,

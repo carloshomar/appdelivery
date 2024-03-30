@@ -29,5 +29,6 @@ const Texts = {
   nome_es: "Nome",
   erroPedido: "Ouve um erro nao fazer o pedido, tente novamente.",
   calculando: "Calculando...",
+  nenhum_estabelecimento_aberto: "Nenhum restaurante aberto no momento.",
 };
 export default Texts;

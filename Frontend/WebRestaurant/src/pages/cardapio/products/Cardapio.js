@@ -9,7 +9,7 @@ import Strings from "../../../constants/Strings";
 import Texts from "../../../constants/Texts";
 
 const Cardapio = () => {
-  const { user } = useAuth();
+  const { user, getUser } = useAuth();
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -17,9 +17,7 @@ const Cardapio = () => {
 
   async function start() {
     try {
-      const { data } = await api.get(
-        "/api/order/products/" + user.establishment.id
-      );
+      const { data } = await api.get("/api/order/products/" + getUser()?.id);
       setItems(data);
     } catch (E) {
       console.log(E);
