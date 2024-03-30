@@ -1,13 +1,14 @@
 package middlewares
 
 import (
+	"errors"
 	"log"
 	"os"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gofiber/fiber/v2"
 	"github.com/carloshomar/vercardapio/app/models"
+	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func ValidateJWT(c *fiber.Ctx) (*jwt.Token, error) {
@@ -17,6 +18,9 @@ func ValidateJWT(c *fiber.Ctx) (*jwt.Token, error) {
 	}
 
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("unexpected signing method")
+		}
 		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 
@@ -25,30 +29,53 @@ func ValidateJWT(c *fiber.Ctx) (*jwt.Token, error) {
 		return nil, fiber.NewError(fiber.StatusUnauthorized, "Invalid token")
 	}
 
-	// Verifique a expiração do token manualmente
-	if claims, ok := token.Claims.(jwt.MapClaims); ok {
-		expirationTime := time.Unix(int64(claims["exp"].(float64)), 0)
-		expirationNow := time.Now()
-		if expirationNow.After(expirationTime) {
-			return nil, fiber.NewError(fiber.StatusUnauthorized, "Token is expired (manual check)")
-		}
-	} else {
-		return nil, fiber.NewError(fiber.StatusUnauthorized, "Invalid token claims")
+	if token.Valid {
+		return token, nil
 	}
 
-	return token, nil
+	return nil, fiber.NewError(fiber.StatusUnauthorized, "Invalid token")
 }
 
 func GenerateJWT(user *models.User, establishment *models.Establishment) (string, error) {
 	// Defina a expiração para 7 dias a partir de agora (hora UTC)
 	expirationTime := time.Now().UTC().Add(time.Hour * 24 * 7).Unix()
 
+	// Defina as reivindicações do token
+	claims := jwt.MapClaims{
+		"id":    user.ID,
+		"name":  user.Name,
+		"email": user.Email,
+		"exp":   expirationTime,
+	}
+
+	// Se establishment não for nulo, inclua seus campos relevantes nas reivindicações
+	if establishment != nil {
+		claims["establishment_id"] = establishment.ID
+		claims["establishment_name"] = establishment.Name
+		// Adicione outros campos relevantes conforme necessário
+	}
+
+	// Crie um novo token JWT com as reivindicações definidas
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	// Assine o token com a chave secreta
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
+}
+
+func GenerateJWTDeliveryMan(user *models.DeliveryMan) (string, error) {
+	// Defina a expiração para 7 dias a partir de agora (hora UTC)
+	expirationTime := time.Now().UTC().Add(time.Hour * 24 * 7).Unix()
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":            user.ID,
-		"name":          user.Name,
-		"email":         user.Email,
-		"establishment": establishment,
-		"exp":           expirationTime,
+		"id":    user.ID,
+		"name":  user.Name,
+		"email": user.Email,
+		"exp":   expirationTime,
 	})
 
 	// Assine o token com a chave secreta

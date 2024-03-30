@@ -11,20 +11,31 @@ import { useRoute } from "@react-navigation/native";
 import { useEffect, useRef } from "react";
 import helper from "@/helpers/helper";
 import SwipeButtonDelivery from "@/componentes/SwipButton";
+import { useAuthApi } from "@/contexts/AuthContext";
+import { useNavigation } from "expo-router";
 
 export default function ModalScreen() {
   const insets = useSafeAreaInsets();
+  const nav = useNavigation();
   const route = useRoute();
   const { establishment }: any = route.params;
   const mapViewRef = useRef(null);
+  const { user, isLoading, setIsLoading } = useAuthApi();
 
   const centerMapOnUser = async () => {
     const { latitude, longitude } = establishment.coordinates;
     mapViewRef.current?.animateToRegion({
       latitude,
       longitude,
-      latitudeDelta: 0.002,
+      latitudeDelta: 0.05,
       longitudeDelta: 0.003,
+    });
+  };
+
+  const acceptEntrega = () => {
+    nav.navigate("confirm", {
+      order: establishment,
+      delivery: user,
     });
   };
 
@@ -54,7 +65,9 @@ export default function ModalScreen() {
         <View style={styles.boxOne}>
           <View style={styles.nameContainer}>
             <Text style={{ fontSize: 20 }}>{establishment.name}</Text>
-            <Text style={styles.locationText}>{establishment.location}</Text>
+            <Text style={styles.locationText}>
+              {establishment.location_string}
+            </Text>
           </View>
           <TouchableOpacity style={styles.btnMap} onPress={openMap}>
             <FontAwesome name="map" size={25} color={Colors.light.tint} />
@@ -103,7 +116,7 @@ export default function ModalScreen() {
       </View>
       <SwipeButtonDelivery
         title={Texts.aceitar_entrega}
-        onComplete={() => console.log("Complete")}
+        onComplete={() => acceptEntrega()}
       />
     </View>
   );
@@ -130,14 +143,14 @@ const styles = StyleSheet.create({
   mapView: {
     width: "100%",
     height: 200,
-    borderColor: Colors.light.tint,
+    borderColor: Colors.light.background,
     borderWidth: 1,
   },
   valueText: { fontWeight: "500", fontSize: 15 },
   locationText: {
     marginTop: 10,
     fontSize: 14,
-    textAlign: "justify",
+    textAlign: "left",
   },
   valores: {
     flexDirection: "row",

@@ -44,6 +44,39 @@ func CreateProduct(c *fiber.Ctx) error {
 	return c.JSON(&product)
 }
 
+func UpdateProduct(c *fiber.Ctx) error {
+	// Parse request body
+	var request dto.ProductRequest
+	if err := c.BodyParser(&request); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
+	}
+
+	// Check if product ID is provided
+	productID := c.Params("id")
+	if productID == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Product ID is required"})
+	}
+
+	// Find the product by ID
+	var existingProduct models.Product
+	if err := models.DB.Where("id = ?", productID).First(&existingProduct).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Product not found"})
+	}
+
+	// Update product fields
+	existingProduct.Name = request.Name
+	existingProduct.Description = request.Description
+	existingProduct.Price = request.Price
+	existingProduct.Image = request.Image
+
+	// Save the updated product to the database
+	if err := models.DB.Save(&existingProduct).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update product"})
+	}
+
+	return c.JSON(existingProduct)
+}
+
 func CreateMultProducts(c *fiber.Ctx) error {
 	var requests []dto.ProductRequest
 	if err := c.BodyParser(&requests); err != nil {

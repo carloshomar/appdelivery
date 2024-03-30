@@ -12,5 +12,8 @@ type Establishment struct {
 
 	Lat                 float64 `json:"lat"`
 	Long                float64 `json:"long"`
+	LocationString      string  `json:"location_string"`
 	MaxDistanceDelivery float64 `json:"max_distance_delivery"`
+
+	OpenData *string `json:"open_data,omitempty"`
 }

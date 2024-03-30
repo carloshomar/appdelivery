@@ -13,7 +13,13 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-function HeaderDelivery({ onDisponivel, loading, disponivel }: any) {
+function HeaderDelivery({
+  onDisponivel,
+  loading,
+  disponivel,
+  inWork,
+  disabled,
+}: any) {
   const insets = useSafeAreaInsets();
   const nav = useNavigation();
 
@@ -48,7 +54,10 @@ function HeaderDelivery({ onDisponivel, loading, disponivel }: any) {
           gap: 20,
         }}
       >
-        <TouchableOpacity onPress={() => nav.navigate("perfil")}>
+        <TouchableOpacity
+          onPress={() => nav.navigate("perfil")}
+          disabled={disabled}
+        >
           <Image
             source={{
               uri: "https://cdn-icons-png.freepik.com/512/4140/4140048.png",
@@ -70,6 +79,7 @@ function HeaderDelivery({ onDisponivel, loading, disponivel }: any) {
             width: Dimensions.get("window").width / 2,
             padding: 10,
           }}
+          disabled={disabled}
           onPress={() => onDisponivel(!disponivel)}
         >
           {!loading ? (
@@ -80,7 +90,11 @@ function HeaderDelivery({ onDisponivel, loading, disponivel }: any) {
                 color: Colors.light.white,
               }}
             >
-              {disponivel ? Texts.disponivel : Texts.indisponivel}
+              {disponivel
+                ? !inWork.status
+                  ? Texts.disponivel
+                  : Texts.em_entrega
+                : Texts.indisponivel}
             </Text>
           ) : (
             <ActivityIndicator color={Colors.light.white} />
