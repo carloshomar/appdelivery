@@ -16,11 +16,23 @@ _Contribuições são sempre bem-vindas!_
 
 <a href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
 
+#### Web Restaurante
+
+<img src="./Arquitetura/web_1.png" alt="web1" ></img>
+_Kanban de fluxo de trabalho do restaurante._
+
+#### Gestor de Cardápio
+
+<img src="./Arquitetura/web_2.png" alt="web2"  ></img>
+_Gestor de cardápio para criação e alteração de produtos._
+
 #### App de Entregas:
 
-<img src="./Arquitetura/IMG_9963.jpg" alt="IMG2" width="200"></img>
-<img src="./Arquitetura/IMG_9966.jpg" alt="IMG4" width="200"></img>
-<img src="./Arquitetura/IMG_9964.jpg" alt="IMG3" width="200"></img>
+<img src="./Arquitetura/IMG_9967.PNG" alt="IMG2" width="200"></img>
+<img src="./Arquitetura/IMG_9966.png" alt="IMG4" width="200"></img>
+<img src="./Arquitetura/IMG_9964.PNG" alt="IMG3" width="200"></img>
+<img src="./Arquitetura/IMG_0164.PNG" alt="IMG3" width="200"></img>
+<img src="./Arquitetura/IMG_0165.PNG" alt="IMG3" width="200"></img>
 
 ## Principais Características
 
