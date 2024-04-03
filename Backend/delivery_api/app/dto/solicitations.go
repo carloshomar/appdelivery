@@ -1,5 +1,7 @@
 package dto
 
+import "time"
+
 type Location struct {
 	CEP         string      `json:"cep"`
 	Logradouro  string      `json:"logradouro"`
@@ -62,4 +64,5 @@ type OrderDTO struct {
 	Establishment   Establishment `json:"establishment"`
 	OrderId         string        `json:"order_id"`
 	DeliveryMan     DeliveryMan   `json:"deliveryman"`
+	OperationDate   time.Time     `json:"operationDate"`
 }

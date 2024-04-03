@@ -14,4 +14,7 @@ func SetupRoutes(app *fiber.App, sendMessageToClient func(clientID int64, messag
 	app.Post("/deliveryman/status", func(c *fiber.Ctx) error {
 		return handlers.UpdateOrderStatusByDeliverymanID(c, sendMessageToClient)
 	})
+
+	app.Get("/deliveryman/extrato/:id", handlers.GetExtrato)
+
 }

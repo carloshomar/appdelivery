@@ -79,6 +79,23 @@ const calcularDistancia = async (
   }
 };
 
+function formatDate(dataString: string) {
+  try {
+    const data = new Date(dataString);
+    const dia = String(data.getDate()).padStart(2, "0");
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const ano = data.getFullYear().toString();
+    const horas = String(data.getHours()).padStart(2, "0");
+    const minutos = String(data.getMinutes()).padStart(2, "0");
+
+    return `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
+  } catch (e) {
+    console.log(e);
+
+    return dataString;
+  }
+}
+
 function formatCurrency(value: number): string {
   // Formate o valor como dinheiro brasileiro (BRL)
   try {
@@ -160,4 +177,5 @@ export default {
   formatCurrency,
   getMarkerUser,
   calcularDistanciaMediaDeBike,
+  formatDate,
 };

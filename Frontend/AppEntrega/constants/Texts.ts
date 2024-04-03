@@ -19,6 +19,7 @@ const Texts = {
   em_entrega: "Em Coleta",
   continue_duvida: "Você realmente deseja continuar?",
   nao_sera_possivel_voltar: "Não será possível voltar após confirmar",
+  notfound_extract: "Nenhuma entrega encontrada",
   ...Strings.status,
 };
 
