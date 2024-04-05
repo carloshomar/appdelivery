@@ -96,6 +96,23 @@ function formatDate(dataString: string) {
   }
 }
 
+function formatDateNoHour(dataString: string) {
+  try {
+    const data = new Date(dataString);
+    const dia = String(data.getDate()).padStart(2, "0");
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const ano = data.getFullYear().toString();
+    const horas = String(data.getHours()).padStart(2, "0");
+    const minutos = String(data.getMinutes()).padStart(2, "0");
+
+    return `${dia}/${mes}/${ano}`;
+  } catch (e) {
+    console.log(e);
+
+    return dataString;
+  }
+}
+
 function formatCurrency(value: number): string {
   // Formate o valor como dinheiro brasileiro (BRL)
   try {
@@ -168,6 +185,12 @@ const formatLocationInfo = (locationInfo: any) => {
   } ${locationInfo.bairro}, ${locationInfo.localidade} - ${locationInfo.uf}`;
 };
 
+const formatDay = (dateString: string) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  return day;
+};
+
 export default {
   getMarkerEstablishment,
   calculateNewCoordinates,
@@ -176,6 +199,8 @@ export default {
   formatLocationInfo,
   formatCurrency,
   getMarkerUser,
+  formatDay,
   calcularDistanciaMediaDeBike,
   formatDate,
+  formatDateNoHour,
 };

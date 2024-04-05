@@ -1,17 +1,25 @@
 import Colors from "@/constants/Colors";
 import helper from "@/helpers/helper";
+import { useNavigation } from "expo-router";
 import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 const OrderList = ({ orders }: any) => {
+  const nav = useNavigation();
   const groupOrdersByDate = () => {
     const groupedOrders = {} as any;
     orders.forEach((order: any) => {
-      const date = helper.formatDate(order.operationDate);
-      if (!groupedOrders[date]) {
-        groupedOrders[date] = [];
+      const day = helper.formatDateNoHour(order.operationDate);
+      if (!groupedOrders[day]) {
+        groupedOrders[day] = [];
       }
-      groupedOrders[date].push(order);
+      groupedOrders[day].push(order);
     });
     return groupedOrders;
   };
@@ -26,7 +34,10 @@ const OrderList = ({ orders }: any) => {
 
   // Renderizar um item de pedido
   const renderOrderItem = (item) => (
-    <View style={styles.orderItemContainer}>
+    <TouchableOpacity
+      style={styles.orderItemContainer}
+      onPress={() => nav.navigate("extract_view", item)}
+    >
       <View>
         <Text style={styles.establishmentName}>{item.establishment.name}</Text>
         <Text style={styles.orderDate}>
@@ -36,7 +47,7 @@ const OrderList = ({ orders }: any) => {
       <Text style={styles.deliveryValue}>
         {helper.formatCurrency(item.deliveryValue)}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 
   // Agrupar os pedidos por data

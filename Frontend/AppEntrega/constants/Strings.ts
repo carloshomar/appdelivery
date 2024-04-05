@@ -6,6 +6,7 @@ const Strings = {
     AWAIT_COLECT: "Retirar Pedido",
     IN_ROUTE_DELIVERY: "Fazer Entrega",
     FINISH: "Finalizado",
+    FINISHED: "Finalizado",
   },
 
   status_array: {
@@ -21,6 +22,7 @@ const Strings = {
     IN_ROUTE_DELIVERY: "Em Rota de Entrega",
     FINISH: "Finalizado",
   },
+  config: "Configuração",
   inicio: "Inicio",
   extrato: "Extrato",
   ajuda: "Ajuda",

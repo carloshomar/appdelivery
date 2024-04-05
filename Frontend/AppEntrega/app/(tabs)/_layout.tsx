@@ -56,10 +56,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="help"
         options={{
-          title: Strings.ajuda,
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="question-circle" color={color} />
-          ),
+          title: Strings.config,
+          tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
         }}
       />
     </Tabs>
