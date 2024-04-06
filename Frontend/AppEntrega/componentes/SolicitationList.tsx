@@ -25,12 +25,36 @@ const OrderList = ({ orders }: any) => {
   };
 
   // Renderizar os itens de pedido para cada dia
-  const renderOrderItemsForDay = (date, orderItems) => (
-    <>
-      <Text style={styles.dateSeparator}>{date}</Text>
-      {orderItems.map((item: any) => renderOrderItem(item))}
-    </>
-  );
+  const renderOrderItemsForDay = (date, orderItems) => {
+    const totalDeliveryValue = orderItems.reduce(
+      (total: number, item: any) => total + item.deliveryValue,
+      0
+    );
+
+    return (
+      <>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={styles.dateSeparator}>{date}</Text>
+          <Text
+            style={{
+              ...styles.dateSeparator,
+              fontSize: 12,
+            }}
+          >
+            {helper.formatCurrency(totalDeliveryValue)}
+          </Text>
+        </View>
+        {orderItems.map((item: any) => renderOrderItem(item))}
+      </>
+    );
+  };
 
   // Renderizar um item de pedido
   const renderOrderItem = (item) => (
@@ -92,7 +116,7 @@ const styles = StyleSheet.create({
   },
   dateSeparator: {
     fontSize: 16,
-    fontWeight: "400",
+    fontWeight: "600",
     color: Colors.light.text,
     backgroundColor: Colors.light.background,
     paddingVertical: 15,

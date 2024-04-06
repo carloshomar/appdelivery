@@ -97,11 +97,30 @@ const calcularDistancia = async (lat: number, long: number) => {
   }
 };
 
+function orderByImage(listaDeObjetos: any) {
+  // Separe os objetos com o atributo "Image" dos que não têm
+  const objetosComImagem = listaDeObjetos.filter((objeto: any) => objeto.Image);
+  const objetosSemImagem = listaDeObjetos.filter(
+    (objeto: any) => !objeto.Image
+  );
+
+  // Classifique os objetos com imagem primeiro
+  objetosComImagem.sort((a: any, b: any) => {
+    // Aqui você pode personalizar a lógica de ordenação, se necessário
+    // Neste exemplo, estamos apenas priorizando os objetos com "Image"
+    return a.Image.localeCompare(b.Image);
+  });
+
+  // Junte os objetos classificados e retorne a lista ordenada
+  return [...objetosComImagem, ...objetosSemImagem];
+}
+
 export default {
   formatCurrency,
   formatPhoneNumber,
   removePhoneNumberMask,
   generateId,
   calcularDistancia,
+  orderByImage,
   getLocationDistance,
 };
