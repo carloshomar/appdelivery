@@ -23,7 +23,7 @@ const CardapioEditModal = ({
     price: item?.Price || 0,
     image: item?.Image || "",
   });
-  const { user } = useAuth();
+  const { getUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -69,7 +69,7 @@ const CardapioEditModal = ({
       ...formData,
       price: parseFloat(formData.price),
       id: parseInt(formData.id) || null,
-      establishmentId: user.establishment.id,
+      establishmentId: getUser().id,
     };
 
     try {

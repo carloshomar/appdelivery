@@ -20,6 +20,7 @@ const Texts = {
   fora_area: "Fora da área de entrega",
   alter: "Alterar",
   metodos_pagamentos: "Pagamento",
+  todos: "Todos",
   telefone: "Telefone",
   endereco: "Endereço",
   credit: "Crédito",

@@ -6,6 +6,7 @@ import (
 	"log"
 	"math"
 	"strconv"
+	"time"
 
 	"github.com/carloshomar/vercardapio/app/dto"
 	"github.com/carloshomar/vercardapio/app/models"
@@ -34,7 +35,7 @@ func CreateSolicitation(msg string, sendMessageToClient func(clientID int64, mes
 			return nil
 		}
 	} else {
-		update := bson.M{"$set": bson.M{"status": orderDTO.Status}}
+		update := bson.M{"$set": bson.M{"status": orderDTO.Status, "operationDate": time.Now()}}
 
 		log.Printf("Atualizando pedido %s", orderDTO.OrderId)
 		log.Printf("Para Status: %s", orderDTO.Status)
@@ -47,7 +48,6 @@ func CreateSolicitation(msg string, sendMessageToClient func(clientID int64, mes
 
 		var solicitationExistent dto.OrderDTO
 		existingSolicitation.Decode(&solicitationExistent)
-
 		orderDTO.DeliveryMan = solicitationExistent.DeliveryMan
 
 		jsonData, _ := json.Marshal(&orderDTO)

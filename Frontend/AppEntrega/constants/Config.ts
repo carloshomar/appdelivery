@@ -1,4 +1,4 @@
 export default {
-  msUpdateInDelivery: 60000,
+  msUpdateInDelivery: 30000,
   msUpdateOffDelivery: 30000,
 };

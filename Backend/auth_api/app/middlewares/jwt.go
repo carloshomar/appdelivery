@@ -75,6 +75,7 @@ func GenerateJWTDeliveryMan(user *models.DeliveryMan) (string, error) {
 		"id":    user.ID,
 		"name":  user.Name,
 		"email": user.Email,
+		"phone": user.Phone,
 		"exp":   expirationTime,
 	})
 

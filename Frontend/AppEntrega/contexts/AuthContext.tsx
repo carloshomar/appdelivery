@@ -10,6 +10,7 @@ interface User {
   email: string;
   name: string;
   id: number;
+  phone: string;
 }
 
 interface AuthContextType {
@@ -108,6 +109,7 @@ const AuthProvider: React.FC<any> = ({ children }) => {
         email: string;
         name: string;
         id: number;
+        phone: string;
       };
 
       setUser(decodedToken);

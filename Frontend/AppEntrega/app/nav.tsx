@@ -52,6 +52,15 @@ export default function StackNav() {
         />
 
         <Stack.Screen
+          name="extract_view"
+          options={{
+            title: Texts.extract,
+            headerBackTitleVisible: false,
+            headerTintColor: Colors.light.text,
+          }}
+        />
+
+        <Stack.Screen
           name="confirm_generical"
           options={{
             title: "",
