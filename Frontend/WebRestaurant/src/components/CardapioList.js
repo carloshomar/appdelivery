@@ -38,7 +38,13 @@ const MenuList = ({
                   {helper.formatCurrency(item.Price)}
                 </p>
               </div>
-              <p className="text-sm text-gray-500 mt-4">{item.Description}</p>
+              <div className="mt-2">
+                {item?.Categories.map((e) => (
+                  <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 p-1 rounded dark:bg-blue-900 dark:text-blue-300 cursor-pointer">
+                    {e.Name}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </li>

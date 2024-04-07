@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import Strings from "../constants/Strings";
 import { toast } from "react-toastify";
 import Texts from "../constants/Texts";
+import helper from "../helpers/helper";
 
 const CardapioEditModal = ({
   isOpen,
@@ -23,7 +24,7 @@ const CardapioEditModal = ({
     price: item?.Price || 0,
     image: item?.Image || "",
   });
-  const { user } = useAuth();
+  const { user, getUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -69,7 +70,7 @@ const CardapioEditModal = ({
       ...formData,
       price: parseFloat(formData.price),
       id: parseInt(formData.id) || null,
-      establishmentId: user.establishment.id,
+      establishmentId: getUser().id,
     };
 
     try {
@@ -104,59 +105,91 @@ const CardapioEditModal = ({
         <h2 className="font-bold text-lg pl-6 mb-2">{Texts.editar_itens}</h2>
         <div className="flex flex-col items-center">
           <form onSubmit={handleSubmit} className="w-full p-6">
-            <div className="flex row mb-4">
-              {formData.id ? (
-                <div className="mb-4">
+            <div className="w-full flex mb-4 row flex gap-6">
+              {formData.image && (
+                <div className="mt-2">
+                  <img
+                    src={formData.image}
+                    alt="Imagem do produto"
+                    className="w-32 h-32 object-fill rounded-md border-2 border-primary"
+                  />
+                </div>
+              )}
+              <div className="w-full">
+                <div className="flex row mb-4">
+                  {formData.id ? (
+                    <div className="">
+                      <label
+                        htmlFor="id"
+                        className="block text-sm font-medium text-black"
+                      >
+                        ID
+                      </label>
+                      <input
+                        type="text"
+                        id="id"
+                        name="id"
+                        value={formData.id}
+                        disabled
+                        className="mt-1 p-1 border rounded-sm w-12 mr-4"
+                      />
+                    </div>
+                  ) : null}
+
+                  <div className=" w-full">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Nome
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="mt-1 p-1 border rounded-sm w-full"
+                    />
+                  </div>
+                  <div className=" ml-4">
+                    <label
+                      htmlFor="price"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Preço
+                    </label>
+                    <input
+                      type="text"
+                      id="price"
+                      name="price"
+                      value={formData.price}
+                      onChange={handleChangeMoney}
+                      className="mt-1 p-1 border rounded-sm w-full"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full">
                   <label
                     htmlFor="id"
                     className="block text-sm font-medium text-black"
                   >
-                    ID
+                    {Texts.imagem}
                   </label>
                   <input
                     type="text"
-                    id="id"
-                    name="id"
-                    value={formData.id}
-                    disabled
-                    className="mt-1 p-1 border rounded-sm w-12 mr-4"
+                    id="image"
+                    name="image"
+                    value={formData.image}
+                    onChange={handleChange}
+                    placeholder="Insira a URL da imagem"
+                    className="mt-1 p-1 h-10 border rounded-sm w-full"
                   />
                 </div>
-              ) : null}
-
-              <div className="mb-4 w-full">
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-black"
-                >
-                  Nome
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="mt-1 p-1 border rounded-sm w-full"
-                />
-              </div>
-              <div className="mb-4 ml-4">
-                <label
-                  htmlFor="price"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Preço
-                </label>
-                <input
-                  type="text"
-                  id="price"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChangeMoney}
-                  className="mt-1 p-1 border rounded-sm w-full"
-                />
               </div>
             </div>
+
             <div className="mb-4">
               <label
                 htmlFor="description"
@@ -172,44 +205,47 @@ const CardapioEditModal = ({
                 className="mt-1 p-1 border rounded-sm w-full"
               />
             </div>
+
             <div className="mt-2 mb-4">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label className="block text-sm font-medium text-gray-700">
                 {Texts.categorias}
               </label>
-              <input
-                type="text"
-                className="mt-1 p-1 h-10 border rounded-sm w-full"
-              />
-            </div>
-            <div className="w-full flex mb-4 row flex gap-6">
-              <div className="mt-2">
-                {formData.image && (
-                  <img
-                    src={formData.image}
-                    alt="Imagem do produto"
-                    className="w-32 h-32 object-fill rounded-md border-2 border-primary"
-                  />
-                )}
-              </div>
-              <div className="w-full">
-                <label
-                  htmlFor="id"
-                  className="block text-sm font-medium text-black"
+              <div className="mt-2   items-center flex">
+                <button
+                  type="button"
+                  onClick={() => {}}
+                  className="bg-primary text-white px-4 py-2 rounded mr-4 hover:bg-menu1"
                 >
-                  {Texts.imagem}
-                </label>
-                <input
-                  type="text"
-                  id="image"
-                  name="image"
-                  value={formData.image}
-                  onChange={handleChange}
-                  placeholder="Insira a URL da imagem"
-                  className="mt-1 p-1 h-10 border rounded-sm w-full"
-                />
+                  +
+                </button>
+                {item?.Categories.map((e) => (
+                  <span class="bg-blue-100 text-blue-800 text-base font-medium me-2 px-2.5 py-2  rounded dark:bg-blue-900 dark:text-blue-300 cursor-pointer">
+                    x {e.Name}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-2 mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                {Texts.additional}
+              </label>
+              <div className="mt-2   items-center flex">
+                <button
+                  type="button"
+                  onClick={() => {}}
+                  className="bg-primary text-white px-4 py-2 rounded mr-4 hover:bg-menu1"
+                >
+                  +
+                </button>
+                {item?.Additional.map((e) => (
+                  <span class="bg-blue-100 text-blue-800 text-base font-medium me-2 px-2.5 py-2  rounded dark:bg-blue-900 dark:text-blue-300 cursor-pointer">
+                    x {e.Name}{" "}
+                    <span className="text-xs font-light">
+                      ({helper.formatCurrency(e.Price)})
+                    </span>
+                  </span>
+                ))}
               </div>
             </div>
 

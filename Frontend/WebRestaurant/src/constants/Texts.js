@@ -31,4 +31,5 @@ export default {
   password: "Senha",
   esqueceu_senha: "Esqueceu sua senha?",
   entrar: "Entrar",
+  additional: "Adicionais",
 };
