@@ -7,6 +7,6 @@ type Product struct {
 	Price           float64 `gorm:"not null"`
 	Image           string
 	EstablishmentID uint
-	Categories      []Category   `gorm:"many2many:category_products;"`
+	Categories      []Category   `gorm:"many2many:category_products;foreignKey:ID;joinForeignKey:ProductID;joinReferences:CategoryID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	Additional      []Additional `gorm:"many2many:additional_products;foreignKey:ID;joinForeignKey:ProductID;joinReferences:AdditionalID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }

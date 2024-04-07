@@ -172,6 +172,18 @@ const CardapioEditModal = ({
                 className="mt-1 p-1 border rounded-sm w-full"
               />
             </div>
+            <div className="mt-2 mb-4">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700"
+              >
+                {Texts.categorias}
+              </label>
+              <input
+                type="text"
+                className="mt-1 p-1 h-10 border rounded-sm w-full"
+              />
+            </div>
             <div className="w-full flex mb-4 row flex gap-6">
               <div className="mt-2">
                 {formData.image && (

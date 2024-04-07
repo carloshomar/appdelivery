@@ -20,7 +20,9 @@ func SetupRoutes(app *fiber.App, sendMessageToClient func(clientID int64, messag
 	app.Post("/categories/product", handlers.CreateProductCategorie)
 	app.Get("/categories/product/:establishmentId", handlers.GetCategoriesWithProducts)
 
+	app.Get("/additional/:id", handlers.ListAdditional)
 	app.Post("/additional", handlers.CreateAdditional)
+	app.Put("/additional/:id", handlers.UpdateAdditional)
 	app.Post("/additional/product", handlers.CreateProductToAdditional)
 
 	app.Post("/delivery", handlers.InsertDelivery)
