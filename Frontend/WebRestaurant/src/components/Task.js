@@ -1,8 +1,7 @@
-// src/components/Task.js
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import helper from "../helpers/helper";
-import Strings from "../constants/Strings";
+
 import Texts from "../constants/Texts";
 const Task = ({ task, index, key }) => {
   const [showItems, setShowItems] = useState(false);

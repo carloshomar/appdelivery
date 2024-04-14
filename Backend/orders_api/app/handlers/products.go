@@ -129,3 +129,30 @@ func GetByEstablishmentIdWithRelations(c *fiber.Ctx) error {
 
 	return c.JSON(&categories)
 }
+
+func DeleteProduct(c *fiber.Ctx) error {
+	productID := c.Params("id")
+
+	// Verifique se o produto existe no banco de dados
+	var existingProduct models.Product
+	if err := models.DB.First(&existingProduct, productID).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Product not found"})
+	}
+
+	// Antes de excluir o produto, exclua todos os relacionamentos na tabela category_products que o referenciam
+	if err := models.DB.Where("product_id = ?", productID).Delete(&models.CategoryProducts{}).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete associated relationships"})
+	}
+
+	// Antes de excluir o produto, exclua todos os relacionamentos na tabela additional_products que o referenciam
+	if err := models.DB.Where("product_id = ?", productID).Delete(&models.AdditionalProducts{}).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete associated relationships"})
+	}
+
+	// Agora podemos excluir o produto
+	if err := models.DB.Delete(&existingProduct).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete product"})
+	}
+
+	return c.JSON(fiber.Map{"message": "Product deleted successfully"})
+}

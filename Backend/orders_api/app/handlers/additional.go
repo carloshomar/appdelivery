@@ -91,11 +91,15 @@ func CreateProductToAdditional(c *fiber.Ctx) error {
 	}).First(&existingAdditionalProducts)
 
 	if result.RowsAffected > 0 {
-		// O relacionamento já existe, retorne um erro ou trate conforme necessário
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Relationship already exists"})
+		// O relacionamento já existe, então vamos removê-lo
+		models.DB.Where(&models.AdditionalProducts{
+			ProductID:    request.ProductID,
+			AdditionalID: request.AdditionalID,
+		}).Delete(&existingAdditionalProducts)
+		return c.JSON(&existingAdditionalProducts)
 	}
 
-	// O produto existe, e o relacionamento não existe, agora podemos criar o AdditionalProducts
+	// Agora podemos criar o AdditionalProducts
 	additionalProducts := models.AdditionalProducts{
 		ProductID:    request.ProductID,
 		AdditionalID: request.AdditionalID,
@@ -104,4 +108,26 @@ func CreateProductToAdditional(c *fiber.Ctx) error {
 	models.DB.Create(&additionalProducts)
 
 	return c.JSON(&additionalProducts)
+}
+
+func DeleteAdditional(c *fiber.Ctx) error {
+	additionalID := c.Params("id")
+
+	// Verifique se o item adicional existe no banco de dados
+	var existingAdditional models.Additional
+	if err := models.DB.First(&existingAdditional, additionalID).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Additional item not found"})
+	}
+
+	// Antes de excluir o item adicional, exclua todos os relacionamentos na tabela additional_products que o referenciam
+	if err := models.DB.Where("additional_id = ?", additionalID).Delete(&models.AdditionalProducts{}).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete associated relationships"})
+	}
+
+	// Agora podemos excluir o item adicional
+	if err := models.DB.Delete(&existingAdditional).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete additional item"})
+	}
+
+	return c.JSON(fiber.Map{"message": "Additional item deleted successfully"})
 }

@@ -11,6 +11,7 @@ func SetupRoutes(app *fiber.App, sendMessageToClient func(clientID int64, messag
 	app.Get("/products/:establishmentId", handlers.GetByEstablishmentId)
 
 	app.Post("/products/create", handlers.CreateProduct)
+	app.Delete("/products/delete/:id", handlers.DeleteProduct)
 	app.Post("/products/multi-create", handlers.CreateMultProducts)
 	app.Put("/products/update/:id", handlers.UpdateProduct)
 
@@ -18,11 +19,16 @@ func SetupRoutes(app *fiber.App, sendMessageToClient func(clientID int64, messag
 	app.Get("/categories/:establishmentId", handlers.GetCategories)
 
 	app.Post("/categories/product", handlers.CreateProductCategorie)
+	app.Delete("/categories/:id", handlers.DeleteCategory)
+	app.Put("/categories/:id", handlers.UpdateCategory)
+
 	app.Get("/categories/product/:establishmentId", handlers.GetCategoriesWithProducts)
 
-	app.Get("/additional/:id", handlers.ListAdditional)
 	app.Post("/additional", handlers.CreateAdditional)
+
+	app.Get("/additional/:id", handlers.ListAdditional)
 	app.Put("/additional/:id", handlers.UpdateAdditional)
+	app.Delete("/additional/:id", handlers.DeleteAdditional)
 	app.Post("/additional/product", handlers.CreateProductToAdditional)
 
 	app.Post("/delivery", handlers.InsertDelivery)
