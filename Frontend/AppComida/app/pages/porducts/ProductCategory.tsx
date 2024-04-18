@@ -40,11 +40,18 @@ const ProductCategory = ({ category }: any) => {
               <View style={styles.productDetails}>
                 <View>
                   <Text style={styles.productName}>{item.Name}</Text>
-                  <Text style={styles.description} numberOfLines={4}>
-                    {item.Description}
-                  </Text>
+                  {item.Description ? (
+                    <Text style={styles.description} numberOfLines={4}>
+                      {item.Description}
+                    </Text>
+                  ) : null}
                 </View>
-                <Text style={styles.productPrice}>
+                <Text
+                  style={{
+                    ...styles.productPrice,
+                    marginTop: item.Description ? 10 : 0,
+                  }}
+                >
                   <Text style={styles.priceValue}>
                     {helpers.formatCurrency(item.Price)}
                   </Text>

@@ -52,6 +52,7 @@ func CreateDeliveryMan(c *fiber.Ctx) error {
 	user := models.DeliveryMan{
 		Name:     request.Name,
 		Email:    request.Email,
+		Phone:    request.Phone,
 		Password: string(hashedPassword),
 	}
 
