@@ -5,6 +5,9 @@ O **Delivery** é uma plataforma de código aberto que permite a personalizaçã
 _Fique a vontade para Criar, Modificar, Comercializar e Distribuir!_ <br/>
 _Contribuições são sempre bem-vindas!_
 
+##### <a href="https://github.com/carloshomar/appdelivery/issues">Backlog e Andamento do Projeto</a>
+
+
 #### App de Comida
 
 <img src="./Arquitetura/IMG_9734.PNG" alt="IMG1" width="200"></img>
@@ -29,9 +32,8 @@ _Gestor de cardápio para criação e alteração de produtos._
 #### App de Entregas:
 
 <img src="./Arquitetura/IMG_9967.PNG" alt="IMG2" width="200"></img>
-<img src="./Arquitetura/IMG_9966.png" alt="IMG4" width="200"></img>
+<img src="./Arquitetura/IMG_9966.PNG" alt="IMG4" width="200"></img>
 <img src="./Arquitetura/IMG_9964.PNG" alt="IMG3" width="200"></img>
-<img src="./Arquitetura/IMG_0164.PNG" alt="IMG3" width="200"></img>
 <img src="./Arquitetura/IMG_0165.PNG" alt="IMG3" width="200"></img>
 
 ## Principais Características
@@ -47,13 +49,6 @@ _Gestor de cardápio para criação e alteração de produtos._
 
 - **Arquitetura Eficiente:** O servidor foi projetado para suportar um ou mais aplicativos simultaneamente, permitindo a divisão de custos e manutenção simplificada em larga escala.
 
-## Backlog (em desenvolvimento)
-
-- App do entregador
-- Página WEB de alteração de status de Pedido
-- Página WEB de alteração de Cardápio
-- Página WEB de Relatorio
-- Webhooks para integração (não priorizado)
 
 ## Técnico
 
@@ -114,7 +109,11 @@ go run main.go
 
 ### Frontend:
 
-Tenha o node instalado na sua maquina, no caso eu utilizei a v16.15. na pasta _Frontend/AppComida/services/api.tsx_ faça alterações para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a prota que está rodando aplicativo e alterar a url.
+_Tenha o node instalado na sua maquina, no caso eu utilizei a v16.15._
+
+
+No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/services/api.tsx_</a> faça alterações da URL para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a prota que está rodando aplicativo e alterar a url.
+
 
 Instalando dependências.
 
