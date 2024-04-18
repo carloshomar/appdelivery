@@ -7,7 +7,6 @@ _Contribuições são sempre bem-vindas!_
 
 ##### <a href="https://github.com/carloshomar/appdelivery/issues">Backlog e Andamento do Projeto</a>
 
-
 #### App de Comida
 
 <img src="./Arquitetura/IMG_9734.PNG" alt="IMG1" width="200"></img>
@@ -49,7 +48,6 @@ _Gestor de cardápio para criação e alteração de produtos._
 
 - **Arquitetura Eficiente:** O servidor foi projetado para suportar um ou mais aplicativos simultaneamente, permitindo a divisão de custos e manutenção simplificada em larga escala.
 
-
 ## Técnico
 
 Um servidor tem a capacidade de executar simultaneamente _N_ aplicativos. Dessa forma, torna-se viável reduzir os custos do servidor, necessitando apenas de um servidor para sustentar toda a infraestrutura de aplicativos.
@@ -85,7 +83,7 @@ _É importante já ter o docker instalado no sistema operacional._
 Rode no terminal:
 
 ```bash
-docker compose up
+docker compose up --build
 ```
 
 As credenciais de banco estão presentes no docker-compose.yml.
@@ -111,9 +109,7 @@ go run main.go
 
 _Tenha o node instalado na sua maquina, no caso eu utilizei a v16.15._
 
-
-No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/services/api.tsx_</a> faça alterações da URL para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a prota que está rodando aplicativo e alterar a url.
-
+No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/services/api.tsx_</a> faça alterações da URL para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a porta que está rodando aplicativo e alterar a url.
 
 Instalando dependências.
 
