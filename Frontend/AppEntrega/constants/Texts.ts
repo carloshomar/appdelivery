@@ -19,6 +19,8 @@ const Texts = {
   em_entrega: "Em Coleta",
   continue_duvida: "Você realmente deseja continuar?",
   nao_sera_possivel_voltar: "Não será possível voltar após confirmar",
+  codigo: "Por favor, insira o código para prosseguir.",
+  codigo_errado: "Código inválido. Por favor, insira o código corretamente.",
   ...Strings.status,
 };
 

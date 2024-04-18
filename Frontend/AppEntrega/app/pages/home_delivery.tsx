@@ -35,6 +35,7 @@ function HomeDelivery() {
   const isAndroid = Platform.OS === "android";
   const isFocused = useIsFocused();
   const [hasFirst, setHasFirst] = useState(false);
+  const intervalRef = useRef<any>(null);
 
   const centerMapOnUser = async () => {
     if (mylocation) {
@@ -78,10 +79,18 @@ function HomeDelivery() {
   }
 
   useEffect(() => {
-    start();
-    setInterval(() => {
-      isActiveOrder();
-    }, Config.msUpdateInDelivery);
+    const iniciarIntervalo = () => {
+      start();
+      intervalRef.current = setInterval(() => {
+        isActiveOrder();
+      }, Config.msUpdateOffDelivery);
+    };
+
+    iniciarIntervalo();
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   }, []);
 
   useEffect(() => {

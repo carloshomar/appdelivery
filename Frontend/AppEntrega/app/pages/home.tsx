@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -38,6 +38,7 @@ export default function Home() {
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const nav = useNavigation();
+  const intervalRef = useRef<any>(null);
 
   const [loading, setLoading] = useState(false);
   const [markers, setMarkers] = useState<any>([]);
@@ -117,11 +118,19 @@ export default function Home() {
   }
 
   useEffect(() => {
-    start();
-    setInterval(() => {
+    const iniciarIntervalo = () => {
       start();
-      disponify(false, false);
-    }, Config.msUpdateOffDelivery);
+
+      intervalRef.current = setInterval(() => {
+        start();
+        disponify(false, false);
+      }, Config.msUpdateOffDelivery);
+    };
+
+    iniciarIntervalo();
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   }, []);
 
   useEffect(() => {
