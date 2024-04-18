@@ -25,6 +25,8 @@ services:
       context: ./auth_api
       dockerfile: Dockerfile
     container_name: auth-api
+    env_file:
+      - ./auth_api/.env
     environment:
       - DB_CONNECTION_STRING=user=admin password=pass dbname=users_db sslmode=disable host=users-db
       - JWT_SECRET=4fcfc25be07f50a0f0f6214df8b495c0
@@ -52,6 +54,8 @@ services:
       context: ./orders_api
       dockerfile: Dockerfile
     container_name: orders-api
+    env_file:
+      - ./orders_api/.env
     depends_on:
       - orders-mongo
       - orders-db
@@ -101,6 +105,8 @@ services:
       context: ./delivery_api
       dockerfile: Dockerfile
     container_name: delivery-api
+    env_file:
+      - ./delivery_api/.env
     depends_on:
       - delivery-mongo
       - rabbitmq
