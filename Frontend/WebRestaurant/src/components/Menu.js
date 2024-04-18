@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  FiBellOff,
   FiBox,
   FiEye,
   FiEyeOff,
   FiHardDrive,
   FiHome,
   FiLogOut,
-  FiMenu,
-  FiPaperclip,
-  FiPhoneOutgoing,
-  FiSettings,
-  FiX,
 } from "react-icons/fi";
 import { FaStore, FaStoreSlash } from "react-icons/fa";
 
@@ -82,7 +76,7 @@ const SideMenu = ({ isOpen }) => {
   const { logout } = useAuth();
   const MENUS = [
     {
-      title: "Meus Pedidos",
+      title: Texts.meus_pedidos,
       href: "/",
       icon: (
         <FiHome className={`h-6 w-6 ${isOpen ? "mr-4" : ""} cursor-pointer`} />
@@ -145,10 +139,14 @@ const SideMenu = ({ isOpen }) => {
 };
 
 const MenuLayout = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const tagitem = "ISOPEN";
+  const getItem = localStorage.getItem(tagitem);
+  const [isOpen, setIsOpen] = useState(getItem ? getItem == "true" : false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    const res = !isOpen;
+    setIsOpen(res);
+    localStorage.setItem(tagitem, JSON.stringify(res));
   };
 
   return (
@@ -156,11 +154,17 @@ const MenuLayout = ({ children }) => {
       <div className="fixed">
         <SideMenu isOpen={isOpen} />
       </div>
-      <div className={`flex-grow ${isOpen ? "ml-60" : "ml-25"}`}>
+      <div className={`flex-grow ${isOpen ? "ml-60" : ""}`}>
         <div>
           <TopMenu toggleMenu={toggleMenu} isOpen={isOpen} />
         </div>
-        <div className="container mx-auto mt-4">{children}</div>
+        <div
+          className={`container overflow-x-hidden mx-auto mt-4 items-center ${
+            isOpen ? "sm:ml-0 md:ml-0 lg:ml-0" : "sm:ml-9 md:ml-24 lg:ml-24"
+          }`}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

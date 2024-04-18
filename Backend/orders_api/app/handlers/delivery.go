@@ -1,14 +1,15 @@
 package handlers
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"github.com/carloshomar/vercardapio/app/models"
+	"github.com/gofiber/fiber/v2"
 )
 
 func CalculateDeliveryValue(c *fiber.Ctx) error {
 	// Extrair a distância do corpo da requisição
 	var request struct {
-		Distance float32 `json:"distance"`
+		Distance        float32 `json:"distance"`
+		EstablishmentID int64   `json:"establishmentId"`
 	}
 
 	if err := c.BodyParser(&request); err != nil {
@@ -17,9 +18,14 @@ func CalculateDeliveryValue(c *fiber.Ctx) error {
 		})
 	}
 
-	// Consultar no banco de dados para obter as configurações de entrega
+	// Se establishmentId não estiver presente na solicitação, definimos o valor padrão como 1
+	if request.EstablishmentID == 0 {
+		request.EstablishmentID = 1
+	}
+
+	// Consultar no banco de dados para obter as configurações de entrega específicas do estabelecimento
 	var delivery models.Delivery
-	if err := models.DB.First(&delivery).Error; err != nil {
+	if err := models.DB.Where("establishment_id = ?", request.EstablishmentID).First(&delivery).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Failed to fetch delivery settings",
 		})

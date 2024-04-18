@@ -5,6 +5,7 @@ import MenuLayout from "../../components/Menu";
 import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 import Texts from "../../constants/Texts";
+import ordersModels from "../../services/orders.models";
 
 const columns = [
   { id: "AWAIT_APPROVE", title: "Em análise", background: "#fb6f2d" },
@@ -21,27 +22,7 @@ const Home = () => {
   async function init() {
     if (!user) return;
     try {
-      const { data } = await api.get("/api/order/orders/" + getUser()?.id);
-      setTasks(
-        data
-          .filter((e) => {
-            if (!e.deliveryman) {
-              return e;
-            }
-            if (e.deliveryman?.status !== "FINISHED") {
-              return e;
-            }
-          })
-          .map((e) => {
-            return {
-              id: e._id,
-              column: e.status,
-              data: {
-                ...e,
-              },
-            };
-          })
-      );
+      setTasks(await ordersModels.getOrders(getUser().id));
     } catch (e) {
       console.log(e);
     }
@@ -49,7 +30,6 @@ const Home = () => {
 
   useEffect(() => {
     init();
-    console.log(socketMessage);
   }, [socketMessage]);
 
   const onDragEnd = async (result) => {
@@ -69,10 +49,7 @@ const Home = () => {
       })
     );
 
-    const { data } = await api.put("/api/order/orders/status", {
-      id: draggableId,
-      status: destination.droppableId,
-    });
+    await ordersModels.alterStatus(destination.droppableId, draggableId);
   };
 
   return (

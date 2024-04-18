@@ -1,8 +1,7 @@
-// src/components/Task.js
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import helper from "../helpers/helper";
-import Strings from "../constants/Strings";
+
 import Texts from "../constants/Texts";
 const Task = ({ task, index, key }) => {
   const [showItems, setShowItems] = useState(false);
@@ -46,6 +45,7 @@ const Task = ({ task, index, key }) => {
           <div>
             {Texts.phone}: {task.data.user.phone}
           </div>
+
           <div>
             {Texts.forma_pay}:{" "}
             {Texts[task.data.paymentmethod.type] ??
@@ -53,7 +53,15 @@ const Task = ({ task, index, key }) => {
           </div>
           <div className="mt-1">
             Total:{" "}
-            <span className="font-bold">{helper.formatCurrency(subTotal)}</span>
+            <span className="font-bold text-lg ml-1">
+              {helper.formatCurrency(subTotal)}
+            </span>
+          </div>
+          <div>
+            Código:{" "}
+            <span className="font-bold text-lg ml-1">
+              {helper.genCode(task.data._id, task.data.establishment.id)}
+            </span>
           </div>
 
           {task.data?.deliveryman && task.data?.deliveryman?.id != 0 ? (
