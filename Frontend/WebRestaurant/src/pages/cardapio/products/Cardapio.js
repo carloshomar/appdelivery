@@ -11,7 +11,7 @@ import Texts from "../../../constants/Texts";
 import productsModel from "../../../services/products.model";
 
 const Cardapio = () => {
-  const { user, getUser } = useAuth();
+  const { getUser } = useAuth();
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false);
