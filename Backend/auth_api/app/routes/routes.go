@@ -22,12 +22,11 @@ func SetupRoutes(app *fiber.App) {
 }
 
 func ProtectedRoute(c *fiber.Ctx) error {
-	// Valide o token JWT e obtenha informações do usuário
+
 	_, err := middlewares.ValidateJWT(c)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid token"})
 	}
 
-	// Realize a lógica protegida aqui, por exemplo, retornar informações do usuário
 	return c.Next()
 }

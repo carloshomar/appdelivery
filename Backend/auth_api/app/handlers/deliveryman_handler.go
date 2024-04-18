@@ -37,10 +37,8 @@ func CreateDeliveryMan(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
 
-	// Check if the email already exists
 	var existingUser models.DeliveryMan
 	if err := models.DB.Where(&models.DeliveryMan{Email: request.Email}).First(&existingUser).Error; err == nil {
-		// Email already exists
 		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"error": "Email already exists"})
 	}
 

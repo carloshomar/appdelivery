@@ -26,10 +26,8 @@ func CreateOrder(c *fiber.Ctx, sendMessageToClient func(clientID int64, message 
 		})
 	}
 
-	// Definir o status padrão
 	request.Status = "AWAIT_APPROVE"
 
-	// Obter detalhes do estabelecimento
 	establishment, err := GetEstablishment(request.EstablishmentId)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -73,18 +71,15 @@ func GetEstablishment(establishmentID int64) (*dto.Establishment, error) {
 	}
 	defer response.Body.Close()
 
-	// Verifique o status da resposta
 	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API retornou status não OK: %d", response.StatusCode)
 	}
 
-	// Decodifique a resposta para o objeto DTO
 	var establishmentDTO dto.Establishment
 	if err := json.NewDecoder(response.Body).Decode(&establishmentDTO); err != nil {
 		return nil, err
 	}
 
-	// Retorne o objeto Establishment mapeado para DTO
 	return &establishmentDTO, nil
 }
 
@@ -138,14 +133,12 @@ func UpdateOrderStatus(c *fiber.Ctx, sendMessageToClient func(clientID int64, me
 		log.Fatal(err)
 	}
 
-	// Verificar se algum documento foi atualizado
 	if updateResult.ModifiedCount == 0 {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"error": "Nenhum pedido encontrado com o ID fornecido",
 		})
 	}
 
-	// Retornar resposta de sucesso
 	return c.JSON(fiber.Map{
 		"message": "Status do pedido atualizado com sucesso",
 	})
@@ -180,7 +173,6 @@ func ListOrdersByEstablishmentID(c *fiber.Ctx) error {
 	}
 	defer cursor.Close(context.Background())
 
-	// Decodificar todos os resultados em uma slice
 	var orders []map[string]interface{}
 	if err := cursor.All(context.Background(), &orders); err != nil {
 		log.Fatal(err)
@@ -189,7 +181,6 @@ func ListOrdersByEstablishmentID(c *fiber.Ctx) error {
 		})
 	}
 
-	// Formatar cada objeto individualmente
 	var formattedOrders []map[string]interface{}
 	for _, order := range orders {
 		formattedOrder := make(map[string]interface{})
@@ -233,7 +224,6 @@ func ListOrdersByEstablishmentIDAndPhone(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Falha ao decodificar resultados"})
 	}
 
-	// Não é necessário formatar, podemos retornar os resultados diretamente
 	return c.JSON(orders)
 }
 
@@ -257,6 +247,5 @@ func ListOrdersByPhone(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Falha ao decodificar resultados"})
 	}
 
-	// Não é necessário formatar, podemos retornar os resultados diretamente
 	return c.JSON(orders)
 }

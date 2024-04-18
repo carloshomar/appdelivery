@@ -10,31 +10,26 @@ import (
 )
 
 func CreateUser(c *fiber.Ctx) error {
-	// Parse the request body to obtain user data
 	var request dto.CreateUserRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
 
-	// Create the user with the request data
 	user := models.User{
 		Name:  request.Name,
 		Email: request.Email,
 	}
 
-	// Generate the password hash using bcrypt
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to hash password"})
 	}
 	user.Password = string(hashedPassword)
 
-	// Insert the user into the database
 	if err := models.DB.Create(&user).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create user"})
 	}
 
-	// Create the establishment with the request data
 	establishment := models.Establishment{
 		Name:                request.Establishment.Name,
 		Description:         request.Establishment.Description,
@@ -48,12 +43,10 @@ func CreateUser(c *fiber.Ctx) error {
 		LocationString:      request.Establishment.LocationString,
 	}
 
-	// Insert the establishment into the database
 	if err := models.DB.Create(&establishment).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create establishment"})
 	}
 
-	// Update the user with the establishment ID
 	user.EstablishmentID = establishment.ID
 	if err := models.DB.Save(&user).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update user"})
@@ -65,7 +58,6 @@ func CreateUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to generate JWT token"})
 	}
 
-	// Return the response with user data and token
 	request.Password = ""
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"user": request, "token": tokenString})
 }
@@ -81,7 +73,6 @@ func Login(c *fiber.Ctx) error {
 		Email: request.Email,
 	}).First(&user)
 
-	// Compare a senha fornecida com o hash salvo no banco de dados
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"error": "Incorrect credentials"})
 	}
@@ -103,13 +94,11 @@ func Login(c *fiber.Ctx) error {
 }
 
 func GetUser(c *fiber.Ctx) error {
-	// Lógica para obter usuário por ID
+
 	userID := c.Params("id")
 	var user models.User
 
-	// Consulte o usuário no banco de dados por ID
 	models.DB.First(&user, userID)
 
-	// Retorne o usuário em formato JSON
 	return c.JSON(user)
 }

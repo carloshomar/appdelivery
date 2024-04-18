@@ -57,30 +57,32 @@ const Task = ({ task, index, key }) => {
               {helper.formatCurrency(subTotal)}
             </span>
           </div>
-          <div>
-            Código:{" "}
-            <span className="font-bold text-lg ml-1">
-              {helper.genCode(task.data._id, task.data.establishment.id)}
-            </span>
-          </div>
 
           {task.data?.deliveryman && task.data?.deliveryman?.id != 0 ? (
-            <div className="mt-2 grid">
-              <span>
-                {Texts.entregador}: {task.data?.deliveryman?.name}
-              </span>
-              {task.data?.deliveryman?.phone ? (
+            <>
+              <div>
+                Código:{" "}
+                <span className="font-bold text-lg ml-1">
+                  {helper.genCode(task.data._id, task.data.establishment.id)}
+                </span>
+              </div>
+              <div className="mt-2 grid">
                 <span>
-                  {Texts.phone}: {task.data?.deliveryman?.phone}
+                  {Texts.entregador}: {task.data?.deliveryman?.name}
                 </span>
-              ) : null}
-              <span>
-                {Texts.status}:{" "}
-                <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                  {Texts[task.data?.deliveryman?.status]}
+                {task.data?.deliveryman?.phone ? (
+                  <span>
+                    {Texts.phone}: {task.data?.deliveryman?.phone}
+                  </span>
+                ) : null}
+                <span>
+                  {Texts.status}:{" "}
+                  <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                    {Texts[task.data?.deliveryman?.status]}
+                  </span>
                 </span>
-              </span>
-            </div>
+              </div>
+            </>
           ) : null}
 
           <div className="mt-2">

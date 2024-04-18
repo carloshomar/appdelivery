@@ -37,10 +37,9 @@ func ValidateJWT(c *fiber.Ctx) (*jwt.Token, error) {
 }
 
 func GenerateJWT(user *models.User, establishment *models.Establishment) (string, error) {
-	// Defina a expiração para 7 dias a partir de agora (hora UTC)
+	// Expiração para 7 dias a partir de agora (hora UTC)
 	expirationTime := time.Now().UTC().Add(time.Hour * 24 * 7).Unix()
 
-	// Defina as reivindicações do token
 	claims := jwt.MapClaims{
 		"id":    user.ID,
 		"name":  user.Name,
@@ -48,17 +47,13 @@ func GenerateJWT(user *models.User, establishment *models.Establishment) (string
 		"exp":   expirationTime,
 	}
 
-	// Se establishment não for nulo, inclua seus campos relevantes nas reivindicações
 	if establishment != nil {
 		claims["establishment_id"] = establishment.ID
 		claims["establishment_name"] = establishment.Name
-		// Adicione outros campos relevantes conforme necessário
 	}
 
-	// Crie um novo token JWT com as reivindicações definidas
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	// Assine o token com a chave secreta
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 	if err != nil {
 		return "", err
@@ -68,7 +63,6 @@ func GenerateJWT(user *models.User, establishment *models.Establishment) (string
 }
 
 func GenerateJWTDeliveryMan(user *models.DeliveryMan) (string, error) {
-	// Defina a expiração para 7 dias a partir de agora (hora UTC)
 	expirationTime := time.Now().UTC().Add(time.Hour * 24 * 7).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -79,7 +73,6 @@ func GenerateJWTDeliveryMan(user *models.DeliveryMan) (string, error) {
 		"exp":   expirationTime,
 	})
 
-	// Assine o token com a chave secreta
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 	if err != nil {
 		return "", err

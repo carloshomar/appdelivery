@@ -36,7 +36,6 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 		},
 	}
 
-	// Consultar o banco de dados para obter os pedidos
 	cursor, err := collection.Find(context.Background(), filter)
 	if err != nil {
 		log.Printf("Erro ao consultar os pedidos: %s", err)
@@ -46,7 +45,6 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 	}
 	defer cursor.Close(context.Background())
 
-	// Iterar sobre os resultados e adicionar os pedidos a uma slice
 	var orders []dto.OrderDTO
 	for cursor.Next(context.Background()) {
 		var order dto.OrderDTO
@@ -57,7 +55,6 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 		orders = append(orders, order)
 	}
 
-	// Verificar se houve algum erro durante a iteração
 	if err := cursor.Err(); err != nil {
 		log.Printf("Erro ao iterar sobre os resultados: %s", err)
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -71,10 +68,8 @@ func GetOrdersByDeliverymanID(c *fiber.Ctx) error {
 func GetOrderByID(orderID string) (*dto.OrderDTO, error) {
 	collection := models.MongoDabase.Collection("solicitations")
 
-	// Definir o filtro para encontrar o pedido com base no ID do pedido
 	filter := bson.M{"orderid": orderID}
 
-	// Consultar o banco de dados para obter o pedido
 	var order dto.OrderDTO
 	err := collection.FindOne(context.Background(), filter).Decode(&order)
 	if err != nil {
@@ -103,16 +98,13 @@ func UpdateOrderStatusByDeliverymanID(c *fiber.Ctx, sendMessageToClient func(cli
 
 	collection := models.MongoDabase.Collection("solicitations")
 
-	// Definir o filtro para encontrar o pedido com base no ID do pedido e no ID do entregador
 	filter := bson.M{
 		"orderid":        request.OrderID,
-		"deliveryman.id": request.Deliveryman.Id, // Adicionar verificação do ID do entregador
+		"deliveryman.id": request.Deliveryman.Id,
 	}
 
-	// Definir os dados de atualização para o status do entregador
 	update := bson.M{"$set": bson.M{"deliveryman.status": request.Deliveryman.Status}}
 
-	// Executar a operação de atualização no banco de dados
 	_, err := collection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

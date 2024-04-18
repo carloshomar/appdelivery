@@ -56,7 +56,7 @@ func CreateProductCategorie(c *fiber.Ctx) error {
 	}).First(&existingCategoryProduct)
 
 	if result.RowsAffected > 0 {
-		// O relacionamento já existe, então vamos removê-lo
+		// O relacionamento já existe, então deve removê-lo
 		models.DB.Where(&models.CategoryProducts{
 			CategoryID: request.CategoryID,
 			ProductID:  request.ProductID,
@@ -91,10 +91,7 @@ func GetCategoriesWithProducts(c *fiber.Ctx) error {
 	for _, category := range categories {
 		var products []models.Product
 
-		// Obtenha os produtos associados à categoria
 		models.DB.Model(&category).Preload("Additional").Association("Products").Find(&products)
-
-		// Converte os produtos para o formato de request adequado
 
 		// Adiciona a categoria e os produtos associados à lista final
 		categoriesWithProducts = append(categoriesWithProducts,
@@ -119,7 +116,6 @@ func DeleteCategory(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Category not found"})
 	}
 
-	// Antes de excluir a categoria, exclui todos os relacionamentos na tabela category_products que a referenciam.
 	if err := models.DB.Where("category_id = ?", categoryID).Delete(&models.CategoryProducts{}).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete associated relationships"})
 	}

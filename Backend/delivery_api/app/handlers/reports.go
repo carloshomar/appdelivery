@@ -30,11 +30,9 @@ func GetExtrato(c *fiber.Ctx) error {
 		"deliveryman.status": "FINISHED",
 	}
 
-	// Definir a opção de ordenação por operationDate em ordem decrescente
 	options := options.Find()
 	options.SetSort(bson.D{{"operationDate", -1}})
 
-	// Consultar o banco de dados para obter os pedidos ordenados por operationDate
 	cursor, err := collection.Find(context.Background(), filter, options)
 	if err != nil {
 		log.Printf("Erro ao consultar os pedidos: %s", err)
@@ -44,7 +42,6 @@ func GetExtrato(c *fiber.Ctx) error {
 	}
 	defer cursor.Close(context.Background())
 
-	// Iterar sobre os resultados e adicionar os pedidos a uma slice
 	var orders []dto.OrderDTO
 	for cursor.Next(context.Background()) {
 		var order dto.OrderDTO
@@ -55,7 +52,6 @@ func GetExtrato(c *fiber.Ctx) error {
 		orders = append(orders, order)
 	}
 
-	// Verificar se houve algum erro durante a iteração
 	if err := cursor.Err(); err != nil {
 		log.Printf("Erro ao iterar sobre os resultados: %s", err)
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

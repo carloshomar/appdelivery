@@ -56,7 +56,6 @@ func CreateSolicitation(msg string, sendMessageToClient func(clientID int64, mes
 		return nil
 	}
 
-	// Se a solicitação não existir, insira-a no banco de dados
 	_, err = collection.InsertOne(context.Background(), &orderDTO)
 	if err != nil {
 		log.Fatal(err)
@@ -74,10 +73,8 @@ func HandShakeDeliveryman(c *fiber.Ctx) error {
 
 	collection := models.MongoDabase.Collection("solicitations")
 
-	// Definir o filtro para encontrar o pedido com base no OrderId
 	filter := bson.M{"orderid": orderDTO.OrderId}
 
-	// Verificar se o pedido existe e se o campo deliveryman já está preenchido
 	var existingOrder dto.OrderDTO
 	err := collection.FindOne(context.Background(), filter).Decode(&existingOrder)
 	if err != nil {
@@ -92,19 +89,16 @@ func HandShakeDeliveryman(c *fiber.Ctx) error {
 	}
 
 	if existingOrder.DeliveryMan != (dto.DeliveryMan{}) {
-		// Já existe um deliveryman atribuído a este pedido
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "O deliveryman já foi atribuído a este pedido",
 		})
 	}
 
-	// Se o campo deliveryman ainda não estiver preenchido, atribua o novo valor
 	orderDTO.DeliveryMan.Status = "IN_ROUTE_COLECT"
 	existingOrder.DeliveryMan = orderDTO.DeliveryMan
 
 	update := bson.M{"$set": bson.M{"deliveryman": existingOrder.DeliveryMan}}
 
-	// Executar a operação de atualização no banco de dados
 	_, err = collection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -117,19 +111,16 @@ func HandShakeDeliveryman(c *fiber.Ctx) error {
 
 	PublishMessage(orderBytes)
 
-	// Responder com sucesso
 	return c.JSON(fiber.Map{
 		"message": "Pedido atualizado com sucesso",
 	})
 }
 
 func GetApprovedSolicitations(c *fiber.Ctx) error {
-	// Receber latitude, longitude e limite de distância dos parâmetros da consulta
 	lat := c.Query("latitude")
 	long := c.Query("longitude")
 	limitDistance := c.Query("limitDistance")
 
-	// Converter latitude, longitude e limite de distância para float64
 	latitude, err := strconv.ParseFloat(lat, 64)
 	if err != nil {
 		return err
@@ -157,19 +148,17 @@ func GetApprovedSolicitations(c *fiber.Ctx) error {
 		},
 	}
 
-	// Realizando a consulta ao banco de dados
 	cur, err := collection.Find(context.Background(), filter)
 	if err != nil {
-		return err // Retornar erro
+		return err
 	}
 	defer cur.Close(context.Background())
 
-	// Iterando sobre os resultados e decodificando cada documento em um DTO
 	for cur.Next(context.Background()) {
 		var orderDTO dto.OrderDTO
 		err := cur.Decode(&orderDTO)
 		if err != nil {
-			return err // Retornar erro
+			return err
 		}
 
 		// Calcular a distância entre o estabelecimento e as coordenadas fornecidas
@@ -184,21 +173,21 @@ func GetApprovedSolicitations(c *fiber.Ctx) error {
 	return c.JSON(approvedSolicitations)
 }
 
-// Função para calcular a distância entre dois pontos usando a fórmula de Haversine
+// Função para calcular a distância entre dois pontos usando a fórmula de Haversine (https://pt.wikipedia.org/wiki/F%C3%B3rmula_de_haversine)
 func calculateDistance(lat1, lon1, lat2, lon2 float64) float64 {
 	const earthRadius = 6371 // Raio da Terra em quilômetros
 
-	// Converter coordenadas de graus para radianos
+	// Converte as coordenadas de graus para radianos
 	lat1Rad := degreesToRadians(lat1)
 	lon1Rad := degreesToRadians(lon1)
 	lat2Rad := degreesToRadians(lat2)
 	lon2Rad := degreesToRadians(lon2)
 
-	// Calcular diferenças de coordenadas
+	// Calcula as diferenças de coordenadas
 	deltaLat := lat2Rad - lat1Rad
 	deltaLon := lon2Rad - lon1Rad
 
-	// Calcular a distância usando a fórmula de Haversine
+	// Calcula as distância usando a fórmula de Haversine
 	a := math.Pow(math.Sin(deltaLat/2), 2) + math.Cos(lat1Rad)*math.Cos(lat2Rad)*math.Pow(math.Sin(deltaLon/2), 2)
 	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
 	distance := earthRadius * c
