@@ -48,14 +48,31 @@ func CreateProductCategorie(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
 	}
 
-	product := models.CategoryProducts{
+	// Verificar se o relacionamento já existe
+	var existingCategoryProduct models.CategoryProducts
+	result := models.DB.Where(&models.CategoryProducts{
+		CategoryID: request.CategoryID,
+		ProductID:  request.ProductID,
+	}).First(&existingCategoryProduct)
+
+	if result.RowsAffected > 0 {
+		// O relacionamento já existe, então vamos removê-lo
+		models.DB.Where(&models.CategoryProducts{
+			CategoryID: request.CategoryID,
+			ProductID:  request.ProductID,
+		}).Delete(&existingCategoryProduct)
+		return c.JSON(&existingCategoryProduct)
+
+	}
+
+	categoryProduct := models.CategoryProducts{
 		CategoryID: request.CategoryID,
 		ProductID:  request.ProductID,
 	}
 
-	models.DB.Create(&product)
+	models.DB.Create(&categoryProduct)
 
-	return c.JSON(&product)
+	return c.JSON(&categoryProduct)
 }
 
 func GetCategoriesWithProducts(c *fiber.Ctx) error {
@@ -82,15 +99,58 @@ func GetCategoriesWithProducts(c *fiber.Ctx) error {
 		// Adiciona a categoria e os produtos associados à lista final
 		categoriesWithProducts = append(categoriesWithProducts,
 			dto.CategorieRequest{
-				Id:                  category.ID,
-				Name:                category.Name,
-				Image:               category.Image,
-				MaxDistanceDelivery: 50,
-				EstablishmentId:     category.EstablishmentID,
-				Products:            products,
+				Id:              category.ID,
+				Name:            category.Name,
+				Image:           category.Image,
+				EstablishmentId: category.EstablishmentID,
+				Products:        products,
 			},
 		)
 	}
 
 	return c.JSON(&categoriesWithProducts)
+}
+
+func DeleteCategory(c *fiber.Ctx) error {
+	categoryID := c.Params("id")
+
+	var existingCategory models.Category
+	if err := models.DB.First(&existingCategory, categoryID).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Category not found"})
+	}
+
+	// Antes de excluir a categoria, exclui todos os relacionamentos na tabela category_products que a referenciam.
+	if err := models.DB.Where("category_id = ?", categoryID).Delete(&models.CategoryProducts{}).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete associated relationships"})
+	}
+
+	if err := models.DB.Delete(&existingCategory).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete category"})
+	}
+
+	return c.JSON(fiber.Map{"message": "Category deleted successfully"})
+}
+
+func UpdateCategory(c *fiber.Ctx) error {
+	var request dto.CategorieRequest
+
+	if err := c.BodyParser(&request); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Failed to parse request body"})
+	}
+
+	categoryID := c.Params("id")
+
+	var existingCategory models.Category
+	if err := models.DB.First(&existingCategory, categoryID).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Category not found"})
+	}
+
+	existingCategory.Name = request.Name
+	existingCategory.Image = request.Image
+
+	if err := models.DB.Save(&existingCategory).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update category"})
+	}
+
+	return c.JSON(&existingCategory)
 }

@@ -30,6 +30,8 @@ const Texts = {
   nao_sera_possivel_voltar: "Não será possível voltar após confirmar",
   notfound_extract: "Nenhuma entrega encontrada",
   extract: "Detalhes da Entrega",
+  codigo: "Por favor, insira o código para prosseguir.",
+  codigo_errado: "Código inválido. Por favor, insira o código corretamente.",
   ...Strings.status,
 };
 

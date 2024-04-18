@@ -12,6 +12,23 @@ function formatCurrency(value) {
   }
 }
 
-export default {
-  formatCurrency,
+const genCode = (str, multiplicar) => {
+  const numerosEncontrados = str.match(/\d+/g);
+
+  if (!numerosEncontrados) {
+    return "0000";
+  }
+
+  let codigo = numerosEncontrados.slice(0, 4).join("").slice(0, 4);
+
+  if (multiplicar) {
+    if (multiplicar === 1) {
+      multiplicar = 2;
+    }
+    codigo = (parseInt(codigo, 10) * multiplicar).toString().slice(0, 4);
+  }
+
+  return codigo;
 };
+
+export default { genCode, formatCurrency };

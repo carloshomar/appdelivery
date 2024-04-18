@@ -3,25 +3,30 @@ import MenuLayout from "../../../components/Menu";
 import CardapioList from "../../../components/CardapioList";
 import SearchInput from "../../../components/SearchInput";
 import AddButton from "../../../components/AddButton";
-import api from "../../../services/api";
+
 import { useAuth } from "../../../context/AuthContext";
 import Strings from "../../../constants/Strings";
 import Texts from "../../../constants/Texts";
 
+import productsModel from "../../../services/products.model";
+
 const Cardapio = () => {
-  const { user, getUser } = useAuth();
+  const { getUser } = useAuth();
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   async function start() {
-    try {
-      const { data } = await api.get("/api/order/products/" + getUser()?.id);
-      setItems(data);
-    } catch (E) {
-      console.log(E);
+    const products = await productsModel.getProducts(getUser().id);
+    setItems(products);
+  }
+
+  async function onRefreshItens(item) {
+    if (item && selectedItem) {
+      setSelectedItem(item);
     }
+    await start();
   }
 
   async function save(item) {
@@ -51,29 +56,31 @@ const Cardapio = () => {
 
   return (
     <MenuLayout>
-      <h2 className="font-bold text-lg pl-4 mb-4">{Texts.gestor_ca}</h2>
+      <div className="container">
+        <h2 className="font-bold text-lg pl-4 mb-4">{Texts.gestor_ca}</h2>
 
-      <div className="mb-6 ml-4 pr-6 mt-6 flex row-auto gap-2 w-full justify-between">
-        <SearchInput onSearch={handleSearch} />
-        <AddButton
-          onClick={() => {
-            setEditModalOpen(true);
-            setSelectedItem(Strings.initial_order);
-          }}
-        />
-      </div>
-      <div style={{ height: "100%", overflowY: "scroll" }}>
-        <CardapioList
-          items={items.filter((item) =>
-            item?.Name?.toLowerCase().includes(searchTerm.toLowerCase())
-          )}
-          editModalOpen={editModalOpen}
-          selectedItem={selectedItem}
-          setEditModalOpen={setEditModalOpen}
-          setSelectedItem={setSelectedItem}
-          onSave={save}
-          onRefreshItens={start}
-        />
+        <div className="mb-6 ml-4 pr-6 mt-6 flex row-auto gap-2 w-full justify-between">
+          <SearchInput onSearch={handleSearch} />
+          <AddButton
+            onClick={() => {
+              setEditModalOpen(true);
+              setSelectedItem(Strings.initial_order());
+            }}
+          />
+        </div>
+        <div style={{ height: "100%", overflowY: "scroll" }}>
+          <CardapioList
+            items={items.filter((item) =>
+              item?.Name?.toLowerCase().includes(searchTerm.toLowerCase())
+            )}
+            editModalOpen={editModalOpen}
+            selectedItem={selectedItem}
+            setEditModalOpen={setEditModalOpen}
+            setSelectedItem={setSelectedItem}
+            onSave={save}
+            onRefreshItens={onRefreshItens}
+          />
+        </div>
       </div>
     </MenuLayout>
   );

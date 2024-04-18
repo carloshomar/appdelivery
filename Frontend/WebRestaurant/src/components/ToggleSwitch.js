@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const ToggleSwitch = ({ label, onChange, checked }) => {
-  const [isChecked, setIsChecked] = useState(checked ? true : false);
+  const [isChecked, setIsChecked] = useState(checked ?? false);
 
   const toggleChecked = () => {
     onChange(!isChecked);

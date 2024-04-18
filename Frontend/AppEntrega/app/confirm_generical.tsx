@@ -1,34 +1,133 @@
 import Colors from "@/constants/Colors";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import DeliveryHappy from "../assets/images/deliveryman_happy.png";
 import Texts from "@/constants/Texts";
 import { useNavigation } from "expo-router";
 import { useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 
 export default function ConfirmGenerical() {
   const nav = useNavigation();
   const route = useRoute();
 
-  const { onConfirm } = route.params;
+  const { onConfirm, hasCode = false } = route.params as any;
+  const [code, setCode] = useState("");
+
+  function handlerConfirm() {
+    if (hasCode && hasCode !== code) {
+      return;
+    }
+
+    if (onConfirm) onConfirm();
+    nav.goBack();
+  }
+
+  function verify() {
+    if (hasCode === code) {
+      handlerConfirm();
+    } else {
+      Alert.alert("", Texts.codigo_errado);
+    }
+  }
+
+  useEffect(() => {
+    if (code.length >= 4) verify();
+  }, [code]);
+  useEffect(() => {
+    setCode("");
+  }, []);
 
   return (
     <View style={styles.containers}>
       <View></View>
-      <View style={styles.imageContainer}>
-        <Image source={DeliveryHappy} style={styles.images} />
-        <Text style={styles.textTwo}>{Texts.continue_duvida}</Text>
-        <Text style={styles.titleOne}>{Texts.nao_sera_possivel_voltar}</Text>
-      </View>
+      {!hasCode ? (
+        <View style={styles.imageContainer}>
+          <Image source={DeliveryHappy} style={styles.images} />
+          <Text style={styles.textTwo}>{Texts.continue_duvida}</Text>
+          <Text style={styles.titleOne}>{Texts.nao_sera_possivel_voltar}</Text>
+        </View>
+      ) : (
+        <View
+          style={{
+            width: "95%",
+            alignContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              ...styles.textTwo,
+              textAlign: "center",
+              fontSize: 20,
+              width: "80%",
+            }}
+          >
+            {Texts.codigo}
+          </Text>
+
+          <View
+            style={{
+              borderBottomWidth: 3,
+              borderColor: "red",
+              borderBottomColor: "red",
+              marginTop: 30,
+            }}
+          >
+            <TextInput
+              value={code}
+              keyboardType={"numeric"}
+              style={{
+                fontSize: 30,
+                padding: 15,
+                paddingLeft: 30,
+                letterSpacing: 15,
+                color: Colors.light.text,
+              }}
+              autoFocus={true}
+              placeholder="####"
+              placeholderTextColor={Colors.light.secondaryText}
+              maxLength={4}
+              onChangeText={(text) => setCode(text)}
+            />
+          </View>
+        </View>
+      )}
 
       <View style={styles.buttons}>
         <TouchableOpacity
+          disabled={hasCode && hasCode !== code}
           onPress={() => {
-            onConfirm();
-            nav.goBack();
+            handlerConfirm();
           }}
-          style={{ ...styles.button, ...styles.acceptButton }}
+          style={{
+            ...styles.button,
+            ...styles.acceptButton,
+            ...(hasCode && hasCode !== code
+              ? {
+                  backgroundColor: Colors.light.tabIconDefault,
+                  borderColor: Colors.light.secondaryText,
+                  color: Colors.light.secondaryText,
+                }
+              : {}),
+          }}
         >
-          <Text style={{ ...styles.buttonText, color: Colors.light.tint }}>
+          <Text
+            style={{
+              ...styles.buttonText,
+              color:
+                hasCode && hasCode !== code
+                  ? Colors.light.secondaryText
+                  : Colors.light.tint,
+            }}
+          >
             {Texts.confirmar}
           </Text>
         </TouchableOpacity>

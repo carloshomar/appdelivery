@@ -57,8 +57,24 @@ export default function DeliveryMode({ showIcon }: any) {
   };
 
   const onConfirm = () => {
+    let code: boolean | string = false;
+    console.log(order);
+    switch (deliveryman.status) {
+      case "AWAIT_COLECT":
+        code = helper.genCode(order.order_id, order.establishmentId);
+        break;
+
+      case "IN_ROUTE_DELIVERY":
+        code = helper.genCode(order.order_id);
+        break;
+      default:
+        code = false;
+        break;
+    }
+
     nav.navigate("confirm_generical", {
       onConfirm: awaitCollect,
+      hasCode: code,
     });
   };
 
@@ -151,7 +167,9 @@ export default function DeliveryMode({ showIcon }: any) {
           order.status == "AWAIT_APPROVE"
         }
         title={Texts[deliveryman.status] ?? deliveryman.status}
-        onComplete={() => onConfirm()}
+        onComplete={() => {
+          onConfirm();
+        }}
       />
     </View>
   );
