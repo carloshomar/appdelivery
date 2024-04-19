@@ -31,6 +31,8 @@ export default {
   description: "Descrição",
   cancelar: "Cancelar",
   salvar: "Salvar",
+  restaurant_update:
+    "Os dados do estabelecimento foram atualizados com sucesso.",
   removido_produto: "Produto removido com sucesso!",
   falha_remover_produto: "Ouve um erro ao remover o produto, tente novamente.",
   imagem: "Imagem",

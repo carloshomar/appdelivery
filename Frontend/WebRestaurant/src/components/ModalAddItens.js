@@ -1,6 +1,6 @@
-import React, { useEffect, useInsertionEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import api from "../services/api";
+
 import { useAuth } from "../context/AuthContext";
 import { FiEdit, FiSave, FiX } from "react-icons/fi";
 
@@ -9,7 +9,6 @@ import { MdDeleteOutline } from "react-icons/md";
 import { toast } from "react-toastify";
 import Texts from "../constants/Texts";
 import additionalsModel from "../services/additionals.model";
-import ReactModal from "react-modal";
 import Strings from "../constants/Strings";
 import categoryModel from "../services/category.model";
 import helper from "../helpers/helper";
@@ -200,6 +199,7 @@ const ModalAddItens = ({
             <input
               type="text"
               id="search"
+              maxLength={150}
               name="search"
               placeholder={Texts.search_placeholer}
               className="p-2 border rounded-sm w-full"
@@ -301,6 +301,7 @@ const ModalAddItens = ({
                         <input
                           type="text"
                           id="name"
+                          maxLength={100}
                           value={editItem?.Name}
                           name="Name"
                           onChange={({ target }) => handlerEditItem(target)}
@@ -316,6 +317,7 @@ const ModalAddItens = ({
                         ) : (
                           <input
                             type="number"
+                            min={0}
                             id="price"
                             value={editItem?.Price ?? 0}
                             name="Price"

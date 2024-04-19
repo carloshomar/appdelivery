@@ -56,7 +56,7 @@ const Cardapio = () => {
 
   return (
     <MenuLayout>
-      <div className="container">
+      <div className="">
         <h2 className="font-bold text-lg pl-4 mb-4">{Texts.gestor_ca}</h2>
 
         <div className="mb-6 ml-4 pr-6 mt-6 flex row-auto gap-2 w-full justify-between">
@@ -68,19 +68,18 @@ const Cardapio = () => {
             }}
           />
         </div>
-        <div style={{ height: "100%", overflowY: "scroll" }}>
-          <CardapioList
-            items={items.filter((item) =>
-              item?.Name?.toLowerCase().includes(searchTerm.toLowerCase())
-            )}
-            editModalOpen={editModalOpen}
-            selectedItem={selectedItem}
-            setEditModalOpen={setEditModalOpen}
-            setSelectedItem={setSelectedItem}
-            onSave={save}
-            onRefreshItens={onRefreshItens}
-          />
-        </div>
+
+        <CardapioList
+          items={items.filter((item) =>
+            item?.Name?.toLowerCase().includes(searchTerm.toLowerCase())
+          )}
+          editModalOpen={editModalOpen}
+          selectedItem={selectedItem}
+          setEditModalOpen={setEditModalOpen}
+          setSelectedItem={setSelectedItem}
+          onSave={save}
+          onRefreshItens={onRefreshItens}
+        />
       </div>
     </MenuLayout>
   );

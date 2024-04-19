@@ -9,7 +9,6 @@ const CardapioList = ({
   setEditModalOpen,
   selectedItem,
   setSelectedItem,
-
   onRefreshItens,
 }) => {
   const handleEditClick = (item) => {
@@ -29,7 +28,10 @@ const CardapioList = ({
         >
           <div className="flex space-x-3 pl-2">
             {item.Image ? (
-              <img src={item?.Image} className=" h-20 w-20 rounded-md" />
+              <img
+                src={item?.Image}
+                className=" h-20 w-20 rounded-md object-cover border-2 border-primary"
+              />
             ) : null}
 
             <div className="flex-1 space-y-1">

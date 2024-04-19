@@ -15,6 +15,7 @@ const SearchInput = ({ onSearch }) => {
       placeholder="Buscar..."
       style={{ width: "100%" }}
       value={searchTerm}
+      maxLength={100}
       onChange={handleChange}
       className="border border-gray-300 rounded-md py-2 px-4 w-100 focus:outline-none focus:border-blue-500"
     />

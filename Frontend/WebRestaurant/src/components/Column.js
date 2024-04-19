@@ -1,4 +1,3 @@
-// src/components/Column.js
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Task from "./Task";
