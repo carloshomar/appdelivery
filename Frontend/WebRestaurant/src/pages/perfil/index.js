@@ -12,6 +12,7 @@ function Perfil() {
 
   const [establishment, setEstablishment] = useState({});
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handlerEstablishment = (target) => {
     setEstablishment({
@@ -41,11 +42,18 @@ function Perfil() {
 
   async function submit(e) {
     e.preventDefault();
+    setLoading(true);
 
-    const resp = await restaurantModel.updateEstablishment(establishment);
+    const resp = await restaurantModel.updateEstablishment(
+      getUser().establishment_id,
+      establishment
+    );
     if (resp) {
       toast.success(Texts.restaurant_update);
+    } else {
+      toast.error(Texts.restaurant_error);
     }
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -289,7 +297,11 @@ function Perfil() {
           </div>
         </div>
         <div className="mt-8 w-full">
-          <button className="flex float-end items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+          <button
+            type="submit"
+            disabled={loading}
+            className="flex float-end items-center justify-center bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white font-bold py-2 px-4 rounded"
+          >
             <FiSave className="h-5 w-5 mr-1" /> Salvar
           </button>
         </div>

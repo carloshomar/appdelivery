@@ -14,6 +14,7 @@ func SetupRoutes(app *fiber.App) {
 	app.Get("/establishments", handlers.ListEstablishments)
 	app.Put("/establishments/status/handler/:id", handlers.HandlerEstablishmentStatus)
 	app.Get("/establishments/:id", handlers.GetEstablishments)
+	app.Put("/establishments/:id", handlers.UpdateEstablishment)
 	app.Get("/establishments/:id/users", ProtectedRoute, handlers.GetUserByEstablishment)
 
 	app.Post("/delivery-man/login", handlers.LoginDeliveryMan)

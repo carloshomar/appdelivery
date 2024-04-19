@@ -56,3 +56,46 @@ func HandlerEstablishmentStatus(c *fiber.Ctx) error {
 
 	return c.JSON(establishment)
 }
+
+func UpdateEstablishment(c *fiber.Ctx) error {
+	establishmentID := c.Params("id")
+
+	if establishmentID == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid establishment ID"})
+	}
+
+	existingEstablishment := models.Establishment{}
+
+	if err := models.DB.First(&existingEstablishment, establishmentID).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Establishment not found"})
+	}
+
+	request := struct {
+		Establishment *models.Establishment `json:"establishment"`
+	}{}
+
+	if err := c.BodyParser(&request); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request body"})
+	}
+
+	if request.Establishment == nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "No valid establishment data provided"})
+	}
+
+	existingEstablishment.Name = request.Establishment.Name
+	existingEstablishment.Description = request.Establishment.Description
+	existingEstablishment.Image = request.Establishment.Image
+	existingEstablishment.PrimaryColor = request.Establishment.PrimaryColor
+	existingEstablishment.HorarioFuncionamento = request.Establishment.HorarioFuncionamento
+	existingEstablishment.SecondaryColor = request.Establishment.SecondaryColor
+	existingEstablishment.Lat = request.Establishment.Lat
+	existingEstablishment.Long = request.Establishment.Long
+	existingEstablishment.MaxDistanceDelivery = request.Establishment.MaxDistanceDelivery
+	existingEstablishment.LocationString = request.Establishment.LocationString
+
+	if err := models.DB.Save(&existingEstablishment).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update establishment"})
+	}
+
+	return c.JSON(fiber.Map{"message": "Establishment updated successfully"})
+}
