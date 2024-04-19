@@ -80,6 +80,7 @@ function Perfil() {
               type="text"
               name="name"
               placeholder="Jane"
+              disabled
               maxLength={200}
               required
               value={user.name}

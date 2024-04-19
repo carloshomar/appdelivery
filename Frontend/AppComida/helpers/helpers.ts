@@ -115,11 +115,49 @@ function orderByImage(listaDeObjetos: any) {
   return [...objetosComImagem, ...objetosSemImagem];
 }
 
+const genCode = (str: string, multiplicar: number | null) => {
+  const numerosEncontrados = str.match(/\d+/g);
+
+  if (!numerosEncontrados) {
+    return "0000";
+  }
+
+  let codigo = numerosEncontrados.slice(0, 4).join("").slice(0, 4);
+
+  if (multiplicar) {
+    if (multiplicar === 1) {
+      multiplicar = 2;
+    }
+    codigo = (parseInt(codigo, 10) * multiplicar).toString().slice(0, 4);
+  }
+
+  return codigo;
+};
+
+function formatDate(dataString: string) {
+  try {
+    const data = new Date(dataString);
+    const dia = String(data.getDate()).padStart(2, "0");
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const ano = data.getFullYear().toString();
+    const horas = String(data.getHours()).padStart(2, "0");
+    const minutos = String(data.getMinutes()).padStart(2, "0");
+
+    return `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
+  } catch (e) {
+    console.log(e);
+
+    return dataString;
+  }
+}
+
 export default {
   formatCurrency,
+  formatDate,
   formatPhoneNumber,
   removePhoneNumberMask,
   generateId,
+  genCode,
   calcularDistancia,
   orderByImage,
   getLocationDistance,

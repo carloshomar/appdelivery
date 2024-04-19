@@ -2,7 +2,6 @@ import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
-import { useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -19,6 +18,7 @@ function HeaderDelivery({
   disponivel,
   inWork,
   disabled,
+  headerView,
 }: any) {
   const insets = useSafeAreaInsets();
   const nav = useNavigation();
@@ -26,20 +26,24 @@ function HeaderDelivery({
   return (
     <View
       style={{
-        width: Dimensions.get("window").width / 1.08,
+        width: headerView ? Dimensions.get("window").width / 1.08 : "100%",
         padding: 20,
-        borderRadius: 35,
+        paddingTop: headerView ? 20 : insets.top + 10,
+        height: headerView ? undefined : 150,
+
+        borderRadius: headerView ? 35 : 0,
         position: "absolute",
         backgroundColor: Colors.light.background,
         borderWidth: 1,
         borderColor: Colors.light.tabIconDefault,
-        top: insets.top + 10,
+        top: headerView ? insets.top + 10 : 0,
+
         zIndex: 1,
 
-        shadowColor: "#000",
+        shadowColor: headerView ? "#000" : Colors.light.secondaryText,
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.3,
-        shadowRadius: 5,
+        shadowRadius: headerView ? 5 : 0,
 
         alignContent: "center",
         alignItems: "center",

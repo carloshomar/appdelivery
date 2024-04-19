@@ -10,6 +10,7 @@ export default {
     tabIconDefault: "#f2f2f2",
     tabIconSelected: tintColorLight,
     white: "#fff",
+    green: "green",
   },
   dark: {
     text: "#000",
@@ -19,5 +20,6 @@ export default {
     tabIconDefault: "#f2f2f2",
     tabIconSelected: tintColorLight,
     white: "#fff",
+    green: "green",
   },
 };

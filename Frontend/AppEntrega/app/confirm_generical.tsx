@@ -34,6 +34,7 @@ export default function ConfirmGenerical() {
     if (hasCode === code) {
       handlerConfirm();
     } else {
+      console.log(code);
       Alert.alert("", Texts.codigo_errado);
     }
   }

@@ -15,6 +15,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func CreateOrder(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
@@ -231,12 +232,17 @@ func ListOrdersByPhone(c *fiber.Ctx) error {
 	phoneNumberEncoded := c.Params("phone")
 
 	phoneNumber, err := url.QueryUnescape(phoneNumberEncoded)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Erro ao decodificar número de telefone"})
+	}
+
 	filter := bson.M{
 		"user.phone": phoneNumber,
 	}
 
 	collection := models.MongoDabase.Collection("orders")
-	cursor, err := collection.Find(context.Background(), filter)
+	options := options.Find().SetSort(bson.D{{"lastModified", -1}}) // Sort by lastModified field in descending order
+	cursor, err := collection.Find(context.Background(), filter, options)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Falha ao buscar pedidos"})
 	}

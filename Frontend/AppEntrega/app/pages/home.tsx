@@ -6,7 +6,7 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  Platform,
+  FlatList,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -36,17 +36,16 @@ export default function Home() {
     setMyLocation,
   } = useAuthApi();
 
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const nav = useNavigation();
   const intervalRef = useRef<any>(null);
 
+  const [formatView, setFormatView] = useState<"list" | "map">("map");
   const [loading, setLoading] = useState(false);
   const [markers, setMarkers] = useState<any>([]);
   const isFocused = useIsFocused();
   const [hasStart, setHasStart] = useState(false);
 
   const mapViewRef = React.useRef(null);
-  const isAndroid = Platform.OS === "android";
 
   const centerMapOnUser = () => {
     if (mylocation) {
@@ -62,10 +61,6 @@ export default function Home() {
 
   async function start() {
     let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      setErrorMsg("Permissão para acessar a localização negada");
-      return;
-    }
 
     let location = await Location.getCurrentPositionAsync({});
     setMyLocation({
@@ -157,6 +152,7 @@ export default function Home() {
         loading={loading}
         disponivel={disponivel}
         inWork={inWork}
+        headerView={formatView === "map"}
         onDisponivel={(disp: boolean) => {
           if (!disp) {
             clearMap();
@@ -166,67 +162,122 @@ export default function Home() {
           setDisponivel(disp);
         }}
       />
-      <MapView
-        ref={mapViewRef}
-        style={styles.map}
-        initialRegion={{
-          latitude: mylocation?.coords.latitude || 0,
-          longitude: mylocation?.coords.longitude || 0,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      >
-        {markers.map((marker: any) => (
-          <Marker
-            key={marker.id}
-            coordinate={marker.coordinates}
-            onPress={() =>
-              marker.isEstablishment
-                ? nav.navigate("modal", { establishment: marker })
-                : null
-            }
-          >
-            {marker?.icon ? (
-              <Image source={marker?.icon} style={styles.markerImage} />
-            ) : null}
+      {formatView === "map" ? (
+        <MapView
+          ref={mapViewRef}
+          style={styles.map}
+          initialRegion={{
+            latitude: mylocation?.coords.latitude || 0,
+            longitude: mylocation?.coords.longitude || 0,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        >
+          {markers.map((marker: any) => (
+            <Marker
+              key={marker.id}
+              coordinate={marker.coordinates}
+              onPress={() =>
+                marker.isEstablishment
+                  ? nav.navigate("modal", { establishment: marker })
+                  : null
+              }
+            >
+              {marker?.icon ? (
+                <Image source={marker?.icon} style={styles.markerImage} />
+              ) : null}
 
-            {marker.isEstablishment ? (
-              <TouchableOpacity style={styles.calloutContainer}>
-                <View style={styles.calloutRow}>
-                  <FontAwesome6
-                    name="money-bill"
-                    size={17}
-                    color={Colors.light.secondaryText}
-                  />
-                  <Text style={styles.calloutText}>
-                    {helper.formatCurrency(marker.valueDelivery)}
-                  </Text>
-                </View>
-                <View style={styles.calloutRow}>
-                  <MaterialCommunityIcons
-                    name="bike-fast"
-                    size={17}
-                    color={Colors.light.secondaryText}
-                  />
-                  <Text style={styles.calloutText}>
-                    {marker.distance.toFixed(1)}
-                    {Texts.km}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ) : null}
-          </Marker>
-        ))}
-      </MapView>
+              {marker.isEstablishment ? (
+                <TouchableOpacity style={styles.calloutContainer}>
+                  <View style={styles.calloutRow}>
+                    <FontAwesome6
+                      name="money-bill"
+                      size={17}
+                      color={Colors.light.secondaryText}
+                    />
+                    <Text style={styles.calloutText}>
+                      {helper.formatCurrency(marker.valueDelivery)}
+                    </Text>
+                  </View>
+                  <View style={styles.calloutRow}>
+                    <MaterialCommunityIcons
+                      name="bike-fast"
+                      size={17}
+                      color={Colors.light.secondaryText}
+                    />
+                    <Text style={styles.calloutText}>
+                      {marker.distance.toFixed(1)}
+                      {Texts.km}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ) : null}
+            </Marker>
+          ))}
+        </MapView>
+      ) : null}
+
+      {formatView === "list" ? (
+        <FlatList
+          data={markers.filter((x: any) => x.name)}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.containers}
+              onPress={() =>
+                item.isEstablishment
+                  ? nav.navigate("modal", { establishment: item })
+                  : null
+              }
+            >
+              <Text style={styles.name}>{item?.name}</Text>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={{ ...styles.distance }}>
+                  {item.distance?.toFixed(1)}
+                  {Texts.km}
+                </Text>
+                <Text style={{ ...styles.valueDelivery, marginTop: 5 }}>
+                  {helper.formatCurrency(item?.valueDelivery)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          contentContainerStyle={{
+            backgroundColor: Colors.light.white,
+
+            marginTop: 150,
+          }}
+        />
+      ) : null}
+
       <TouchableOpacity
         style={styles.centerButton}
-        onPress={() => {
-          centerMapOnUser();
-          isActiveOrder();
-        }}
+        onPress={() => setFormatView(formatView === "list" ? "map" : "list")}
       >
-        <MaterialIcons name="my-location" size={24} color="white" />
+        {formatView === "map" ? (
+          <MaterialIcons name="list" size={24} color="white" />
+        ) : (
+          <MaterialIcons name="map" size={24} color="white" />
+        )}
       </TouchableOpacity>
+
+      {formatView === "map" ? (
+        <TouchableOpacity
+          style={{ ...styles.centerButton, bottom: 76 }}
+          onPress={() => {
+            centerMapOnUser();
+            isActiveOrder();
+          }}
+        >
+          <MaterialIcons name="my-location" size={24} color="white" />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 }
@@ -288,5 +339,28 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.tint,
     borderRadius: 50,
     padding: 10,
+  },
+  containers: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.tabIconDefault,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "400",
+  },
+  distance: {
+    fontSize: 16,
+    fontWeight: "300",
+  },
+  valueDelivery: {
+    fontSize: 17,
+    fontWeight: "500",
+    color: "green",
   },
 });

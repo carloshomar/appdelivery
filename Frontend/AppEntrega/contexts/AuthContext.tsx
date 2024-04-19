@@ -5,6 +5,7 @@ import api from "@/services/api";
 import { Buffer } from "buffer";
 import useWebSocket from "react-use-websocket";
 import Strings from "@/constants/Strings";
+import { useNavigation } from "expo-router";
 
 interface User {
   email: string;
@@ -38,6 +39,8 @@ const AuthProvider: React.FC<any> = ({ children }) => {
   const [mylocation, setMyLocation] = useState<any | null>(null);
 
   const [inWork, setInWork] = useState({ status: false, order: null });
+
+  const nav = useNavigation();
 
   const { sendJsonMessage, lastMessage, lastJsonMessage } = useWebSocket(
     api.getUri().replace("http", "ws") + "/api/delivery/ws/" + user?.id,
@@ -113,7 +116,7 @@ const AuthProvider: React.FC<any> = ({ children }) => {
       };
 
       setUser(decodedToken);
-
+      nav.navigate("index");
       setIsLoading(false);
     } catch (error) {
       console.error("Erro ao fazer login:", error);

@@ -31,5 +31,15 @@ const Texts = {
   erroPedido: "Ouve um erro nao fazer o pedido, tente novamente.",
   calculando: "Calculando...",
   nenhum_estabelecimento_aberto: "Nenhum restaurante aberto no momento.",
+
+  IN_ROUTE_COLECT: "À caminho da coleta",
+  AWAIT_COLECT: "Aguardando Pedido",
+  AWAIT_APPROVE: "Aguardando Aprovação",
+  DONE: "Em Rota de entrega",
+  IN_ROUTE_DELIVERY: "Em Rota de entrega",
+  APPROVED: "Preparando seu pedido",
+  FINISH: "Entregue",
+  FINISHED: "Entregue",
+  forma_pay: "Pagamento",
 };
 export default Texts;

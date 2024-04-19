@@ -3,7 +3,7 @@ export default {
   AWAIT_COLECT: "Aguardando Pedido",
   IN_ROUTE_DELIVERY: "Em Rota de entrega",
   FINISH: "Entregue",
-  FINISHED: "Entrgue",
+  FINISHED: "Entregue",
   credit: "Crédito",
   debit: "Débito",
   pix: "PIX",

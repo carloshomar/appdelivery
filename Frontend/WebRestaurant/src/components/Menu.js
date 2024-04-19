@@ -9,14 +9,11 @@ import {
   FiSettings,
 } from "react-icons/fi";
 import { FaStore, FaStoreSlash } from "react-icons/fa";
-
 import { useAuth } from "../context/AuthContext";
 import ToggleSwitch from "../components/ToggleSwitch";
 import { toast } from "react-toastify";
 import Texts from "../constants/Texts";
-
 import api from "../services/api";
-import { MdPerson, MdPersonOutline } from "react-icons/md";
 
 const TopMenu = ({ toggleMenu, isOpen }) => {
   const { getUser, openEstablishment, refreshOpenawait } = useAuth();

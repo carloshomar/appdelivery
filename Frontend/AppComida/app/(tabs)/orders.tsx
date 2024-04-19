@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import api from "@/services/api";
 import { useApi } from "@/contexts/ApiContext";
 import { useIsFocused } from "@react-navigation/native";
+import Texts from "@/constants/Texts";
+import helpers from "@/helpers/helpers";
 
 export default function TabTwoScreen() {
   const { establishment } = useCartApi();
@@ -17,6 +19,19 @@ export default function TabTwoScreen() {
   const isFocused = useIsFocused();
 
   const { image, name } = establishment;
+
+  function sortObjectsByLastModified(arr: any) {
+    arr.sort((a: any, b: any) => {
+      if (a.lastModified === undefined) {
+        return -1;
+      } else if (b.lastModified === undefined) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return arr;
+  }
 
   async function getMyOrders() {
     try {
@@ -27,7 +42,7 @@ export default function TabTwoScreen() {
       const { data } = await api.get(
         "/api/order/orders/list-phone/" + userData?.phone
       );
-      setMyOrders(data);
+      setMyOrders(sortObjectsByLastModified(data));
 
       return true;
     } catch (e) {
@@ -47,10 +62,107 @@ export default function TabTwoScreen() {
           return (
             <View style={styles.containerStyle}>
               <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
               >
-                <Image source={{ uri: image }} style={styles.imageStyle} />
-                <Text>{name}</Text>
+                <View
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <Image source={{ uri: image }} style={styles.imageStyle} />
+                    <Text>{name}</Text>
+                  </View>
+                </View>
+
+                {e.status !== "FINISHED" ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      backgroundColor: Colors.light.tabIconDefault,
+                      padding: 10,
+                      paddingLeft: 5,
+                      paddingRight: 5,
+                      borderRadius: 5,
+                      marginTop: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: Colors.light.text,
+                      }}
+                    >
+                      Código
+                    </Text>
+
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                      {helpers.genCode(e._id, null) ?? ""}
+                    </Text>
+                  </View>
+                ) : null}
+
+                <View
+                  style={{
+                    padding: 5,
+                    backgroundColor:
+                      e.status !== "FINISHED"
+                        ? Colors.light.secondaryText
+                        : Colors.light.green,
+                    justifyContent: "center",
+                    borderRadius: 5,
+                    height: 35,
+                    marginTop: 15,
+                    marginBottom: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor:
+                        e.status !== "FINISHED"
+                          ? Colors.light.secondaryText
+                          : Colors.light.green,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: Colors.light.white,
+                        fontWeight: "600",
+                        fontSize: 13,
+                      }}
+                    >
+                      {Texts[e.status] ?? e.status}
+                    </Text>
+
+                    <Text
+                      style={{
+                        color: Colors.light.white,
+                        fontWeight: "600",
+                        fontSize: 13,
+                      }}
+                    >
+                      {e.lastModified
+                        ? helpers.formatDate(e.lastModified)
+                        : null}
+                    </Text>
+                  </View>
+                </View>
               </View>
               <OrderSummary disabled={true} data={e.cart} />
             </View>
