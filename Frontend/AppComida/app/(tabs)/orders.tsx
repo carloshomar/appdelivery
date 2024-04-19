@@ -13,12 +13,9 @@ import Texts from "@/constants/Texts";
 import helpers from "@/helpers/helpers";
 
 export default function TabTwoScreen() {
-  const { establishment } = useCartApi();
   const { getUserData } = useApi();
   const [myOrders, setMyOrders] = useState([]);
   const isFocused = useIsFocused();
-
-  const { image, name } = establishment;
 
   function sortObjectsByLastModified(arr: any) {
     arr.sort((a: any, b: any) => {
@@ -82,8 +79,19 @@ export default function TabTwoScreen() {
                       gap: 10,
                     }}
                   >
-                    <Image source={{ uri: image }} style={styles.imageStyle} />
-                    <Text>{name}</Text>
+                    <Image
+                      source={{ uri: e?.establishment?.image }}
+                      style={styles.imageStyle}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 19,
+                        fontWeight: "500",
+                        color: Colors.light.text,
+                      }}
+                    >
+                      {e?.establishment?.name}
+                    </Text>
                   </View>
                 </View>
 
@@ -94,9 +102,9 @@ export default function TabTwoScreen() {
                       justifyContent: "space-between",
                       backgroundColor: Colors.light.tabIconDefault,
                       padding: 10,
-                      paddingLeft: 5,
-                      paddingRight: 5,
-                      borderRadius: 5,
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                      borderRadius: 3,
                       marginTop: 10,
                     }}
                   >
@@ -119,14 +127,16 @@ export default function TabTwoScreen() {
                 <View
                   style={{
                     padding: 5,
+                    paddingLeft: 10,
+                    paddingRight: 10,
                     backgroundColor:
                       e.status !== "FINISHED"
                         ? Colors.light.secondaryText
                         : Colors.light.green,
                     justifyContent: "center",
-                    borderRadius: 5,
+                    borderRadius: 3,
                     height: 35,
-                    marginTop: 15,
+                    marginTop: 10,
                     marginBottom: 10,
                   }}
                 >
