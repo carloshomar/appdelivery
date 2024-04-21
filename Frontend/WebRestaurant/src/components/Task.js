@@ -66,6 +66,13 @@ const Task = ({ task, index, key }) => {
                   {helper.genCode(task.data._id, task.data.establishment.id)}
                 </span>
               </div>
+              <div style={{ color: "red" }}>
+                Código Cliente:{" "}
+                <span className="font-bold text-lg ml-1">
+                  {helper.genCode(task.data._id)}
+                </span>
+              </div>
+
               <div className="mt-2 grid">
                 <span>
                   {Texts.entregador}: {task.data?.deliveryman?.name}

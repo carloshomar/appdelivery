@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [openEstablishment, setOpenEstablishment] = useState(false);
+  const [fmode, setFMode] = useState(false);
 
   const [socketMessage, setSocketMessage] = useState([]);
 
@@ -20,6 +21,10 @@ export const AuthProvider = ({ children }) => {
   const { sendJsonMessage, lastMessage } = useWebSocket(url, {
     reconnectInterval: 1000,
     retryOnError: true,
+    reconnectAttempts: 5,
+    onReconnectStop: () => {
+      setFMode(true);
+    },
   });
 
   const getUser = () => {
@@ -116,6 +121,7 @@ export const AuthProvider = ({ children }) => {
         openEstablishment,
         setOpenEstablishment,
         refreshOpen,
+        fmode,
       }}
     >
       {children}

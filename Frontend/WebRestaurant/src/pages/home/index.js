@@ -16,7 +16,7 @@ const columns = [
 
 const Home = () => {
   const [tasks, setTasks] = useState([]);
-  const { getUser, socketMessage } = useAuth();
+  const { getUser, socketMessage, fmode } = useAuth();
   const user = getUser();
 
   async function init() {
@@ -31,6 +31,20 @@ const Home = () => {
   useEffect(() => {
     init();
   }, [socketMessage]);
+
+  useEffect(() => {
+    let intervalId;
+
+    if (fmode) {
+      intervalId = setInterval(() => {
+        init();
+      }, 20000);
+    }
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [fmode]);
 
   const onDragEnd = async (result) => {
     const { destination, source, draggableId } = result;

@@ -2,7 +2,7 @@ import axios from "axios";
 import Strings from "../constants/Strings";
 
 const api = axios.create({
-  baseURL: "http://192.168.100.142",
+  baseURL: "https://hpm3zd1439.execute-api.us-east-1.amazonaws.com",
 });
 
 api.interceptors.request.use(async (config) => {

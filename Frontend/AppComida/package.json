@@ -20,7 +20,6 @@
     "base-64": "^1.0.0",
     "buffer": "^6.0.3",
     "expo": "~50.0.4",
-    "expo-barcode-scanner": "^12.9.3",
     "expo-font": "~11.10.2",
     "expo-linking": "~6.2.2",
     "expo-location": "~16.5.3",
