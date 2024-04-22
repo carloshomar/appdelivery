@@ -71,7 +71,7 @@ const Home = () => {
 
   return (
     <MenuLayout>
-      <h2 className=" font-bold text-lg pl-6 mb-2">{Texts.meus_pedidos}</h2>
+      <h2 className="font-bold text-lg pl-6 mb-2">{Texts.meus_pedidos}</h2>
       <Board tasks={tasks} columns={columns} onDragEnd={onDragEnd} />
     </MenuLayout>
   );

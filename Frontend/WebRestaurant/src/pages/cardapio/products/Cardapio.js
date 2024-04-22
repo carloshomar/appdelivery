@@ -9,17 +9,21 @@ import Strings from "../../../constants/Strings";
 import Texts from "../../../constants/Texts";
 
 import productsModel from "../../../services/products.model";
+import { FiLoader } from "react-icons/fi";
 
 const Cardapio = () => {
   const { getUser } = useAuth();
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [load, setLoad] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   async function start() {
+    setLoad(true);
     const products = await productsModel.getProducts(getUser().id);
     setItems(products);
+    setLoad(false);
   }
 
   async function onRefreshItens(item) {
@@ -81,6 +85,13 @@ const Cardapio = () => {
           onRefreshItens={onRefreshItens}
         />
       </div>
+      {load ? (
+        <div className="flex w-full items-center justify-center h-32 text-center">
+          <div>
+            <FiLoader size={20} color="blue" />
+          </div>
+        </div>
+      ) : null}
     </MenuLayout>
   );
 };

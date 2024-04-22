@@ -5,7 +5,7 @@ import Task from "./Task";
 const Column = ({ column, tasks }) => {
   return (
     <div
-      className="flex-1 p-4 bg-gray-200 rounded-md ml-4 mr-2 shadow-lg sm:mt-4"
+      className="w-[95%] p-4 bg-gray-200 rounded-md ml-4 mr-2 shadow-lg mt-0 sm:mt-4 md:mt-4 lg:mt-4"
       style={{ backgroundColor: column.background }}
     >
       <h3 className="text-lg font-semibold mb-4 text-white ">{column.title}</h3>
@@ -13,7 +13,7 @@ const Column = ({ column, tasks }) => {
         <Droppable droppableId={column.id} key={column.id}>
           {(provided) => (
             <div
-              className="flex flex-col sm:h-[35vh] md:h-[35vh] lg:h-[75vh]"
+              className="flex flex-col h-[30vh] sm:h-[75vh] md:h-[75vh] lg:h-[75vh]"
               ref={provided.innerRef}
               {...provided.droppableProps}
             >

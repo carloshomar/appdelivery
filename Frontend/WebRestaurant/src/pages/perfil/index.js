@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MenuLayout from "../../components/Menu";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../services/api";
-import { FiSave } from "react-icons/fi";
+import { FiLoader, FiSave } from "react-icons/fi";
 import { toast } from "react-toastify";
 import Texts from "../../constants/Texts";
 import restaurantModel from "../../services/restaurant.model";
@@ -22,6 +22,7 @@ function Perfil() {
   };
 
   const init = async () => {
+    setLoading(true);
     try {
       const { data } = await api.get(
         "/api/auth/establishments/" + getUser().id
@@ -38,6 +39,7 @@ function Perfil() {
     } catch (e) {
       console.log(e);
     }
+    setLoading(false);
   };
 
   async function submit(e) {
@@ -62,6 +64,13 @@ function Perfil() {
 
   return (
     <MenuLayout>
+      {loading ? (
+        <div className="flex w-full items-center justify-center h-32 text-center">
+          <div>
+            <FiLoader size={20} color="blue" />
+          </div>
+        </div>
+      ) : null}
       <div className="flex flex-wrap mt-2">
         <h4 className="px-6 font-bold">Usuário</h4>
       </div>

@@ -30,5 +30,8 @@ const genCode = (str, multiplicar) => {
 
   return codigo;
 };
+function isMobile() {
+  return window.innerWidth < 768;
+}
 
-export default { genCode, formatCurrency };
+export default { genCode, formatCurrency, isMobile };

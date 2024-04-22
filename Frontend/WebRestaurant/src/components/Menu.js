@@ -14,6 +14,7 @@ import ToggleSwitch from "../components/ToggleSwitch";
 import { toast } from "react-toastify";
 import Texts from "../constants/Texts";
 import api from "../services/api";
+import helper from "../helpers/helper";
 
 const TopMenu = ({ toggleMenu, isOpen }) => {
   const { getUser, openEstablishment, refreshOpenawait } = useAuth();
@@ -33,7 +34,9 @@ const TopMenu = ({ toggleMenu, isOpen }) => {
   return (
     <div className="bg-menu1 text-white py-4">
       <div className="mx-auto flex justify-between items-center px-4">
-        <div className="text-xl font-bold">{getUser()?.establishment_name}</div>
+        <div className="text-xl font-bold">
+          {!helper.isMobile() ? getUser()?.establishment_name : null}
+        </div>
 
         <div className="flex items-center w-auto gap-16">
           <div className="flex row justify-center items-center gap-2 w-20">
