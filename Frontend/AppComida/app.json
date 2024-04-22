@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "PedeComida",
+    "name": "CoopFood",
     "slug": "comida",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.yanagassi.comida"
+      "package": "com.coopdelivery.food"
     },
     "web": {
       "bundler": "metro",

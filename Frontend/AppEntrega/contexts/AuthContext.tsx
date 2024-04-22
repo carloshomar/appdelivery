@@ -42,30 +42,30 @@ const AuthProvider: React.FC<any> = ({ children }) => {
 
   const nav = useNavigation();
 
-  const { sendJsonMessage, lastMessage, lastJsonMessage } = useWebSocket(
-    api.getUri().replace("http", "ws") + "/api/delivery/ws/" + user?.id,
-    {
-      reconnectInterval: 1000,
-      retryOnError: true,
-    }
-  );
+  // const { sendJsonMessage, lastMessage, lastJsonMessage } = useWebSocket(
+  //   api.getUri().replace("http", "ws") + "/api/delivery/ws/" + user?.id,
+  //   {
+  //     reconnectInterval: 1000,
+  //     retryOnError: true,
+  //   }
+  // );
 
   useEffect(() => {
     if (user) sendSocketMessage("connect", user);
   }, [user]);
 
-  useEffect(() => {
-    if (lastJsonMessage) {
-      setSocketMessage([...socketMessage, lastJsonMessage]);
-    }
-  }, [lastJsonMessage]);
+  // useEffect(() => {
+  //   if (lastJsonMessage) {
+  //     setSocketMessage([...socketMessage, lastJsonMessage]);
+  //   }
+  // }, [lastJsonMessage]);
 
   const sendSocketMessage = (type: string, data: any) => {
     try {
-      sendJsonMessage({
-        type,
-        data,
-      });
+      // sendJsonMessage({
+      //   type,
+      //   data,
+      // });
     } catch (e) {
       console.log(e);
     }
@@ -82,7 +82,7 @@ const AuthProvider: React.FC<any> = ({ children }) => {
       );
       setInWork({ status: data !== null, order: data });
 
-      setDisponivel(true);
+      setDisponivel(data !== null || disponivel);
     } catch (e) {
       console.log(e);
     }

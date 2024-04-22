@@ -112,6 +112,7 @@ function HomeDelivery() {
         loading={false}
         disponivel={disponivel}
         inWork={inWork}
+        headerView={true}
         disabled={true}
         onDisponivel={(disp: boolean) => {}}
       />

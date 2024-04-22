@@ -41,7 +41,7 @@ const Home = () => {
     if (fmode) {
       intervalId = setInterval(() => {
         init(true);
-      }, 20000);
+      }, 15000);
     }
 
     return () => {

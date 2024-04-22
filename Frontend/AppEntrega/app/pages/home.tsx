@@ -151,6 +151,7 @@ export default function Home() {
       <HeaderDelivery
         loading={loading}
         disponivel={disponivel}
+        disabled={loading}
         inWork={inWork}
         headerView={formatView === "map"}
         onDisponivel={(disp: boolean) => {

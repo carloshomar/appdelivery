@@ -1,5 +1,12 @@
-import React, { useEffect } from "react";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Colors from "@/constants/Colors";
 import { useNavigation } from "expo-router";
@@ -15,8 +22,10 @@ const ConfirmScreen = () => {
   const route = useRoute();
   const { isActiveOrder } = useAuthApi();
   const { order, delivery } = route.params as any;
+  const [loading, setLoading] = useState(false);
 
   async function aceitarRota() {
+    setLoading(true);
     try {
       const { data } = await api.put(
         "/api/delivery/solicitation-orders/hand-shake",
@@ -49,6 +58,7 @@ const ConfirmScreen = () => {
         console.log("Erro ao processar a solicitação:", error.message);
       }
     }
+    setLoading(false);
   }
 
   return (
@@ -76,11 +86,16 @@ const ConfirmScreen = () => {
       <View style={styles.buttons}>
         <TouchableOpacity
           onPress={() => aceitarRota()}
+          disabled={loading}
           style={{ ...styles.button, ...styles.acceptButton }}
         >
-          <Text style={{ ...styles.buttonText, color: Colors.light.tint }}>
-            {Texts.aceitar}
-          </Text>
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={{ ...styles.buttonText, color: Colors.light.tint }}>
+              {Texts.aceitar}
+            </Text>
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => nav.goBack()}

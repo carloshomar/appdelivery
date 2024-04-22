@@ -1,13 +1,14 @@
 import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
 import { AntDesign } from "@expo/vector-icons";
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { SwipeButton } from "react-native-expo-swipe-button";
 
 export default function SwipeButtonDelivery({
   title,
   onComplete,
   disabled,
+  loading,
 }: any) {
   return (
     <SwipeButton
@@ -26,7 +27,7 @@ export default function SwipeButtonDelivery({
         backgroundColor: Colors.light.tint,
         borderRadius: 5,
       }}
-      disabled={disabled}
+      disabled={disabled || loading}
       underlayTitleContainerStyle={{ borderRadius: 5 }}
       Icon={<AntDesign size={20} name="check" color={Colors.light.white} />}
     />

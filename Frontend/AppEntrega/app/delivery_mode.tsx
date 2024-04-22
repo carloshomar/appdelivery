@@ -23,6 +23,7 @@ export default function DeliveryMode({ showIcon }: any) {
   const mapViewRef = useRef(null);
   const { user, inWork, isActiveOrder, socketMessage } = useAuthApi();
   const [order, setOrder] = useState(inWork?.order[0]);
+  const [loading, setLoading] = useState(false);
 
   const establishment = order.establishment;
   const deliveryman = order.deliveryman;
@@ -42,23 +43,30 @@ export default function DeliveryMode({ showIcon }: any) {
         break;
     }
 
-    const { data } = await api.post("/api/delivery/deliveryman/status", {
-      order_id: order.order_id,
-      deliveryman: {
-        id: deliveryman.id,
-        status: status,
-      },
-    });
-    if (status == "FINISHED") {
-      nav.goBack();
-      return;
+    setLoading(true);
+
+    try {
+      const { data } = await api.post("/api/delivery/deliveryman/status", {
+        order_id: order.order_id,
+        deliveryman: {
+          id: deliveryman.id,
+          status: status,
+        },
+      });
+      if (status == "FINISHED") {
+        nav.goBack();
+        return;
+      }
+      await isActiveOrder();
+    } catch (e) {
+      console.log(e);
     }
-    await isActiveOrder();
+    setLoading(false);
   };
 
   const onConfirm = () => {
     let code: boolean | string = false;
-    console.log(order);
+
     switch (deliveryman.status) {
       case "AWAIT_COLECT":
         code = helper.genCode(order.order_id, order.establishmentId);
@@ -166,6 +174,7 @@ export default function DeliveryMode({ showIcon }: any) {
           (deliveryman.status == "AWAIT_COLECT" && order.status !== "DONE") ||
           order.status == "AWAIT_APPROVE"
         }
+        loading={loading}
         title={Texts[deliveryman.status] ?? deliveryman.status}
         onComplete={() => {
           onConfirm();

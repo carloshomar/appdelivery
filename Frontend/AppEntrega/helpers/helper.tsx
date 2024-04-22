@@ -185,13 +185,12 @@ const formatLocationInfo = (locationInfo: any) => {
   } ${locationInfo.bairro}, ${locationInfo.localidade} - ${locationInfo.uf}`;
 };
 
-
 const formatDay = (dateString: string) => {
   const date = new Date(dateString);
   const day = date.getDate();
   return day;
-}
-  
+};
+
 const genCode = (str: string, multiplicar: number | undefined) => {
   const numerosEncontrados = str.match(/\d+/g);
 
@@ -208,7 +207,6 @@ const genCode = (str: string, multiplicar: number | undefined) => {
     codigo = (parseInt(codigo, 10) * multiplicar).toString().slice(0, 4);
   }
 
-  console.log(codigo);
   return codigo;
 };
 
