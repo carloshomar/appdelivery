@@ -11,11 +11,13 @@ import { useApi } from "@/contexts/ApiContext";
 import { useIsFocused } from "@react-navigation/native";
 import Texts from "@/constants/Texts";
 import helpers from "@/helpers/helpers";
+import Strings from "@/constants/Strings";
 
 export default function TabTwoScreen() {
   const { getUserData } = useApi();
   const [myOrders, setMyOrders] = useState([]);
   const isFocused = useIsFocused();
+  const [intervalId, setIntervalId] = useState<any>(null);
 
   function sortObjectsByLastModified(arr: any) {
     arr.sort((a: any, b: any) => {
@@ -37,7 +39,7 @@ export default function TabTwoScreen() {
         return;
       }
       const { data } = await api.get(
-        "/api/order/orders/list-phone/" + userData?.phone
+        "/api/order/orders/list-phone/" + userData?.phone.replace(/ /g, "")
       );
       setMyOrders(sortObjectsByLastModified(data));
 
@@ -49,7 +51,20 @@ export default function TabTwoScreen() {
   }
 
   useEffect(() => {
-    if (isFocused) getMyOrders();
+    if (isFocused) {
+      getMyOrders();
+      const idinterval = setInterval(() => {
+        getMyOrders();
+      }, Strings.wait_interval);
+
+      setIntervalId(idinterval);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
   }, [isFocused]);
 
   return (

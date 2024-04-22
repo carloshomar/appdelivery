@@ -19,7 +19,7 @@ const LoginScreen = () => {
   const { login } = useApi();
 
   const handleLogin = async () => {
-    login({ phone, nome });
+    login({ phone: phone.replace(/ /g, ""), nome });
   };
 
   return (

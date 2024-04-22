@@ -19,9 +19,12 @@ const Home = () => {
   const { getUser, socketMessage, fmode } = useAuth();
   const user = getUser();
 
-  async function init() {
+  async function init(verifyFmode) {
     if (!user) return;
     try {
+      if (verifyFmode && !fmode) {
+        return;
+      }
       setTasks(await ordersModels.getOrders(getUser().id));
     } catch (e) {
       console.log(e);
@@ -37,7 +40,7 @@ const Home = () => {
 
     if (fmode) {
       intervalId = setInterval(() => {
-        init();
+        init(true);
       }, 20000);
     }
 

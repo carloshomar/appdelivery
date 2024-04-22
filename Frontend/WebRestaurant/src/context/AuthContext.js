@@ -25,6 +25,12 @@ export const AuthProvider = ({ children }) => {
     onReconnectStop: () => {
       setFMode(true);
     },
+    onError: () => {
+      setFMode(true);
+    },
+    onOpen: () => {
+      setFMode(false);
+    },
   });
 
   const getUser = () => {

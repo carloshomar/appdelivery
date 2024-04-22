@@ -8,13 +8,7 @@ import React, {
   ReactNode,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { jwtDecode } from "@/helpers/jwt";
 import LoadingPage from "@/components/LoadingPage";
-
-interface User {
-  nome: string;
-  phone: string;
-}
 
 interface ApiContextProps {
   login(token: any): void;
