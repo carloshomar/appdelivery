@@ -49,7 +49,10 @@ export default function Home() {
 
   const centerMapOnUser = () => {
     if (mylocation) {
-      const { latitude, longitude } = mylocation.coords;
+      const { latitude, longitude } = mylocation.coords ?? {
+        latitude: 0,
+        longitude: 0,
+      };
       mapViewRef.current?.animateToRegion({
         latitude,
         longitude,
@@ -59,18 +62,43 @@ export default function Home() {
     }
   };
 
-  async function start() {
-    let { status } = await Location.requestForegroundPermissionsAsync();
+  async function getPermission() {
+    try {
+      let { status } = await Location.requestBackgroundPermissionsAsync();
+      if (status === "granted") return true;
+    } catch (e) {
+      console.log(e);
+    }
 
-    let location = await Location.getCurrentPositionAsync({});
-    setMyLocation({
-      ...location,
-      coords: {
-        ...location.coords,
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      },
-    });
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === "granted") return true;
+    } catch (e) {
+      console.log(e);
+    }
+
+    return false;
+  }
+
+  async function start() {
+    try {
+      const status = await getPermission();
+      if (!status) {
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setMyLocation({
+        ...location,
+        coords: {
+          ...location.coords,
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async function disponify(focused = true, loader = true) {
@@ -86,8 +114,8 @@ export default function Home() {
           name: mak.establishment.name,
           location_string: mak.establishment.location_string,
           coordinates: {
-            latitude: mak.establishment.lat,
-            longitude: mak.establishment.long,
+            latitude: mak.establishment?.lat ?? 0,
+            longitude: mak.establishment?.long ?? 0,
           },
           isEstablishment: true,
           valueDelivery: mak.deliveryValue,
@@ -167,6 +195,7 @@ export default function Home() {
         <MapView
           ref={mapViewRef}
           style={styles.map}
+          googleMapId="6cba0e311b251b4c"
           initialRegion={{
             latitude: mylocation?.coords.latitude || 0,
             longitude: mylocation?.coords.longitude || 0,

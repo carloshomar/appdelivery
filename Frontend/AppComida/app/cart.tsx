@@ -1,4 +1,3 @@
-// components/ProductPage.js
 import HeaderMain from "@/components/HeaderMain";
 import OrderSummary from "@/components/OrderSummary";
 import OrderSummaryWithTotal from "@/components/OrderSummaryWithTotal";

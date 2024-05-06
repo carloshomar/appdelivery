@@ -1,8 +1,5 @@
-// TabOneScreen.js
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text } from "react-native";
-
-import api from "@/services/api";
+import { ScrollView, StyleSheet, Text } from "react-native";
 
 import Colors from "@/constants/Colors";
 import { useIsFocused } from "@react-navigation/native";
@@ -13,6 +10,7 @@ import { useCartApi } from "@/contexts/ApiCartContext";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "@/components/Themed";
 import Texts from "@/constants/Texts";
+import establishmentsModel from "@/services/establishments.model";
 
 export default function index() {
   return (
@@ -21,19 +19,15 @@ export default function index() {
 }
 
 function TabTwo() {
-  const [estabelecimentos, setEstabelecimentos] = useState([]);
-
   const { setEstablishment, cleanCart } = useCartApi();
   const nav = useNavigation();
   const isFocused = useIsFocused();
 
+  const [estabelecimentos, setEstabelecimentos] = useState([]);
+
   async function init() {
-    try {
-      const { data } = await api.get("/api/auth/establishments");
-      setEstabelecimentos(data);
-    } catch (e) {
-      console.log(e);
-    }
+    const resp = await establishmentsModel.getEstablishment();
+    setEstabelecimentos(resp);
   }
 
   useEffect(() => {
@@ -55,15 +49,8 @@ function TabTwo() {
       showsVerticalScrollIndicator={false}
     >
       {estabelecimentos.length === 0 ? (
-        <View
-          style={{
-            marginTop: "20%",
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ fontSize: 14, fontWeight: "300" }}>
+        <View style={styles.container}>
+          <Text style={styles.conttexts}>
             {Texts.nenhum_estabelecimento_aberto}
           </Text>
         </View>
@@ -80,3 +67,16 @@ function TabTwo() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: "20%",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  conttexts: {
+    fontSize: 14,
+    fontWeight: "300",
+  },
+});

@@ -20,7 +20,7 @@ export default function ModalScreen() {
   const route = useRoute();
   const { establishment }: any = route.params;
   const mapViewRef = useRef(null);
-  const { user, isLoading, setIsLoading } = useAuthApi();
+  const { user } = useAuthApi();
 
   const centerMapOnUser = async () => {
     const { latitude, longitude } = establishment.coordinates;
@@ -41,11 +41,10 @@ export default function ModalScreen() {
 
   const openMap = () => {
     const { latitude, longitude } = establishment.coordinates;
-    const label = establishment.name;
 
     const url = Platform.select({
       ios: `maps://${latitude},${longitude}?q=`,
-      android: "geo:${latitude},${longitude}?q=",
+      android: `geo:${latitude},${longitude}?q=`,
     });
 
     Linking.openURL(url).catch((err) =>
@@ -81,6 +80,7 @@ export default function ModalScreen() {
           <Text style={styles.textMap}>{Texts.maps}</Text>
           <MapView
             style={styles.mapView}
+            googleMapId="6cba0e311b251b4c"
             ref={mapViewRef}
             initialRegion={{
               latitude: establishment.coordinates.latitude | 0,
@@ -179,7 +179,6 @@ const styles = StyleSheet.create({
   },
   boxOne: {
     width: "100%",
-
     backgroundColor: Colors.light.white,
     borderRadius: 5,
     padding: 15,

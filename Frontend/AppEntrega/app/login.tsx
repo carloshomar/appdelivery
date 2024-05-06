@@ -1,14 +1,12 @@
 import Colors from "@/constants/Colors";
 import { useAuthApi } from "@/contexts/AuthContext";
 
-import api from "@/services/api";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   TextInput,
   TouchableOpacity,
   Text,
-  Image,
   StyleSheet,
   SafeAreaView,
 } from "react-native";
@@ -24,7 +22,6 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Image source={{ uri: "" }} style={styles.logo} /> */}
       <View style={styles.formContainer}>
         <TextInput
           style={styles.input}

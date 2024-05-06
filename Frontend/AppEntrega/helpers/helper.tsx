@@ -148,8 +148,8 @@ function getMarkerUser(mylocation: any) {
     id: 999999,
     title: "Usuário",
     coordinates: {
-      latitude: mylocation.coords.latitude,
-      longitude: mylocation.coords.longitude,
+      latitude: mylocation?.coords?.latitude ?? 0,
+      longitude: mylocation?.coords?.longitude ?? 0,
     },
     icon: require("../assets/images/deliveryman_icon.png"),
   };

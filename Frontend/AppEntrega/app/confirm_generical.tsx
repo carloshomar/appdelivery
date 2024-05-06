@@ -56,13 +56,7 @@ export default function ConfirmGenerical() {
           <Text style={styles.titleOne}>{Texts.nao_sera_possivel_voltar}</Text>
         </View>
       ) : (
-        <View
-          style={{
-            width: "95%",
-            alignContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.containerdata}>
           <Text
             style={{
               ...styles.textTwo,
@@ -74,24 +68,11 @@ export default function ConfirmGenerical() {
             {Texts.codigo}
           </Text>
 
-          <View
-            style={{
-              borderBottomWidth: 3,
-              borderColor: "red",
-              borderBottomColor: "red",
-              marginTop: 30,
-            }}
-          >
+          <View style={styles.containermine}>
             <TextInput
               value={code}
               keyboardType={"numeric"}
-              style={{
-                fontSize: 30,
-                padding: 15,
-                paddingLeft: 30,
-                letterSpacing: 15,
-                color: Colors.light.text,
-              }}
+              style={styles.codes}
               autoFocus={true}
               placeholder="####"
               placeholderTextColor={Colors.light.secondaryText}
@@ -153,9 +134,27 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "space-between",
   },
+  containerdata: {
+    width: "95%",
+    alignContent: "center",
+    alignItems: "center",
+  },
+  containermine: {
+    borderBottomWidth: 3,
+    borderColor: "red",
+    borderBottomColor: "red",
+    marginTop: 30,
+  },
   textTwo: {
     fontSize: 22,
     fontWeight: "500",
+    color: Colors.light.text,
+  },
+  codes: {
+    fontSize: 30,
+    padding: 15,
+    paddingLeft: 30,
+    letterSpacing: 15,
     color: Colors.light.text,
   },
   imageContainer: {

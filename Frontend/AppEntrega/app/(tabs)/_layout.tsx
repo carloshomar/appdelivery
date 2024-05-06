@@ -6,7 +6,6 @@ import { Platform, Pressable } from "react-native";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import Texts from "@/constants/Texts";
 import Strings from "@/constants/Strings";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

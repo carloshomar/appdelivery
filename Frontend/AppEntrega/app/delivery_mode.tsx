@@ -2,7 +2,7 @@ import { Linking, Platform, StyleSheet, TouchableOpacity } from "react-native";
 
 import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import Texts from "@/constants/Texts";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MapView, { Marker } from "react-native-maps";
@@ -13,7 +13,6 @@ import { useAuthApi } from "@/contexts/AuthContext";
 import { useNavigation } from "expo-router";
 import Strings from "@/constants/Strings";
 import api from "@/services/api";
-import { SwipeButton } from "react-native-expo-swipe-button";
 import SwipeButtonDelivery from "@/componentes/SwipButton";
 import helper from "@/helpers/helper";
 
@@ -21,7 +20,7 @@ export default function DeliveryMode({ showIcon }: any) {
   const insets = useSafeAreaInsets();
   const nav = useNavigation();
   const mapViewRef = useRef(null);
-  const { user, inWork, isActiveOrder, socketMessage } = useAuthApi();
+  const { inWork, isActiveOrder } = useAuthApi();
   const [order, setOrder] = useState(inWork?.order[0]);
   const [loading, setLoading] = useState(false);
 
@@ -144,6 +143,7 @@ export default function DeliveryMode({ showIcon }: any) {
           <MapView
             style={styles.mapView}
             ref={mapViewRef}
+            googleMapId="6cba0e311b251b4c"
             initialRegion={{
               latitude:
                 (deliveryman.status === "IN_ROUTE_DELIVERY"

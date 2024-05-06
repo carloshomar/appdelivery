@@ -140,9 +140,6 @@ const AuthProvider: React.FC<any> = ({ children }) => {
     try {
       const token = await AsyncStorage.getItem(Strings.token_jwt);
       if (token) {
-        // Decodifica o token para obter os dados do usuário
-
-        // Decodifica o token para obter os dados do usuário
         const parts = token
           .split(".")
           .map((part) =>

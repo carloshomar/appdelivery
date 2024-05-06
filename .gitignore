@@ -78,6 +78,7 @@ web_modules/
 # Optional npm cache directory
 .npm
 
+
 # Optional eslint cache
 .eslintcache
 
@@ -413,3 +414,8 @@ yarn-error.*
 
 expo-env.d.ts
 # @end expo-cli
+
+
+
+ios/
+android/

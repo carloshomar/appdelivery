@@ -33,14 +33,7 @@ const OrderList = ({ orders }: any) => {
 
     return (
       <>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <View style={styles.container}>
           <Text style={styles.dateSeparator}>{date}</Text>
           <Text
             style={{
@@ -88,6 +81,12 @@ const OrderList = ({ orders }: any) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   orderItemContainer: {
     borderBottomWidth: 1,
     borderColor: Colors.light.tabIconDefault,

@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
-import { Stack, Tabs } from "expo-router";
+import React from "react";
+import { Stack } from "expo-router";
 import LoginScreen from "./pages/auth/login";
 import { useApi } from "@/contexts/ApiContext";
-import { useCartApi } from "@/contexts/ApiCartContext";
-import { View, Text, StyleSheet } from "react-native";
-import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
-import { useRoute } from "@react-navigation/native";
-import { APP_MODE, APP_MODE_OPTIONS } from "@/config/config";
 
 export default function NavStack() {
   const { isLogged } = useApi();

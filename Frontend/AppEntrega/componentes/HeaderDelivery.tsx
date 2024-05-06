@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -24,40 +25,8 @@ function HeaderDelivery({
   const nav = useNavigation();
 
   return (
-    <View
-      style={{
-        width: headerView ? Dimensions.get("window").width / 1.08 : "100%",
-        padding: 20,
-        paddingTop: headerView ? 20 : insets.top + 10,
-        height: headerView ? undefined : 150,
-
-        borderRadius: headerView ? 35 : 0,
-        position: "absolute",
-        backgroundColor: Colors.light.background,
-        borderWidth: 1,
-        borderColor: Colors.light.tabIconDefault,
-        top: headerView ? insets.top + 10 : 0,
-
-        zIndex: 1,
-
-        shadowColor: headerView ? "#000" : Colors.light.secondaryText,
-        shadowOffset: { width: 1, height: 1 },
-        shadowOpacity: 0.3,
-        shadowRadius: headerView ? 5 : 0,
-
-        alignContent: "center",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          alignContent: "center",
-          alignItems: "center",
-          gap: 20,
-        }}
-      >
+    <View style={styles.container(headerView, insets)}>
+      <View style={styles.container2}>
         <TouchableOpacity
           onPress={() => nav.navigate("perfil")}
           disabled={disabled}
@@ -66,34 +35,20 @@ function HeaderDelivery({
             source={{
               uri: "https://cdn-icons-png.freepik.com/512/4140/4140048.png",
             }}
-            style={{
-              height: 50,
-              width: 50,
-            }}
+            style={styles.imagem}
           />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={{
+            ...styles.btn,
             backgroundColor: disponivel ? "green" : Colors.light.tint,
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 20,
-            width: Dimensions.get("window").width / 2,
-            padding: 10,
           }}
           disabled={disabled}
           onPress={() => onDisponivel(!disponivel)}
         >
           {!loading ? (
-            <Text
-              style={{
-                fontSize: 17,
-                fontWeight: "500",
-                color: Colors.light.white,
-              }}
-            >
+            <Text style={styles.mfonte}>
               {disponivel
                 ? !inWork.status
                   ? Texts.disponivel
@@ -112,4 +67,51 @@ function HeaderDelivery({
   );
 }
 
+const styles = StyleSheet.create({
+  btn: {
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 20,
+    width: Dimensions.get("window").width / 2,
+    padding: 10,
+  },
+  imagem: {
+    height: 50,
+    width: 50,
+  },
+  mfonte: {
+    fontSize: 17,
+    fontWeight: "500",
+    color: Colors.light.white,
+  },
+  container: (headerView: any, insets: any) => {
+    return {
+      width: headerView ? Dimensions.get("window").width / 1.08 : "100%",
+      position: "absolute",
+      padding: 20,
+      backgroundColor: Colors.light.background,
+      borderWidth: 1,
+      borderColor: Colors.light.tabIconDefault,
+      zIndex: 1,
+      alignContent: "center",
+      alignItems: "center",
+      justifyContent: "center",
+      shadowOffset: { width: 1, height: 1 },
+      shadowOpacity: 0.3,
+      paddingTop: headerView ? 20 : insets.top + 10,
+      top: headerView ? insets.top + 10 : 0,
+      height: headerView ? undefined : 150,
+      borderRadius: headerView ? 35 : 0,
+      shadowColor: headerView ? "#000" : Colors.light.secondaryText,
+      shadowRadius: headerView ? 5 : 0,
+    };
+  },
+  container2: {
+    flexDirection: "row",
+    alignContent: "center",
+    alignItems: "center",
+    gap: 20,
+  },
+});
 export default HeaderDelivery;

@@ -1,4 +1,3 @@
-// components/ProductPage.js
 import React, { useState } from "react";
 import {
   View,
@@ -6,7 +5,6 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Dimensions,
   Platform,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -39,10 +37,10 @@ const ProductPage = () => {
   const addRemove = (id: number) => {
     // Verifique se o ID já está na lista de selecionados
     if (selectedsAdditional.includes(id)) {
-      // Se estiver, remova-o
+      // Remova-o
       setSelectedAdditionals(selectedsAdditional.filter((e) => e !== id));
     } else {
-      // Se não estiver, adicione-o
+      // Adicione-o
       setSelectedAdditionals([...selectedsAdditional, id]);
     }
   };
@@ -51,7 +49,9 @@ const ProductPage = () => {
     // Calcula o preço total dos adicionais selecionados
     const additionalPricesSum = selectedsAdditional.reduce(
       (sum, additionalId) => {
-        const additional = item.Additional.find((a) => a.ID === additionalId);
+        const additional = item.Additional.find(
+          (a: any) => a.ID === additionalId
+        );
         return sum + (additional?.Price || 0);
       },
       0
@@ -102,7 +102,9 @@ const ProductPage = () => {
           quantity={quantity}
           onIncrement={() => setQuantity(quantity + 1)}
           onDecrement={() =>
-            setQuantity((quantity) => (quantity !== 1 ? quantity - 1 : 1))
+            setQuantity((quantity: number) =>
+              quantity !== 1 ? quantity - 1 : 1
+            )
           }
         />
         <TouchableOpacity

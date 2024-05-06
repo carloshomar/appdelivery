@@ -1,4 +1,3 @@
-import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
 import Texts from "@/constants/Texts";
 import { useAuthApi } from "@/contexts/AuthContext";
@@ -7,7 +6,7 @@ import LoginScreen from "./login";
 import LoadingPage from "./pages/loading";
 
 export default function StackNav() {
-  const { isLogged, user, isLoading } = useAuthApi();
+  const { isLogged, isLoading } = useAuthApi();
 
   if (!isLogged) {
     return <LoginScreen />;

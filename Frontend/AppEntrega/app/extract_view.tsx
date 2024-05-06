@@ -11,7 +11,6 @@ import Texts from "@/constants/Texts";
 import helper from "@/helpers/helper";
 import { useRoute } from "@react-navigation/native";
 import Colors from "@/constants/Colors";
-import Strings from "@/constants/Strings";
 
 function ExtractView() {
   const route = useRoute();
