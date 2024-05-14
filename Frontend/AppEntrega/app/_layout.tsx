@@ -14,11 +14,12 @@ import Texts from "@/constants/Texts";
 import Colors from "@/constants/Colors";
 import { AuthProvider } from "@/contexts/AuthContext";
 import StackNav from "./nav";
-
+import "react-native-reanimated";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from "expo-router";
+import * as React from "react";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.

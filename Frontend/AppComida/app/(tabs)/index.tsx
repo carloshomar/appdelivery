@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
 
 import Colors from "@/constants/Colors";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { APP_MODE, APP_MODE_OPTIONS } from "@/config/config";
 import EstablishmentView from "@/components/EstablishmentView";
 import Establishment from "../establishment";
 import { useCartApi } from "@/contexts/ApiCartContext";
-import { useNavigation } from "@react-navigation/native";
+
 import { View } from "@/components/Themed";
 import Texts from "@/constants/Texts";
 import establishmentsModel from "@/services/establishments.model";

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import api from "@/services/api";
@@ -6,6 +6,7 @@ import { Buffer } from "buffer";
 import useWebSocket from "react-use-websocket";
 import Strings from "@/constants/Strings";
 import { useNavigation } from "expo-router";
+import * as React from "react";
 
 interface User {
   email: string;
@@ -30,13 +31,13 @@ interface AuthContextType {
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const AuthProvider: React.FC<any> = ({ children }) => {
+const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
   const [disponivel, setDisponivel] = useState(false);
   const [socketMessage, setSocketMessage] = useState<any>([]);
-  const [mylocation, setMyLocation] = useState<any | null>(null);
+  const [mylocation, setMyLocation] = useState<any>(null);
 
   const [inWork, setInWork] = useState({ status: false, order: null });
 
@@ -179,22 +180,24 @@ const AuthProvider: React.FC<any> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        isLoading,
-        setIsLoading,
-        isLogged,
-        login,
-        logout,
-        inWork,
-        disponivel,
-        setDisponivel,
-        isActiveOrder,
-        mylocation,
-        setMyLocation,
-        sendSocketMessage,
-        socketMessage,
-      }}
+      value={
+        {
+          user,
+          isLoading,
+          setIsLoading,
+          isLogged,
+          login,
+          logout,
+          inWork,
+          disponivel,
+          setDisponivel,
+          isActiveOrder,
+          mylocation,
+          setMyLocation,
+          sendSocketMessage,
+          socketMessage,
+        } as any
+      }
     >
       {children}
     </AuthContext.Provider>
@@ -204,7 +207,7 @@ const AuthProvider: React.FC<any> = ({ children }) => {
 const useAuthApi = (): any => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useApi must be used within an ApiProvider");
+    throw new Error("useAuthApi must be used within an AuthProvider");
   }
   return context;
 };

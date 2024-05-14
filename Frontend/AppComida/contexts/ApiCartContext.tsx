@@ -32,7 +32,7 @@ interface ApiContextProps {
   editCart(item: object): void;
   cleanCart(): void;
   setPaymentMethod(method: object): void;
-  submitCart(user: any): boolean;
+  submitCart(user: any): Promise<boolean>;
 
   validDelivery(): boolean;
   paymentMethod: any;
@@ -40,7 +40,7 @@ interface ApiContextProps {
 
   setHiddenCart(state: boolean): void;
   setEstablishment(establishment: any): void;
-  getValueDelivery(ns: number): Promise<any>;
+  getValueDelivery(ns: number, id: string): Promise<any>;
   distance: number | null;
   setMyLocation(location: object): void;
   location: any;
@@ -189,26 +189,27 @@ export const ApiCartProvider: React.FC<ApiCartProviderProps> = ({
 
   return (
     <ApiContext.Provider
-      value={{
-        addCart,
-        editCart,
-        cleanCart,
-        removeCart,
-        submitCart,
-        establishment,
-        setEstablishment,
-        setMyLocation,
-        getValueDelivery,
-        validDelivery,
-        setHiddenCart,
-        setPaymentMethod,
+      value={
+        {
+          addCart,
+          editCart,
+          cleanCart,
+          removeCart,
+          submitCart,
+          setEstablishment,
+          setMyLocation,
+          validDelivery,
+          setHiddenCart,
+          setPaymentMethod,
 
-        cart,
-        distance,
-        location,
-        paymentMethod,
-        deliveryValue,
-      }}
+          establishment,
+          cart,
+          distance,
+          location,
+          paymentMethod,
+          deliveryValue,
+        } as any
+      }
     >
       {children}
       {!hiddenCart && cart.length !== 0 && (

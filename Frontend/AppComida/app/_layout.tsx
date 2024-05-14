@@ -3,6 +3,8 @@ import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 
 import * as SplashScreen from "expo-splash-screen";
+import "react-native-reanimated";
+
 import { useEffect } from "react";
 
 import { useColorScheme } from "@/components/useColorScheme";

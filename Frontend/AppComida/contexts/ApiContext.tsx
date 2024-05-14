@@ -52,7 +52,7 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({ children }) => {
 
   async function getUserData() {
     const token = await AsyncStorage.getItem(Strings.token_jwt);
-    return await JSON.parse(token);
+    return JSON.parse(token as any);
   }
 
   const login = async (token: any) => {
