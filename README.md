@@ -147,9 +147,9 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 - Auth / Create User & Establishment
 - Product & Order / Delivery / Alter Taxe Delivery
-- _(Pode ser feito pela aplicação WEBRestaurante)_ Product & Order / Products / Create Multi Products         
-- _(Pode ser feito pela aplicação WEBRestaurante)_ Product & Order / Additional / Create Additional           
-- _(Pode ser feito pela aplicação WEBRestaurante)_ Product & Order / Additional / Vinculo Additional Products  
+- Product & Order / Products / Create Multi Products  _(Pode ser feito pela aplicação WEBRestaurante)_ 
+- Product & Order / Additional / Create Additional  _(Pode ser feito pela aplicação WEBRestaurante)_ 
+- Product & Order / Additional / Vinculo Additional Products  _(Pode ser feito pela aplicação WEBRestaurante)_
 
 #### Geraração de Aplicativo:
 
