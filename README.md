@@ -191,8 +191,8 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - O restaurante aceita/recusa o pedido, arrastando-o para os próximos estágios do Painel Principal (Quadro Kanban).
 - Ao arrastar o pedido para o estágio de "Em produção", o mesmo aparece disponível para entrega aos entregadores ao redor.
 - Enquanto o pedido está no estágio de "Em produção", o entregador se locomove até o estabelecimento e consegue sinalizar no AppEntrega que chegou ao estabelecimento. O restaurante recebe essa alteração no status do pedido.
-- Ao arrastar o pedido para "Pronto para Entrega", o restaurante consegue entregar o pedido no balcão. Para isso, é necessário o código do restaurante (código de 4 dígitos que está disponível no card do pedido).
-- Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do cliente).
+- Ao arrastar o pedido para "Pronto para Entrega", o restaurante consegue entregar o pedido no balcão. Para isso, é necessário o código do restaurante (código de quatro dígitos que está disponível no card do pedido, na parte WEB do restaurante).
+- Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do Cliente).
 - Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva no extrato do entregador.
 
 
