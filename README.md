@@ -111,6 +111,12 @@ _Tenha o node instalado na sua maquina, no caso eu utilizei a v20.13.1_
 
 No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/services/api.tsx_</a> faça alterações da URL para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a porta que está rodando aplicativo e alterar a url.
 
+
+_O processo de alteração de URL deve ser realizado nas 3 aplicações, WEBRestaurante, AppComida, AppEntregas._
+
+
+<b>_Na parte WEB, em caso de não conseguir logar ou estiver tendo erro de CORS, considere instalar uma <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pt-BR">extenão que desabilita CORS no seu navegador</a>, ou inicialize o mesmo sem essa politica._</b>
+
 Instalando dependências.
 
 ```bash
@@ -139,13 +145,47 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 #### Cadastrar Estabelecimento:
 
-- Auth / Create User & Establishment
+- Auth / Create User & Establishment  **_(Fique atento a geolocalização do estabelecimento, para o calculo correto de entrega)_**
 - Product & Order / Delivery / Alter Taxe Delivery
-- Product & Order / Products / Create Multi Products
-- Product & Order / Additional / Create Additional
-- Product & Order / Additional / Vinculo Additional Products
+- Product & Order / Products / Create Multi Products  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
+- Product & Order / Additional / Create Additional  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
+- Product & Order / Additional / Vinculo Additional Products  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
+
 
 #### Geraração de Aplicativo:
 
 - No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
 - No mesmo arquivo, <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
+
+# Detalhes Gerais
+
+#### Calculo de Entrega:
+
+- Cada restaurante tem seu próprio valor de entrega e distância de atendimento.
+- O cálculo consiste em pôr um valor fixo (Taxa de Serviço) fixedTaxa e um valor por KM perKm.
+- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um metodo no backend e frontend para esse calculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+
+#### Entregador:
+
+- Cada entregador deve estar devidamente cadastrado. A documentação no Postman pode ser encontrada em: Auth/DeliveryMan/Register Deliveryman.
+- Toda entrega realizada pelo entregador é salva em seu extrato, que pode ser visualizado no seu respectivo APP.
+- É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega. Por se tratar de um array, pretendo adicionar como feature futura)_**
+- No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
+
+
+#### Restaurante:
+
+- Todos os dados do restaurante podem ser alterados pelo painel WEBRestaurante.
+- Os restaurantes são cadastrados via endpoint (Auth / Create User & Establishment). A página de cadastro de restaurante está em desenvolvimento futuro.
+
+
+#### Etapas de Entrega:
+
+- O restaurante faz o cadastramento de todos os seus produtos e "abre o estabelecimento" na aplicação WEBRestaurante.
+- O cliente realiza o pedido e indica a forma de pagamento, que pode ser feita na entrega. Atualmente, não temos integração com APIs de pagamento, mas isso pode ser implementado em qualquer linguagem e facilmente devido à arquitetura.
+- O restaurante aceita/recusa o pedido, arrastando-o para os próximos estágios do Painel Principal (Quadro Kanban).
+- Ao arrastar o pedido para o estágio de "Em produção", o mesmo aparece disponível para entrega aos entregadores ao redor.
+- Enquanto o pedido está no estágio de "Em produção", o entregador se locomove até o estabelecimento e consegue sinalizar no AppEntrega que chegou ao estabelecimento. O restaurante recebe essa alteração no status do pedido.
+- Ao arrastar o pedido para "Pronto para Entrega", o restaurante consegue entregar o pedido no balcão. Para isso, é necessário o código do restaurante (código de 4 dígitos que está disponível no card do pedido).
+- Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do cliente).
+- Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva no extrato do entregador.
