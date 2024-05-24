@@ -7,7 +7,7 @@ _Contribuições são sempre bem-vindas!_
 
 ##### <a href="https://github.com/carloshomar/appdelivery/issues">Backlog e Andamento do Projeto</a>
 
-#### Videos
+#### Videos (download)
 
 <a href="./Arquitetura/video2.mp4">Video - Fazendo um pedidio, Aceitando e Entregando (Fluxo todos APPs)</a>
 
