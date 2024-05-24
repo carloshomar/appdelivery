@@ -151,6 +151,12 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Product & Order / Additional / Create Additional  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
 - Product & Order / Additional / Vinculo Additional Products  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
 
+#### Calculo de Entrega:
+
+- Cada restaurante tem seu próprio valor de entrega e distância de atendimento.
+- O cálculo consiste em pôr um valor fixo (Taxa de Serviço) `fixedTaxa` e valor por KM `perKm`, em casos.
+- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine, envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+
 #### Geraração de Aplicativo:
 
 - No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
