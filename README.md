@@ -157,31 +157,34 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
 - No mesmo arquivo, <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
 
-## Detalhes Gerais
+# Detalhes Gerais
 
 #### Etapas de Entrega:
 
-- O Restaurante faz o cadastramento de todos os seus produtos, e _"Abre o estabelecimento"_ na aplicação WEBRestaurante.
-- O Cliente realiza o pedido e indica a forma de pagamento que pode ser feito na entrega, atualmente não temos integração com apis de pagamento, más isso pode ser implementado em qualquer linguagem e facilmente devido a arquitetura.
-- O Restaurante aceita/recusa o pedido, isso é feito arrastando o pedido para os proximos estagios do Painel Principal (Quadro Kanban).
-- Ao arrastar o pedido para estagio de _"Em produção"_ o mesmo aparece disponivel para entrega para os entregadores ao redor.
-- Enquanto o pedido está no estágio de _"Em produção"_ o entregador se locomove até o estabelecimento e consegue sinalizar no AppEntrega que chegou ao estabelecimento, o restaurante recebe essa alteração no status do pedido.
-- Ao arrastar o pedido para _"Pronto para Entrega"_ o restaurante consegue receber o pedido no balcão, más para isso é necessário o código do restaurante (código de 4 digitos que está disponivel no card do pedido).
-- Ao receber o pedido o entregador pode se locomover ao encontro do cliente e ao entregar o pedido, solicitar o seu respectivo código de entrega (código de quatro digitos diponivel na área de pedidos no APP do cliente).
-- Após a entrega realizada, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva no extrado do entregador.
+- O restaurante faz o cadastramento de todos os seus produtos e "abre o estabelecimento" na aplicação WEBRestaurante.
+- O cliente realiza o pedido e indica a forma de pagamento, que pode ser feita na entrega. Atualmente, não temos integração com APIs de pagamento, mas isso pode ser implementado em qualquer linguagem e facilmente devido à arquitetura.
+- O restaurante aceita/recusa o pedido, arrastando-o para os próximos estágios do Painel Principal (Quadro Kanban).
+- Ao arrastar o pedido para o estágio de "Em produção", o mesmo aparece disponível para entrega aos entregadores ao redor.
+- Enquanto o pedido está no estágio de "Em produção", o entregador se locomove até o estabelecimento e consegue sinalizar no AppEntrega que chegou ao estabelecimento. O restaurante recebe essa alteração no status do pedido.
+- Ao arrastar o pedido para "Pronto para Entrega", o restaurante consegue entregar o pedido no balcão. Para isso, é necessário o código do restaurante (código de 4 dígitos que está disponível no card do pedido).
+- Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do cliente).
+- Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva no extrato do entregador.
 
 #### Calculo de Entrega:
 
 - Cada restaurante tem seu próprio valor de entrega e distância de atendimento.
-- O cálculo consiste em pôr um valor fixo (Taxa de Serviço) `fixedTaxa` e valor por KM `perKm`, em casos.
-- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine, envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+- O cálculo consiste em pôr um valor fixo (Taxa de Serviço) fixedTaxa e um valor por KM perKm.
+- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um metodo no backend e frontend para esse calculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+
 
 #### Entregador:
 
-- Cada entregador deve estar devidamente cadastrado, na docuemntação no Postman, pode ser encontrado em: Auth/DeliveryMan/Register Deliveryman.
+- Cada entregador deve estar devidamente cadastrado. A documentação no Postman pode ser encontrada em: Auth/DeliveryMan/Register Deliveryman.
 - Toda entrega realizada pelo entregador é salva em seu extrato, que pode ser visualizado no seu respectivo APP.
-- É permitido somente uma entrega por vez, por entregador. (Existe a possiblidade de adição de uma fila de pedidos para entrega no AppEntrega, por se tratar de um array, pretendo adicionar como feature futura).
+- É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega. Por se tratar de um array, pretendo adicionar como feature futura)_**
+- No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
 
 #### Restaurante:
 
-- Todos os dados do restaurante podem ser alterados pelo 
+- Todos os dados do restaurante podem ser alterados pelo painel WEBRestaurante.
+- Os restaurantes são cadastrados via endpoint (Auth / Create User & Establishment). A página de cadastro de restaurante está em desenvolvimento futuro.
