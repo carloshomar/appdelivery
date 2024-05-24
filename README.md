@@ -157,7 +157,7 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
 - No mesmo arquivo, <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
 
-### Eventos de Pedido
+#### Eventos do Pedido (RabbitMQ)
 
 - Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variável de ambiente: `RABBIT_DELIVERY_QUEUE`.
 - Quando o status do pedido é alterado por parte do entregador, o evento é publicado na fila indicada na variável de ambiente: `RABBIT_ORDER_QUEUE`.
