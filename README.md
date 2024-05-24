@@ -115,7 +115,7 @@ No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/ser
 _O processo de alteração de URL deve ser realizado nas 3 aplicações, WEBRestaurante, AppComida, AppEntregas._
 
 
-<b>_Na parte WEB, no caso de não conseguir logar ou estiver tendo erro de CORS, considere instalar uma <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pt-BR">extenão que desabilita CORS no seu navegador</a>, ou inicialize o mesmo sem essa politica._</b>
+<b>_Na parte WEB, em caso de não conseguir logar ou estiver tendo erro de CORS, considere instalar uma <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pt-BR">extenão que desabilita CORS no seu navegador</a>, ou inicialize o mesmo sem essa politica._</b>
 
 Instalando dependências.
 
@@ -147,9 +147,9 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 - Auth / Create User & Establishment
 - Product & Order / Delivery / Alter Taxe Delivery
-- Product & Order / Products / Create Multi Products
-- Product & Order / Additional / Create Additional
-- Product & Order / Additional / Vinculo Additional Products
+- Product & Order / Products / Create Multi Products          - <b>(Pode ser feito pela WEB)</b>
+- Product & Order / Additional / Create Additional            - <b>(Pode ser feito pela WEB)</b>
+- Product & Order / Additional / Vinculo Additional Products  - <b>(Pode ser feito pela WEB)</b>
 
 #### Geraração de Aplicativo:
 
