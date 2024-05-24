@@ -10,6 +10,8 @@ _Contribuições são sempre bem-vindas!_
 #### Videos
 
 <a href="./Arquitetura/video2.mp4">Video - Fazendo um pedidio, Aceitando e Entregando (Fluxo todos APPs)</a>
+
+
 <a href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
 
 
@@ -67,14 +69,10 @@ _Uma arquitetura baseada em microserviços_
 - O GoLang utiliza também o Fiber como framework API.
 - Implementado em Docker, facilitando a inicialização do servidor sem exigir amplo conhecimento técnico.
 
-### App Entregas:
+### App Entregas e App Comida:
 
 - Desenvolvido em React Native e Expo, possibilitando a publicação na App Store e Google Play.
-- Utiliza o Expo para construção gratuita na nuvem, dispensando a necessidade de um computador ou MacBook, especialmente para iOS.
-
-### App Comida:
-
-- Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variavel de ambiente: `RABBIT_DELIVERY_QUEUE`.
+- Utiliza o Expo para build gratuito na nuvem, dispensando a necessidade de um MacOS, especialmente para iOS.
 
 ## Como Rodar
 
@@ -154,14 +152,21 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Product & Order / Additional / Vinculo Additional Products  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
 
 
-#### Geraração de Aplicativo:
+#### Configuração de APPComida:
 
 - No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
 - No mesmo arquivo, <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
 
+
+#### Eventos do Pedido (RabbitMQ)
+
+- Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variável de ambiente: `RABBIT_DELIVERY_QUEUE`.
+- Quando o status do pedido é alterado por parte do entregador, o evento é publicado na fila indicada na variável de ambiente: `RABBIT_ORDER_QUEUE`.
+
+
 # Detalhes Gerais
 
-#### Calculo de Entrega:
+#### Cálculo de Entrega:
 
 - Cada restaurante tem seu próprio valor de entrega e distância de atendimento.
 - O cálculo consiste em pôr um valor fixo (Taxa de Serviço) fixedTaxa e um valor por KM perKm.
@@ -174,12 +179,10 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega. Por se tratar de um array, pretendo adicionar como feature futura)_**
 - No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
 
-
 #### Restaurante:
 
 - Todos os dados do restaurante podem ser alterados pelo painel WEBRestaurante.
 - Os restaurantes são cadastrados via endpoint (Auth / Create User & Establishment). A página de cadastro de restaurante está em desenvolvimento futuro.
-
 
 #### Etapas de Entrega:
 
@@ -191,3 +194,9 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Ao arrastar o pedido para "Pronto para Entrega", o restaurante consegue entregar o pedido no balcão. Para isso, é necessário o código do restaurante (código de 4 dígitos que está disponível no card do pedido).
 - Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do cliente).
 - Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva no extrato do entregador.
+
+
+
+
+##### Atenciosamente, CHomar
+##### Discord: anypercent_
