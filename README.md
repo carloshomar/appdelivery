@@ -9,10 +9,10 @@ _Contribuições são sempre bem-vindas!_
 
 #### Videos
 
-<a href="./Arquitetura/video2.mp4">Video - Fazendo um pedidio, Aceitando e Entregando (Fluxo todos APPs)</a>
+<a target="_blank" href="./Arquitetura/video2.mp4">Video - Fazendo um pedidio, Aceitando e Entregando (Fluxo todos APPs)</a>
 
 
-<a href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
+<a target="_blank" href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
 
 
 #### App de Comida
