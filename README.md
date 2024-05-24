@@ -10,6 +10,8 @@ _Contribuições são sempre bem-vindas!_
 #### Videos
 
 <a href="./Arquitetura/video2.mp4">Video - Fazendo um pedidio, Aceitando e Entregando (Fluxo todos APPs)</a>
+
+
 <a href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
 
 
@@ -174,12 +176,10 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega. Por se tratar de um array, pretendo adicionar como feature futura)_**
 - No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
 
-
 #### Restaurante:
 
 - Todos os dados do restaurante podem ser alterados pelo painel WEBRestaurante.
 - Os restaurantes são cadastrados via endpoint (Auth / Create User & Establishment). A página de cadastro de restaurante está em desenvolvimento futuro.
-
 
 #### Etapas de Entrega:
 
