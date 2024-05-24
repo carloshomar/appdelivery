@@ -69,14 +69,10 @@ _Uma arquitetura baseada em microserviços_
 - O GoLang utiliza também o Fiber como framework API.
 - Implementado em Docker, facilitando a inicialização do servidor sem exigir amplo conhecimento técnico.
 
-### App Entregas:
+### App Entregas e App Comida:
 
 - Desenvolvido em React Native e Expo, possibilitando a publicação na App Store e Google Play.
-- Utiliza o Expo para construção gratuita na nuvem, dispensando a necessidade de um computador ou MacBook, especialmente para iOS.
-
-### App Comida:
-
-- Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variavel de ambiente: `RABBIT_DELIVERY_QUEUE`.
+- Utiliza o Expo para build gratuito na nuvem, dispensando a necessidade de um MacOS, especialmente para iOS.
 
 ## Como Rodar
 
@@ -160,6 +156,12 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 - No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
 - No mesmo arquivo, <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
+
+### Eventos de Pedido
+
+- Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variável de ambiente: `RABBIT_DELIVERY_QUEUE`.
+- Quando o status do pedido é alterado por parte do entregador, o evento é publicado na fila indicada na variável de ambiente: `RABBIT_ORDER_QUEUE`.
+
 
 # Detalhes Gerais
 
