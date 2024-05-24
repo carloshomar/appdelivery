@@ -145,11 +145,30 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 #### Cadastrar Estabelecimento:
 
-- Auth / Create User & Establishment
+- Auth / Create User & Establishment  **_(Fique atento a geolocalização do estabelecimento, para o calculo correto de entrega)_**
 - Product & Order / Delivery / Alter Taxe Delivery
 - Product & Order / Products / Create Multi Products  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
 - Product & Order / Additional / Create Additional  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
 - Product & Order / Additional / Vinculo Additional Products  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
+
+
+#### Geraração de Aplicativo:
+
+- No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
+- No mesmo arquivo, <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
+
+## Detalhes Gerais
+
+#### Etapas de Entrega:
+
+- O Restaurante faz o cadastramento de todos os seus produtos, e _"Abre o estabelecimento"_ na aplicação WEBRestaurante.
+- O Cliente realiza o pedido e indica a forma de pagamento que pode ser feito na entrega, atualmente não temos integração com apis de pagamento, más isso pode ser implementado em qualquer linguagem e facilmente devido a arquitetura.
+- O Restaurante aceita/recusa o pedido, isso é feito arrastando o pedido para os proximos estagios do Painel Principal (Quadro Kanban).
+- Ao arrastar o pedido para estagio de _"Em produção"_ o mesmo aparece disponivel para entrega para os entregadores ao redor.
+- Enquanto o pedido está no estágio de _"Em produção"_ o entregador se locomove até o estabelecimento e consegue sinalizar no AppEntrega que chegou ao estabelecimento, o restaurante recebe essa alteração no status do pedido.
+- Ao arrastar o pedido para _"Pronto para Entrega"_ o restaurante consegue receber o pedido no balcão, más para isso é necessário o código do restaurante (código de 4 digitos que está disponivel no card do pedido).
+- Ao receber o pedido o entregador pode se locomover ao encontro do cliente e ao entregar o pedido, solicitar o seu respectivo código de entrega (código de quatro digitos diponivel na área de pedidos no APP do cliente).
+- Após a entrega realizada, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva no extrado do entregador.
 
 #### Calculo de Entrega:
 
@@ -157,7 +176,12 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - O cálculo consiste em pôr um valor fixo (Taxa de Serviço) `fixedTaxa` e valor por KM `perKm`, em casos.
 - Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine, envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
 
-#### Geraração de Aplicativo:
+#### Entregador:
 
-- No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, na propriedade _ESTABLISHMENT_, modifique o objeto com as informações desejadas, incluindo logotipos e coordenadas geográficas do estabelecimento (para cálculos de distância).
-- No mesmo arquivo, <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/config/config.tsx_</a>, atualize a propriedade _ESTABLISHMENT_ID_ com o identificador gerado durante o cadastro do estabelecimento _(REQUEST: Auth / Create User & Establishment)_.
+- Cada entregador deve estar devidamente cadastrado, na docuemntação no Postman, pode ser encontrado em: Auth/DeliveryMan/Register Deliveryman.
+- Toda entrega realizada pelo entregador é salva em seu extrato, que pode ser visualizado no seu respectivo APP.
+- É permitido somente uma entrega por vez, por entregador. (Existe a possiblidade de adição de uma fila de pedidos para entrega no AppEntrega, por se tratar de um array, pretendo adicionar como feature futura).
+
+#### Restaurante:
+
+- Todos os dados do restaurante podem ser alterados pelo 
