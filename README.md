@@ -9,7 +9,7 @@ _Contribuições são sempre bem-vindas!_
 
 #### Videos
 
-<a target="_blank" href="./Arquitetura/video2.mp4">Video - Fazendo um pedidio, Aceitando e Entregando (Fluxo todos APPs)</a>
+<a target="_blank" href="./Arquitetura/video2.mp4">Video - Fazendo um pedidio, aceitando e produzindo o pedido, e realizando entrega (fluxo com todos os APPs)</a>
 
 
 <a target="_blank" href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
