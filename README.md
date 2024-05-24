@@ -199,3 +199,4 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 
 #### Atenciosamente, CHomar
+##### Discord: anypercent_
