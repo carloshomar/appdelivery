@@ -7,17 +7,19 @@ _Contribuições são sempre bem-vindas!_
 
 ##### <a href="https://github.com/carloshomar/appdelivery/issues">Backlog e Andamento do Projeto</a>
 
+#### Videos
+
+<a href="./Arquitetura/video2.mp4">Video - Fazendo um pedidio, Aceitando e Entregando (Fluxo todos APPs)</a>
+<a href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
+
+
 #### App de Comida
 
 <img src="./Arquitetura/IMG_9734.PNG" alt="IMG1" width="200"></img>
 <img src="./Arquitetura/IMG_9735.PNG" alt="IMG2" width="200"></img>
 <img src="./Arquitetura/IMG_9736.PNG" alt="IMG3" width="200"></img>
 <img src="./Arquitetura/IMG_9737.PNG" alt="IMG4" width="200"></img>
-
-#### Videos
-
-<a href="./Arquitetura/video1.mp4">Video - Utilizando o App de Comida</a>
-
+ 
 #### Web Restaurante
 
 <img src="./Arquitetura/web_1.png" alt="web1" ></img>
