@@ -185,6 +185,7 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Os restaurantes são cadastrados via endpoint (Auth / Create User & Establishment). A página de cadastro de restaurante está em desenvolvimento futuro.
 
 #### Etapas de Entrega:
+######_O fluxo pode ser visualizado no primeiro video._
 
 - O restaurante faz o cadastramento de todos os seus produtos e "abre o estabelecimento" na aplicação WEBRestaurante.
 - O cliente realiza o pedido e indica a forma de pagamento, que pode ser feita na entrega. Atualmente, não temos integração com APIs de pagamento, mas isso pode ser implementado em qualquer linguagem e facilmente devido à arquitetura.
