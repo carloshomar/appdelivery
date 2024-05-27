@@ -195,7 +195,7 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do Cliente).
 - _**Disclamer**: no código atual da **main**, adicionei o Código do Cliente (em vermelho) no card do pedido, isso é para facilitar os teste, em caso de publicação o ideal é remover o **Código do Cliente** da Visualização do Restaurante (Quadro Kanban), más pode variar de acordo com a regra de negócio._
 - Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva na tela de  **Extrato do entregador**.
-###### _O fluxo acima pode ser visualizado no primeiro video._
+**_O fluxo acima de Etapas de Entrega pode ser visualizado no primeiro video._**
 
 
 
