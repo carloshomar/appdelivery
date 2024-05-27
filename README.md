@@ -193,7 +193,7 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Enquanto o pedido está no estágio de "Em produção", o entregador se locomove até o estabelecimento e consegue sinalizar no AppEntrega que chegou ao estabelecimento. O restaurante recebe essa alteração no status do pedido.
 - Ao arrastar o pedido para "Pronto para Entrega", o restaurante consegue entregar o pedido no balcão. Para isso, é necessário o código do restaurante (código de quatro dígitos que está disponível no card do pedido, na parte WEB do restaurante).
 - Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do Cliente).
-- _**Disclamer**: no código atual da main, eu adicionei o Código do Cliente (em vermelho) no cardo do pedido, isso facilita é para facilitar os teste, em caso de publicação deve-se remover o Código do Cliente da visualização do restaurante, varia de acordo com a regra de negócio._
+- _**Disclamer**: no código atual da **main**, adicionei o Código do Cliente (em vermelho) no card do pedido, isso é para facilitar os teste, em caso de publicação o ideal é remover o **Código do Cliente** da Visualização do Restaurante (Quadro Kanban), más pode variar de acordo com a regra de negócio._
 - Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva no extrato do entregador_.
 
 
