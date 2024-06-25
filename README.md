@@ -165,7 +165,7 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 #### Pagamento (futuro)
 
-- Para desenvolver o pagamento, pretendo adicionar um serviço que sobe escutando também, pois não será o unico, a fila `RABBIT_DELIVERY_QUEUE`.
+- Para desenvolver o pagamento, pretendo adicionar um serviço que sobe escutando a fila `RABBIT_DELIVERY_QUEUE` mas não será o único a fazer isso.
 - No app do cliente, na parte de pagamento, adiciono uma tela para o cliente preencher os dados de pagamento, e no checkout adicionar uma validação de acordo com o método de pagamento.
 - Ao escutar uma mensagem com status de `APROVED` ele realiza o pagamento com os dados vindos na mensagem.
 
