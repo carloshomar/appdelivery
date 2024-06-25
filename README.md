@@ -163,6 +163,11 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variável de ambiente: `RABBIT_DELIVERY_QUEUE`.
 - Quando o status do pedido é alterado por parte do entregador, o evento é publicado na fila indicada na variável de ambiente: `RABBIT_ORDER_QUEUE`.
 
+#### Pagamento (futuro)
+
+- Para desenvolver o pagamento, pretendo adicionar um serviço que sobe escutando também, pois não será o unico, a fila `RABBIT_DELIVERY_QUEUE`.
+- No app do cliente, na parte de pagamento, adiciono uma tela para o cliente preencher os dados de pagamento, e no checkout adicionar uma validação de acordo com o método de pagamento.
+- Ao escutar uma mensagem com status de `APROVED` ele realiza o pagamento com os dados vindos na mensagem.
 
 # Detalhes Gerais
 
