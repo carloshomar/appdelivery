@@ -119,7 +119,10 @@ npm start
 _Baixe o App do EXPO, no seu celular, pela loja de aplicativos e esteja conectado na mesma rede que o seu computador, o aplicativo será visto por toda rede interna enquando estiver em desenvolvimento._
 
 
-#### Rodar um serviço em especifico (não necessário):
+
+### Não necessários para rodar
+
+#### Rodar um serviço em especifico:
 
 Para rodar os microserviços separadamente você precisa já ter o GoLang instalado em sua maquina, acessar a pasta do microsserviço pelo terminal e utilizar:
 
