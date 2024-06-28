@@ -179,7 +179,7 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 #### Cálculo de Entrega:
 
 - Cada restaurante tem seu próprio valor de entrega e distância de atendimento.
-- O cálculo consiste em pôr um valor fixo (Taxa de Serviço) fixedTaxa e um valor por KM perKm.
+- O cálculo consiste em pôr um valor fixo (Taxa de Serviço) `fixedTaxa` e um valor por KM `perKm`.
 - Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um metodo no backend e frontend para esse calculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
 
 #### Entregador:
