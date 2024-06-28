@@ -188,14 +188,15 @@ _Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por sere
 
 - Cada entregador deve estar devidamente cadastrado. Essa documentação do Postman pode ser encontrada em `Auth/DeliveryMan/Register Deliveryman`.
 - Toda entrega realizada pelo entregador é salva em seu extrato, que pode ser visualizado no seu respectivo APP.
-- É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega. Por se tratar de um array, pretendo adicionar como feature futura)_**
-- No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor, todos os entregadores enviam um "sinal de vida" com sua localização. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
+- É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega por se tratar de um array, pretendo adicionar como feature futura)_**
+- No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor, todos os entregadores enviam um "sinal de vida" com sua localização. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido para mapear a locomoção, cálculos de gastos calóricos e etc.)_**
 - Caso a entrega seja cancelada/removida, ou o entregador seja removido da entrega (**somente via banco, no mongoDB**), no próximo "sinal de vida" essa condição será refletida no app do mesmo e ele volta a ficar disponível para novas entregas. Sendo assim, existe a possiblidade da feature de remoção/sobreposição de um entregador em uma respectiva entrega, más não pretendo desenvolver. 
 
 #### Restaurante:
 
 - Todos os dados do restaurante podem ser alterados pelo painel WEBRestaurante.
 - Os restaurantes são cadastrados via endpoint (Auth / Create User & Establishment). A página de cadastro de restaurante está em desenvolvimento futuro.
+- Ainda falta uma feature de relatórios, pretendo adiciona-la no futuro, más os dados podem ser obtidos no mongoDB do serviço do restaurante.
 
 #### Etapas de Entrega:
 
