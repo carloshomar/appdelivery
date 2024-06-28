@@ -180,7 +180,9 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 - Cada restaurante tem seu próprio valor de entrega e distância de atendimento.
 - O cálculo consiste em pôr um valor fixo (Taxa de Serviço) `fixedTaxa` e um valor por KM `perKm`.
-- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um metodo no backend e frontend para esse calculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um método no backend e nofrontend para esse calculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+
+_Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por serem pagas, talvez ele não seja o melhor a ser usado em larga escala pois ele calcula em uma linha reta, não levando em conta o caminho real a ser percorrido pelo entregador, mas a menor distância entre os dois pontos (ponto de coleta e entrega)._
 
 #### Entregador:
 
@@ -209,6 +211,11 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 **_O fluxo acima de Etapas de Entrega pode ser visualizado no primeiro video._**
 
+
+#### Publicação:
+
+- No caso de publicação você pode utilizar o próprio expo para fazer o build, ou fazer o `eject` saindo do expo e usando react native.
+- Você precisa adicionar a chave de API de mapas na aplicação do entregador, pois ela utiliza o maps da Apple e Google só seguir essa <a href="https://docs.expo.dev/versions/latest/sdk/map-view/">Documentação</a>.
 
 
 ##### Atenciosamente, CHomar
