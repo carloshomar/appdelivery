@@ -25,7 +25,7 @@ _Contribuições são sempre bem-vindas!_
 #### Web Restaurante
 
 <img src="./Arquitetura/web_1.png" alt="web1" ></img>
-_Kanban de fluxo de trabalho do restaurante._
+_Kanban de fluxo de trabalho do restaurante, responsiva para celulares e computadores_
 
 #### Gestor de Cardápio
 
