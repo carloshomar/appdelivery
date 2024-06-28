@@ -79,6 +79,7 @@ _Uma arquitetura baseada em microserviços_
 ### Backend:
 
 _É importante já ter o docker instalado no sistema operacional._
+_Somente o backend inicia via docker, as aplicações frontend devem ser rodadas separadamente._
 
 Rode no terminal:
 
@@ -90,32 +91,18 @@ As credenciais de banco estão presentes no docker-compose.yml.
 <br/>
 _Para fazer o deploy é só seguir os passos que o <a href="/Backend/docker-compose.yml">docker-compose.yml</a> faz._
 
-#### Rodar um serviço em especifico:
-
-Para rodar os microserviços separadamente você precisa já ter o GoLang instalado em sua maquina, acessar a pasta do microsserviço pelo terminal e utilizar:
-
-```bash
-go mod tidy
-go install
-```
-
-Para rodar:
-
-```bash
-go run main.go
-```
 
 ### Frontend:
 
 _Tenha o node instalado na sua maquina, no caso eu utilizei a v20.13.1_
 
-No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/services/api.tsx_</a> faça alterações da URL para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a porta que está rodando aplicativo e alterar a url.
+Nos 3 projetos de front-end (WEBRestaurante, AppComida, AppEntregas) existem arquivos no caminho _services/api.tsx_ ou _services/api.ts_ que precisam sofrer alterações da URL para apontar o backend/servidor que subiu. Utilizando Ipconfig/Ifconfig você precisa pegar o endereço IP ou DNS do servidor, juntamente com a porta em que está rodando o backend (docker).
 
 
 _O processo de alteração de URL deve ser realizado nas 3 aplicações, WEBRestaurante, AppComida, AppEntregas._
 
 
-<b>_Na parte WEB, em caso de não conseguir logar ou estiver tendo erro de CORS, considere instalar uma <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pt-BR">extenão que desabilita CORS no seu navegador</a>, ou inicialize o mesmo sem essa politica._</b>
+<b>_Na parte WEB, em caso de não conseguir logar ou estiver tendo erro de CORS, considere instalar uma <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pt-BR">extensão que desabilita CORS no seu navegador</a>, ou inicialize o mesmo sem essa politica._</b>
 
 Instalando dependências.
 
@@ -131,6 +118,21 @@ npm start
 
 _Baixe o App do EXPO, no seu celular, pela loja de aplicativos e esteja conectado na mesma rede que o seu computador, o aplicativo será visto por toda rede interna enquando estiver em desenvolvimento._
 
+
+#### Rodar um serviço em especifico (não necessário):
+
+Para rodar os microserviços separadamente você precisa já ter o GoLang instalado em sua maquina, acessar a pasta do microsserviço pelo terminal e utilizar:
+
+```bash
+go mod tidy
+go install
+```
+
+Para rodar:
+
+```bash
+go run main.go
+```
 ## Configuração do Estabelecimento
 
 Tendo postman na sua maquina, é só importar a biblioteca de requests presentes na pasta _Backend/docs/delivery.postman_collection.json_ no qual você terá acesso a uma mini documentação dos endpoints e formatos esperados pela API.
