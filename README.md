@@ -197,6 +197,9 @@ _Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por sere
 - Todos os dados do restaurante podem ser alterados pelo painel WEBRestaurante.
 - Os restaurantes são cadastrados via endpoint (Auth / Create User & Establishment). A página de cadastro de restaurante está em desenvolvimento futuro.
 - Ainda falta uma feature de relatórios, pretendo adiciona-la no futuro, más os dados podem ser obtidos no mongoDB do serviço do restaurante.
+- Todos os itens do cardápio tem suporte à Adicionais e Categorias de pedido.
+- A visualização do cliente é composta primeiro das categorias exibindo produtos agrupados, na página do restaurante, no AppComida e após as categorias vem uma listagem geral.
+- Todos os adicionais podem ser gratuitos ou terem algum valor, que são refletidos no valor do pedido.
 
 #### Etapas de Entrega:
 
