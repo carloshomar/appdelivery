@@ -186,7 +186,7 @@ _Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por sere
 
 #### Entregador:
 
-- Cada entregador deve estar devidamente cadastrado. A documentação no Postman pode ser encontrada em: Auth/DeliveryMan/Register Deliveryman.
+- Cada entregador deve estar devidamente cadastrado. Essa documentação do Postman pode ser encontrada em `Auth/DeliveryMan/Register Deliveryman`.
 - Toda entrega realizada pelo entregador é salva em seu extrato, que pode ser visualizado no seu respectivo APP.
 - É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega. Por se tratar de um array, pretendo adicionar como feature futura)_**
 - No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor, todos os entregadores enviam um "sinal de vida" com sua localização. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
