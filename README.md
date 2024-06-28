@@ -180,7 +180,7 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 - Cada restaurante tem seu próprio valor de entrega e distância de atendimento.
 - O cálculo consiste em pôr um valor fixo (Taxa de Serviço) `fixedTaxa` e um valor por KM `perKm`.
-- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um método no backend e nofrontend para esse calculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um método no backend e nofrontend para esse cálculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
 
 _Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por serem pagas, talvez ele não seja o melhor a ser usado em larga escala pois ele calcula em uma linha reta, não levando em conta o caminho real a ser percorrido pelo entregador, mas a menor distância entre os dois pontos (ponto de coleta e entrega)._
 
@@ -189,7 +189,8 @@ _Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por sere
 - Cada entregador deve estar devidamente cadastrado. A documentação no Postman pode ser encontrada em: Auth/DeliveryMan/Register Deliveryman.
 - Toda entrega realizada pelo entregador é salva em seu extrato, que pode ser visualizado no seu respectivo APP.
 - É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega. Por se tratar de um array, pretendo adicionar como feature futura)_**
-- No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
+- No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor, todos os entregadores enviam um "sinal de vida" com sua localização. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
+- Caso a entrega seja cancelada/removida, ou o entregador seja removido da entrega (**somente via banco, no mongoDB**), no próximo "sinal de vida" essa condição será refletida no app do mesmo e ele volta a ficar disponível para novas entregas. Sendo assim, existe a possiblidade da feature de remoção/sobreposição de um entregador em uma respectiva entrega, más não pretendo desenvolver. 
 
 #### Restaurante:
 
