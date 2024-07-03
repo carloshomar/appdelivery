@@ -1,8 +1,10 @@
 import axios from "axios";
 import Strings from "../constants/Strings";
 
+const baseURL = process.env.API_BASE_URL || "http://127.0.0.1";
+
 const api = axios.create({
-  baseURL: "https://uid5u87m1l.execute-api.us-east-1.amazonaws.com",
+  baseURL: baseURL,
 });
 
 api.interceptors.request.use(async (config) => {

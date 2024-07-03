@@ -1,9 +1,10 @@
 {
-  "name": "my-app",
+  "name": "appentrega",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "expo start",
+    "start:qrcode": "npx qrcode-terminal \"exp://${EXPO_QR_GEN}:19001\" && expo start --dev-client --port 19001",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",

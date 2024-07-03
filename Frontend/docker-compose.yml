@@ -1,0 +1,42 @@
+version: '3.8'
+
+## Para pegar as credenciais acesse e crie um cadastro em https://expo.dev
+x-common-variables: &common-variables
+  API_BASE_URL: http://192.168.100.142
+  EXPO_QR_GEN: 192.168.100.142
+  EXPO_USERNAME: 
+  EXPO_PASSWORD: 
+
+services:
+  expo-app-entrega:
+    container_name: app-entrega
+    build: ./AppEntrega
+    ports:
+      - 19001:19001
+    volumes:  
+      - ./AppEntrega:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      <<: *common-variables
+
+  expo-app-comida:
+    container_name: app-comida
+    build: ./AppComida
+    ports:
+      - 19002:19002
+    volumes:  
+      - ./AppComida:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      <<: *common-variables
+
+  web-restaurant:
+    container_name: web-restaurant
+    build: ./WebRestaurant
+    volumes:
+      - ./WebRestaurant:/app
+    working_dir: /app
+    ports:
+      - "3000:8080"
+    environment:
+      <<: *common-variables
