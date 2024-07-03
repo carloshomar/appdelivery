@@ -3,8 +3,10 @@ import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const baseURL = process.env.API_BASE_URL || "http://127.0.0.1";
+
 const api = axios.create({
-  baseURL: "https://hpm3zd1439.execute-api.us-east-1.amazonaws.com",
+  baseURL: baseURL,
 });
 
 api.interceptors.request.use(async (config) => {

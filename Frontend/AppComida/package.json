@@ -1,13 +1,15 @@
 {
-  "name": "vercadapio",
+  "name": "appcomida",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start:qrcode": "npx qrcode-terminal \"exp://${EXPO_QR_GEN}:19002\" && expo start --dev-client --port 19002",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "update:": "NODE_ENV=production pkill -f expo; expo export --experimental-bundle --clear --output-dir dist/${APP_BUILD}-${APP_ENV} && eas update --auto --branch=${BRANCH} --input-dir dist/${APP_BUILD}-${APP_ENV}"
   },
   "jest": {
     "preset": "jest-expo"

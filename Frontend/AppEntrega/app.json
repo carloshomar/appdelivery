@@ -5,8 +5,10 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "CoopBike",
     "userInterfaceStyle": "automatic",
+    "type": "module",
+
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -14,14 +16,15 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.coopdelivery.delivery"
     },
     "android": {
+      "package": "com.coopdelivery.delivery",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.coopdelivery.delivery"
+      }
     },
     "web": {
       "bundler": "metro",

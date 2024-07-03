@@ -74,13 +74,15 @@ _Uma arquitetura baseada em microserviços_
 - Desenvolvido em React Native e Expo, possibilitando a publicação na App Store e Google Play.
 - Utiliza o Expo para build gratuito na nuvem, dispensando a necessidade de um MacOS, especialmente para iOS.
 
-## Como Rodar
 
-### Backend:
+## Como Rodar Backend
 
 _É importante já ter o docker instalado no sistema operacional._
 
 Rode no terminal:
+```bash
+cd ./Backend
+```
 
 ```bash
 docker compose up --build
@@ -90,7 +92,8 @@ As credenciais de banco estão presentes no docker-compose.yml.
 <br/>
 _Para fazer o deploy é só seguir os passos que o <a href="/Backend/docker-compose.yml">docker-compose.yml</a> faz._
 
-#### Rodar um serviço em especifico:
+###
+#### Rodar um serviço em especifico (opcional):
 
 Para rodar os microserviços separadamente você precisa já ter o GoLang instalado em sua maquina, acessar a pasta do microsserviço pelo terminal e utilizar:
 
@@ -105,12 +108,35 @@ Para rodar:
 go run main.go
 ```
 
-### Frontend:
+
+## Como rodar o Frontend:
+
+No arquivo <a href="Frontend/docker-compose.yml">Frontend/docker-compose.yml</a>, faça alterações na URL do backend, presente na variável `API_BASE_URL`. Você pode utilizar o ipconfig/ifconfig para obter o endereço IP local da máquina junto com a porta na qual o aplicativo está rodando, e então alterar a URL.
+
+Ainda no arquivo <a href="Frontend/docker-compose.yml">Frontend/docker-compose.yml</a>, adicione as credenciais de acesso do Expo nas variáveis `EXPO_USERNAME` e `EXPO_PASSWORD`. Para obtê-las, basta se cadastrar em: <a href="https://expo.dev">https://expo.dev</a>. Adicione também seu IP local na variável `EXPO_QR_GEN` para que os QR codes dos apps sejam gerados corretamente.
+
+Nos arquivos <a href="Frontend/AppComida/services/api.tsx">Frontend/AppComida/services/api.tsx</a>, <a href="Frontend/AppEntrega/services/api.tsx">Frontend/AppEntrega/services/api.tsx</a> e <a href="Frontend/WebRestaurant/services/api.tsx">Frontend/WebRestaurant/services/api.tsx</a>, faça alterações na URL para apontar para o backend que você subiu.
+
+
+_É importante já ter o docker instalado no sistema operacional._
+
+Rode no terminal:
+
+```bash
+cd ./Frontend
+```
+```bash
+docker compose up --build
+```
+
+O console vai exibir dois QRCodes para abrir os apps via Expo, e o painel WebRestaurante pode ser aberto usando http://localhost:3000.
+
+###
+#### Rodar um fronted em especifico (opicional):
 
 _Tenha o node instalado na sua maquina, no caso eu utilizei a v20.13.1_
 
 No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/services/api.tsx_</a> faça alterações da URL para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a porta que está rodando aplicativo e alterar a url.
-
 
 _O processo de alteração de URL deve ser realizado nas 3 aplicações, WEBRestaurante, AppComida, AppEntregas._
 
