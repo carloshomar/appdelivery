@@ -25,7 +25,7 @@ _Contribuições são sempre bem-vindas!_
 #### Web Restaurante
 
 <img src="./Arquitetura/web_1.png" alt="web1" ></img>
-_Kanban de fluxo de trabalho do restaurante._
+_Kanban de fluxo de trabalho do restaurante, responsiva para celulares e computadores_
 
 #### Gestor de Cardápio
 
@@ -78,6 +78,7 @@ _Uma arquitetura baseada em microserviços_
 ## Como Rodar Backend
 
 _É importante já ter o docker instalado no sistema operacional._
+_Somente o backend inicia via docker, as aplicações frontend devem ser rodadas separadamente._
 
 Rode no terminal:
 ```bash
@@ -136,12 +137,12 @@ O console vai exibir dois QRCodes para abrir os apps via Expo, e o painel WebRes
 
 _Tenha o node instalado na sua maquina, no caso eu utilizei a v20.13.1_
 
-No arquivo <a href="Frontend/AppComida/services/api.tsx">_Frontend/AppComida/services/api.tsx_</a> faça alterações da URL para apontar o backend que você subiu. Utilizando Ipconfig/Ifconfig é só pegar o endereço de IP da maquina juntamente com a porta que está rodando aplicativo e alterar a url.
+Nos 3 projetos de front-end (WEBRestaurante, AppComida, AppEntregas) existem arquivos no caminho _services/api.tsx_ ou _services/api.ts_ que precisam sofrer alterações da URL para apontar o backend/servidor que subiu. Utilizando Ipconfig/Ifconfig você precisa pegar o endereço IP ou DNS do servidor, juntamente com a porta em que está rodando o backend (docker).
 
 _O processo de alteração de URL deve ser realizado nas 3 aplicações, WEBRestaurante, AppComida, AppEntregas._
 
 
-<b>_Na parte WEB, em caso de não conseguir logar ou estiver tendo erro de CORS, considere instalar uma <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pt-BR">extenão que desabilita CORS no seu navegador</a>, ou inicialize o mesmo sem essa politica._</b>
+<b>_Na parte WEB, em caso de não conseguir logar ou estiver tendo erro de CORS, considere instalar uma <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pt-BR">extensão que desabilita CORS no seu navegador</a>, ou inicialize o mesmo sem essa politica._</b>
 
 Instalando dependências.
 
@@ -157,6 +158,24 @@ npm start
 
 _Baixe o App do EXPO, no seu celular, pela loja de aplicativos e esteja conectado na mesma rede que o seu computador, o aplicativo será visto por toda rede interna enquando estiver em desenvolvimento._
 
+
+
+### Não necessários para rodar
+
+#### Rodar um serviço em especifico:
+
+Para rodar os microserviços separadamente você precisa já ter o GoLang instalado em sua maquina, acessar a pasta do microsserviço pelo terminal e utilizar:
+
+```bash
+go mod tidy
+go install
+```
+
+Para rodar:
+
+```bash
+go run main.go
+```
 ## Configuração do Estabelecimento
 
 Tendo postman na sua maquina, é só importar a biblioteca de requests presentes na pasta _Backend/docs/delivery.postman_collection.json_ no qual você terá acesso a uma mini documentação dos endpoints e formatos esperados pela API.
@@ -189,26 +208,38 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Quando o pedido é feito pelo app de comida e aprovado pelo estabelecimento, ele é publicada na fila indicada na variável de ambiente: `RABBIT_DELIVERY_QUEUE`.
 - Quando o status do pedido é alterado por parte do entregador, o evento é publicado na fila indicada na variável de ambiente: `RABBIT_ORDER_QUEUE`.
 
+#### Pagamento (futuro)
+
+- Para desenvolver o pagamento, pretendo adicionar um serviço que sobe escutando a fila `RABBIT_DELIVERY_QUEUE`, existe outro serviço que também escuta essa fila, ao escutar uma mensagem com status de `APROVED` realiza o pagamento com os dados advindos na mensagem.
+- No app do cliente, na parte de pagamento, adiciono uma tela para o cliente preencher os dados de pagamento, e no checkout adicionar uma validação dos dados de acordo com o método de pagamento.
+
 
 # Detalhes Gerais
 
 #### Cálculo de Entrega:
 
 - Cada restaurante tem seu próprio valor de entrega e distância de atendimento.
-- O cálculo consiste em pôr um valor fixo (Taxa de Serviço) fixedTaxa e um valor por KM perKm.
-- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um metodo no backend e frontend para esse calculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+- O cálculo consiste em pôr um valor fixo (Taxa de Serviço) `fixedTaxa` e um valor por KM `perKm`.
+- Baseado na distância recebida, o app calcula a distância através do algoritmo de Haversine (exite um método no backend e nofrontend para esse cálculo), envia para o backend e recebe o valor calculado de acordo com o estabelecimento.
+
+_Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por serem pagas, talvez ele não seja o melhor a ser usado em larga escala pois ele calcula em uma linha reta, não levando em conta o caminho real a ser percorrido pelo entregador, mas a menor distância entre os dois pontos (ponto de coleta e entrega)._
 
 #### Entregador:
 
-- Cada entregador deve estar devidamente cadastrado. A documentação no Postman pode ser encontrada em: Auth/DeliveryMan/Register Deliveryman.
+- Cada entregador deve estar devidamente cadastrado. Essa documentação do Postman pode ser encontrada em `Auth/DeliveryMan/Register Deliveryman`.
 - Toda entrega realizada pelo entregador é salva em seu extrato, que pode ser visualizado no seu respectivo APP.
-- É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega. Por se tratar de um array, pretendo adicionar como feature futura)_**
-- No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido, para cálculos de gastos calóricos e etc.)_**
+- É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega por se tratar de um array, pretendo adicionar como feature futura)_**
+- No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor, todos os entregadores enviam um "sinal de vida" com sua localização. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido para mapear a locomoção, cálculos de gastos calóricos e etc.)_**
+- Caso a entrega seja cancelada/removida, ou o entregador seja removido da entrega (**somente via banco, no mongoDB**), no próximo "sinal de vida" essa condição será refletida no app do mesmo e ele volta a ficar disponível para novas entregas. Sendo assim, existe a possiblidade da feature de remoção/sobreposição de um entregador em uma respectiva entrega, más não pretendo desenvolver. 
 
 #### Restaurante:
 
 - Todos os dados do restaurante podem ser alterados pelo painel WEBRestaurante.
 - Os restaurantes são cadastrados via endpoint (Auth / Create User & Establishment). A página de cadastro de restaurante está em desenvolvimento futuro.
+- Ainda falta uma feature de relatórios, pretendo adiciona-la no futuro, más os dados podem ser obtidos no mongoDB do serviço do restaurante.
+- Todos os itens do cardápio tem suporte à Adicionais e Categorias de pedido.
+- A visualização do cliente é composta primeiro das categorias exibindo produtos agrupados, na página do restaurante, no AppComida e após as categorias vem uma listagem geral.
+- Os adicionais podem ou não possuir algum valor, que em caso de existência é refletido no valor do pedido.
 
 #### Etapas de Entrega:
 
@@ -219,9 +250,17 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Enquanto o pedido está no estágio de "Em produção", o entregador se locomove até o estabelecimento e consegue sinalizar no AppEntrega que chegou ao estabelecimento. O restaurante recebe essa alteração no status do pedido.
 - Ao arrastar o pedido para "Pronto para Entrega", o restaurante consegue entregar o pedido no balcão. Para isso, é necessário o código do restaurante (código de quatro dígitos que está disponível no card do pedido, na parte WEB do restaurante).
 - Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do Cliente).
-- Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva no extrato do entregador.
+- _**Disclamer**: no código atual da **main**, adicionei o Código do Cliente (em vermelho) no card do pedido, isso é para facilitar os teste, em caso de publicação o ideal é remover o **Código do Cliente** da Visualização do Restaurante (Quadro Kanban), más pode variar de acordo com a regra de negócio._
+- Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva na tela de  **Extrato do entregador**.
 
 
+**_O fluxo acima de Etapas de Entrega pode ser visualizado no primeiro video._**
+
+
+#### Publicação:
+
+- No caso de publicação você pode utilizar o próprio expo para fazer o build, ou fazer o `eject` saindo do expo e usando react native.
+- Você precisa adicionar a chave de API de mapas na aplicação do entregador, pois ela utiliza o maps da Apple e Google só seguir essa <a href="https://docs.expo.dev/versions/latest/sdk/map-view/">Documentação</a>.
 
 
 ##### Atenciosamente, CHomar
