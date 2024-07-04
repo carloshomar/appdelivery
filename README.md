@@ -196,6 +196,10 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 - Product & Order / Additional / Create Additional  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
 - Product & Order / Additional / Vinculo Additional Products  <b>_(Pode ser feito pela aplicação WEBRestaurante)_</b>
 
+#### Cadastrar Entregador:
+
+- Cada entregador deve estar devidamente cadastrado. Essa documentação do Postman pode ser encontrada em `Auth/DeliveryMan/Register Deliveryman`.
+
 
 #### Configuração de APPComida:
 
