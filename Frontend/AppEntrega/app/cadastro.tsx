@@ -10,20 +10,17 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import RegisterScreen from "./cadastro";
 
-const LoginScreen = () => {
+const RegisterScreen = ({ setRegister }: any) => {
   const [email, setEmail] = useState("admin@admin.com");
   const [password, setPassword] = useState("admin123");
-  const { login } = useAuthApi();
-  const [register, setRegister] = useState(false);
+  const [name, setName] = useState("Delivery man");
+  const [phone, setPhone] = useState("31982442222");
+  const { register } = useAuthApi();
 
   const handleLogin = async () => {
-    login(email, password);
+    register(email, password, name, phone);
   };
-  if (register) {
-    return <RegisterScreen setRegister={setRegister} />;
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,6 +38,18 @@ const LoginScreen = () => {
           placeholder="Senha"
           secureTextEntry={true}
         />
+        <TextInput
+          style={styles.input}
+          onChangeText={setName}
+          value={name}
+          placeholder="Nome"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={setPhone}
+          value={phone}
+          placeholder="Telefone"
+        />
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Entrar</Text>
         </TouchableOpacity>
@@ -51,10 +60,10 @@ const LoginScreen = () => {
             backgroundColor: "white",
             marginTop: 30,
           }}
-          onPress={() => setRegister(true)}
+          onPress={() => setRegister(false)}
         >
           <Text style={{ ...styles.loginButtonText, color: "red" }}>
-            Novo Entregador
+            Voltar
           </Text>
         </TouchableOpacity>
       </View>
@@ -104,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;

@@ -22,6 +22,12 @@ interface AuthContextType {
   disponivel: boolean;
   setDisponivel: (a: boolean) => void;
   login: (email: string, password: string) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    name: string,
+    phone: string
+  ) => Promise<void>;
   logout: () => Promise<void>;
   inWork: boolean;
   setIsLoading: (a: boolean) => void;
@@ -125,6 +131,49 @@ const AuthProvider = ({ children }: any) => {
     }
   };
 
+  const register = async (
+    email: string,
+    password: string,
+    name: string,
+    phone: string
+  ) => {
+    try {
+      const response = await api.post("/api/auth/delivery-man/register", {
+        email,
+        password,
+        name,
+        phone,
+      });
+      const { token } = response.data;
+
+      await AsyncStorage.setItem(Strings.token_jwt, token);
+
+      // Decodifica o token para obter os dados do usuário
+      const parts = token
+        .split(".")
+        .map((part: any) =>
+          Buffer.from(
+            part.replace(/-/g, "+").replace(/_/g, "/"),
+            "base64"
+          ).toString()
+        );
+
+      const decodedToken = JSON.parse(parts[1]) as {
+        email: string;
+        name: string;
+        id: number;
+        phone: string;
+      };
+
+      setUser(decodedToken);
+      nav.navigate("index");
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      throw error;
+    }
+  };
+
   const logout = async () => {
     try {
       await AsyncStorage.removeItem(Strings.token_jwt);
@@ -196,6 +245,7 @@ const AuthProvider = ({ children }: any) => {
           setMyLocation,
           sendSocketMessage,
           socketMessage,
+          register,
         } as any
       }
     >
