@@ -1,1247 +1,1241 @@
 {
-	"info": {
-		"_postman_id": "aeab5683-f087-4971-beee-c144941bca68",
-		"name": "Appp",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "9997540",
-		"_collection_link": "https://dark-meteor-405549.postman.co/workspace/Team-Workspace~6d1b17f9-4e26-4980-8d0d-1fcd60eead13/collection/9997540-aeab5683-f087-4971-beee-c144941bca68?action=share&source=collection_link&creator=9997540"
-	},
-	"item": [
-		{
-			"name": "Auth",
-			"item": [
-				{
-					"name": "Establishment",
-					"item": [
-						{
-							"name": "Create User & Establishment",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											" ",
-											"const resp = pm.response.json()",
-											"",
-											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
-											"",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"Administrador\",\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\",\n    \"establishment\": {\n        \"name\": \"El Chavo Burritos\",\n        \"image\": \"https://static.vecteezy.com/system/resources/previews/014/971/638/non_2x/food-logo-design-template-restaurant-free-png.png\",\n        \"primary_color\": \"#8B0000\",\n        \"secodary_color\": \"#F0F8FF\",\n        \"description\": \"Uma casa onde se tem carnes.\",\n        \n        \"horarioFuncionamento\": \"22h\",\n        \"location_string\": \"CHina - co\",\n        \"lat\": -21.778131,\n        \"long\": -43.367493,\n        \"max_distance_delivery\": 10\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/auth/users/register"
-							},
-							"response": []
-						},
-						{
-							"name": "Update Establishment",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											" ",
-											"const resp = pm.response.json()",
-											"",
-											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
-											"",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"establishment\": {\n        \"name\": \"El Chavo Burritos\",\n        \"image\": \"https://static.vecteezy.com/system/resources/previews/014/971/638/non_2x/food-logo-design-template-restaurant-free-png.png\",\n        \"primary_color\": \"#8B0000\",\n        \"secodary_color\": \"#F0F8FF\",\n        \"description\": \"Uma casa onde se tem carnes.\",\n        \"horarioFuncionamento\": \"22h\",\n        \"location_string\": \"CHina - co\",\n        \"lat\": -21.778131,\n        \"long\": -43.367493,\n        \"max_distance_delivery\": 10\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/auth/establishments/1"
-							},
-							"response": []
-						},
-						{
-							"name": "Login",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											" ",
-											"const resp = pm.response.json()",
-											"",
-											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
-											"",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{ \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/auth/users/login"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Establishments",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "{{API_GATEWAY}}/api/auth/establishments"
-							},
-							"response": []
-						},
-						{
-							"name": "Open/Close Establishment",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "{{API_GATEWAY}}/api/auth/establishments/status/handler/1"
-							},
-							"response": []
-						},
-						{
-							"name": "Get User by Id",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											" ",
-											"const resp = pm.response.json()",
-											"",
-											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
-											"",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "{{API_GATEWAY}}/api/auth/users/1"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Establishment by Id",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "{{API_GATEWAY}}/api/auth/establishments/1"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Users by Establishment Id Copy",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "{{API_GATEWAY}}/api/auth/establishments/1/users"
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "DeliveryMan",
-					"item": [
-						{
-							"name": "Login Deliveryman",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											" ",
-											"const resp = pm.response.json()",
-											"",
-											"pm.globals.set(\"TOKEN_AUTH\", resp.token);",
-											"",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{ \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/auth/delivery-man/login"
-							},
-							"response": []
-						},
-						{
-							"name": "Register Deliveryman",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{ \n    \"email\": \"admin1@admin.com\",\n    \"password\": \"admin123\",\n    \"name\":\"Delivery man\",\n    \"phone\": \"32988442172\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/auth/delivery-man/register"
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Product & Order",
-			"item": [
-				{
-					"name": "Products",
-					"item": [
-						{
-							"name": "products",
-							"item": [
-								{
-									"name": "Create Product",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"name\": \"Produto Exemplo\",\n  \"description\": \"Uma descrição do produto exemplo.\",\n  \"price\": 29.99,\n  \"image\": \"https://exemplo.com/imagem.jpg\",\n  \"establishmentId\": 1\n}\n",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/products/create"
-									},
-									"response": []
-								},
-								{
-									"name": "Update Product",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"id\": 1,\n    \"name\": \"Pizza Margherita\",\n    \"description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n    \"price\": 19.99,\n    \"image\": \"https://s2-receitas.glbimg.com/wb7DIMyCpEyV07sTAtcDWD8HQjw=/0x0:1200x675/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2024/h/r/EfCbvqTbeDRAD3Lzc5xA/pizza-margherita.jpg\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/products/update/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Update Product Copy",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"id\": 1,\n    \"name\": \"Pizza Margherita\",\n    \"description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n    \"price\": 19.99,\n    \"image\": \"https://s2-receitas.glbimg.com/wb7DIMyCpEyV07sTAtcDWD8HQjw=/0x0:1200x675/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2024/h/r/EfCbvqTbeDRAD3Lzc5xA/pizza-margherita.jpg\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/products/update/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Create Multi Products",
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "[\n    {\n        \"name\": \"Pizza Margherita\",\n        \"description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n        \"price\": 19.99,\n        \"image\": \"https://exemplo.com/pizza_margherita.jpg\",\n        \"establishmentId\": 1\n    },\n    {\n        \"name\": \"Hambúrguer Clássico\",\n        \"description\": \"Um suculento hambúrguer feito com carne de qualidade, queijo cheddar, alface, tomate e maionese especial.\",\n        \"price\": 12.99,\n        \"image\": \"https://exemplo.com/hamburguer_classico.jpg\",\n        \"establishmentId\": 1\n    },\n    {\n        \"name\": \"Salada Caesar\",\n        \"description\": \"Uma salada fresca e crocante com alface romana, croutons, queijo parmesão e molho Caesar cremoso.\",\n        \"price\": 8.99,\n        \"image\": \"https://exemplo.com/salada_caesar.jpg\",\n        \"establishmentId\": 1\n    }\n]",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/products/multi-create"
-									},
-									"response": []
-								},
-								{
-									"name": "Get Product By EstablishmentID",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"url": "{{API_GATEWAY}}/api/order/products/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Get Product By",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"url": "{{API_GATEWAY}}/api/order/products/all/1"
-									},
-									"response": []
-								}
-							]
-						},
-						{
-							"name": "additional",
-							"item": [
-								{
-									"name": "List Additionals",
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"url": "{{API_GATEWAY}}/api/order/additional/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Create Additional",
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"name\":\"psdkoadasdds\",\n    \"price\": 0.50,\n    \"image\": \"dsadsad.png\",\n    \"description\": \"descriptinosdnaspdna n aosdin aonss\",\n    \"establishmentId\":1\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/additional"
-									},
-									"response": []
-								},
-								{
-									"name": "Update Additional",
-									"request": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"name\":\"Descartáveis\",\n    \"price\": 1.50,\n    \"image\": \"\",\n    \"description\": \"descriptinosdnaspdna n aosdin aonss\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/additional/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Additional",
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"name\":\"Descartáveis\",\n    \"price\": 1.50,\n    \"image\": \"\",\n    \"description\": \"descriptinosdnaspdna n aosdin aonss\"\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/additional/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Handler (ADD/REMOVE) Additional Products",
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"productID\": 1,\n    \"additionalID\": 1\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/additional/product"
-									},
-									"response": []
-								}
-							]
-						},
-						{
-							"name": "categories",
-							"item": [
-								{
-									"name": "Create Category",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"name\": \"Teste\",\n    \"image\": \"asdasddas.png\",\n    \"establishmentId\": 1\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/categories/create"
-									},
-									"response": []
-								},
-								{
-									"name": "Update Category",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"name\": \"Testes\",\n    \"image\": \"asdasddas.png\",\n    \"establishmentId\": 1\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/categories/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Category",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"url": "{{API_GATEWAY}}/api/order/categories/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Get Categories by EstablishmentId",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"url": "{{API_GATEWAY}}/api/order/categories/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Get Products group Categories by EstablishmentId",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"url": "{{API_GATEWAY}}/api/order/categories/product/1"
-									},
-									"response": []
-								},
-								{
-									"name": "Handler (ADD/REMOVE)  Vinculo Product Category",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});"
-												],
-												"type": "text/javascript",
-												"packages": {}
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "{{AUTH_TOKEN}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"productId\": 3,\n    \"categoryId\": 1\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": "{{API_GATEWAY}}/api/order/categories/product"
-									},
-									"response": []
-								}
-							]
-						}
-					]
-				},
-				{
-					"name": "Delivery",
-					"item": [
-						{
-							"name": "Alter Taxe Delivery",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"establishmentId\": 1,\n  \"fixedTaxa\": 2.5,\n  \"perKm\": 0.50\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/order/delivery"
-							},
-							"response": []
-						},
-						{
-							"name": "Calculate Delivery",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"distance\": 0.5,\n  \"establishmentId\": 1\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/order/delivery/calculate-delivery-value"
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Orders",
-					"item": [
-						{
-							"name": "Orders by EstablishmentId",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "{{API_GATEWAY}}/api/order/orders/1"
-							},
-							"response": []
-						},
-						{
-							"name": "Orders By EstablishmentID & Phone",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "{{API_GATEWAY}}/api/order/orders/1/(11) 98844-4499"
-							},
-							"response": []
-						},
-						{
-							"name": "Orders By Phone",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "http://127.0.0.1:3000/orders/list-phone/(11) 98844-4499"
-							},
-							"response": []
-						},
-						{
-							"name": "Create Order",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"cart\": [\n        {\n            \"item\": {\n                \"ID\": 1,\n                \"Name\": \"Pizza Margherita\",\n                \"Description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n                \"Price\": 19.99,\n                \"Image\": \"https://exemplo.com/pizza_margherita.jpg\",\n                \"EstablishmentID\": 1,\n                \"Categories\": null,\n                \"Additional\": [\n                    {\n                        \"ID\": 1,\n                        \"Name\": \"Borda Recheada\",\n                        \"Price\": 10,\n                        \"Image\": \"dsadsad.png\",\n                        \"Description\": \"descriptinosdnaspdna n aosdin aonss\"\n                    }\n                ]\n            },\n            \"additionals\": [],\n            \"quantity\": 1,\n            \"id\": \"UTG5ksjsMUNBcqZ\"\n        }\n    ],\n    \"distance\": 1.1365938003231386,\n    \"location\": {\n        \"cep\": \"01001-000\",\n        \"logradouro\": \"Praça da Sé\",\n        \"complemento\": null,\n        \"bairro\": \"Sé\",\n        \"localidade\": \"São Paulo\",\n        \"uf\": \"SP\",\n        \"ibge\": \"3550308\",\n        \"gia\": \"1004\",\n        \"ddd\": \"11\",\n        \"siafi\": \"7107\",\n        \"numero\": \"6\",\n        \"coords\":{\n            \"latitude\": -22.745589467912965,\n            \"longitude\": -41.322124539284329\n        }\n    },\n    \"paymentMethod\": {\n        \"type\": \"credit\",\n        \"icon\": \"credit-score\"\n    },\n    \"deliveryValue\": 3.12,\n    \"user\": {     \n        \"phone\": \"(11) 98844-7777\",\n        \"nome\": \"Ronan Silva\" \n    },\n    \"establishmentId\" : 1\n\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/order/orders"
-							},
-							"response": []
-						},
-						{
-							"name": "Update Status Order",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"66002baa5de0dc376ee35c11\",\n    \"status\": \"APPROVED\" // AWAIT_APPROVE, APPROVED, DONE, FINSIHED// FINISHED\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "{{API_GATEWAY}}/api/order/orders/status"
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Delivery",
-			"item": [
-				{
-					"name": "Report",
-					"item": [
-						{
-							"name": "Extract",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{AUTH_TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": "{{API_GATEWAY}}/api/delivery/deliveryman/has-active/1"
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "HandShake   Order -> Deliveryman",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"order_id\": \"65f5ea0a2652dc9424efb023\",\n    \"deliveryman\":{\"email\": \"admin@admin.com\", \"exp\": 1711215384, \"id\": 1, \"name\": \"DeliveryMan\"}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{API_GATEWAY}}/api/delivery/solicitation-orders/hand-shake"
-					},
-					"response": []
-				},
-				{
-					"name": "Orders",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{API_GATEWAY}}/api/delivery/solicitation-orders?latitude=-23.778131&longitude=-43.367493&limitDistance=50",
-							"host": [
-								"{{API_GATEWAY}}"
-							],
-							"path": [
-								"api",
-								"delivery",
-								"solicitation-orders"
-							],
-							"query": [
-								{
-									"key": "latitude",
-									"value": "-23.778131"
-								},
-								{
-									"key": "longitude",
-									"value": "-43.367493"
-								},
-								{
-									"key": "limitDistance",
-									"value": "50"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Orders by EstablishmentId Copy 2",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"order_id\": \"65f5ea0a2652dc9424efb023\",\n    \"deliveryman\":{\n        \"id\": 1,\n        \"status\":\"AWAIT_COLECT\"/// IN_ROUTE_COLECT, AWAIT_COLECT, IN_ROUTE_DELIVERY, FINISH\n    }\n}\n\n ",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{API_GATEWAY}}/api/delivery/deliveryman/status"
-					},
-					"response": []
-				},
-				{
-					"name": "Has Active",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{AUTH_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": "{{API_GATEWAY}}/api/delivery/deliveryman/has-active/1"
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"variable": [
-		{
-			"key": "AUTH_TOKEN",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlhbmFnYXNzaUBvdXRsb29rLmNvbSIsImVzdGFibGlzaG1lbnQiOnsiaWQiOjEsIm5hbWUiOiJDYXNhIGRhIENhcm5lIiwiZGVzY3JpcHRpb24iOiJVbWEgY2FzYSBvbmRlIHNlIHRlbSBjYXJuZXMuIiwib3duZXJfaWQiOjEsIkltYWdlIjoiIiwicHJpbWFyeV9jb2xvciI6IiM4QjAwMDAiLCJzZWNvZGFyeV9jb2xvciI6IiNGMEY4RkYifSwiZXhwIjoxNzA3MDc0MTA5LCJpZCI6MSwibmFtZSI6IllhbiJ9.HY99-7ZZ_L-JxjMIUad5uXmodsVB0bBHqzzF-UfElWo"
-		}
-	]
+  "info": {
+    "_postman_id": "aeab5683-f087-4971-beee-c144941bca68",
+    "name": "Appp",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "9997540",
+    "_collection_link": "https://dark-meteor-405549.postman.co/workspace/Team-Workspace~6d1b17f9-4e26-4980-8d0d-1fcd60eead13/collection/9997540-aeab5683-f087-4971-beee-c144941bca68?action=share&source=collection_link&creator=9997540"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Establishment",
+          "item": [
+            {
+              "name": "Create User & Establishment",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      " ",
+                      "const resp = pm.response.json()",
+                      "",
+                      "pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Administrador\",\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\",\n    \"establishment\": {\n        \"name\": \"El Chavo Burritos\",\n        \"image\": \"https://static.vecteezy.com/system/resources/previews/014/971/638/non_2x/food-logo-design-template-restaurant-free-png.png\",\n        \"primary_color\": \"#8B0000\",\n        \"secodary_color\": \"#F0F8FF\",\n        \"description\": \"Uma casa onde se tem carnes.\",\n        \n        \"horarioFuncionamento\": \"22h\",\n        \"location_string\": \"CHina - co\",\n        \"lat\": -21.778131,\n        \"long\": -43.367493,\n        \"max_distance_delivery\": 10\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/auth/users/register"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Establishment",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      " ",
+                      "const resp = pm.response.json()",
+                      "",
+                      "pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"establishment\": {\n        \"name\": \"El Chavo Burritos\",\n        \"image\": \"https://static.vecteezy.com/system/resources/previews/014/971/638/non_2x/food-logo-design-template-restaurant-free-png.png\",\n        \"primary_color\": \"#8B0000\",\n        \"secodary_color\": \"#F0F8FF\",\n        \"description\": \"Uma casa onde se tem carnes.\",\n        \"horarioFuncionamento\": \"22h\",\n        \"location_string\": \"CHina - co\",\n        \"lat\": -21.778131,\n        \"long\": -43.367493,\n        \"max_distance_delivery\": 10\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/auth/establishments/1"
+              },
+              "response": []
+            },
+            {
+              "name": "Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      " ",
+                      "const resp = pm.response.json()",
+                      "",
+                      "pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/auth/users/login"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Establishments",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{API_GATEWAY}}/api/auth/establishments"
+              },
+              "response": []
+            },
+            {
+              "name": "Open/Close Establishment",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{API_GATEWAY}}/api/auth/establishments/status/handler/1"
+              },
+              "response": []
+            },
+            {
+              "name": "Get User by Id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      " ",
+                      "const resp = pm.response.json()",
+                      "",
+                      "pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{API_GATEWAY}}/api/auth/users/1"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Establishment by Id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{API_GATEWAY}}/api/auth/establishments/1"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Users by Establishment Id Copy",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{API_GATEWAY}}/api/auth/establishments/1/users"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "DeliveryMan",
+          "item": [
+            {
+              "name": "Login Deliveryman",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      " ",
+                      "const resp = pm.response.json()",
+                      "",
+                      "pm.globals.set(\"TOKEN_AUTH\", resp.token);",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/auth/delivery-man/login"
+              },
+              "response": []
+            },
+            {
+              "name": "Register Deliveryman",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \n    \"email\": \"admin1@admin.com\",\n    \"password\": \"admin123\",\n    \"name\":\"Delivery man\",\n    \"phone\": \"3298844222\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/auth/delivery-man/register"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Product & Order",
+      "item": [
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "products",
+              "item": [
+                {
+                  "name": "Create Product",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Produto Exemplo\",\n  \"description\": \"Uma descrição do produto exemplo.\",\n  \"price\": 29.99,\n  \"image\": \"https://exemplo.com/imagem.jpg\",\n  \"establishmentId\": 1\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/products/create"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Update Product",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"id\": 1,\n    \"name\": \"Pizza Margherita\",\n    \"description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n    \"price\": 19.99,\n    \"image\": \"https://s2-receitas.glbimg.com/wb7DIMyCpEyV07sTAtcDWD8HQjw=/0x0:1200x675/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2024/h/r/EfCbvqTbeDRAD3Lzc5xA/pizza-margherita.jpg\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/products/update/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Update Product Copy",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"id\": 1,\n    \"name\": \"Pizza Margherita\",\n    \"description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n    \"price\": 19.99,\n    \"image\": \"https://s2-receitas.glbimg.com/wb7DIMyCpEyV07sTAtcDWD8HQjw=/0x0:1200x675/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2024/h/r/EfCbvqTbeDRAD3Lzc5xA/pizza-margherita.jpg\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/products/update/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create Multi Products",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n    {\n        \"name\": \"Pizza Margherita\",\n        \"description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n        \"price\": 19.99,\n        \"image\": \"https://exemplo.com/pizza_margherita.jpg\",\n        \"establishmentId\": 1\n    },\n    {\n        \"name\": \"Hambúrguer Clássico\",\n        \"description\": \"Um suculento hambúrguer feito com carne de qualidade, queijo cheddar, alface, tomate e maionese especial.\",\n        \"price\": 12.99,\n        \"image\": \"https://exemplo.com/hamburguer_classico.jpg\",\n        \"establishmentId\": 1\n    },\n    {\n        \"name\": \"Salada Caesar\",\n        \"description\": \"Uma salada fresca e crocante com alface romana, croutons, queijo parmesão e molho Caesar cremoso.\",\n        \"price\": 8.99,\n        \"image\": \"https://exemplo.com/salada_caesar.jpg\",\n        \"establishmentId\": 1\n    }\n]",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/products/multi-create"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get Product By EstablishmentID",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "url": "{{API_GATEWAY}}/api/order/products/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get Product By",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "url": "{{API_GATEWAY}}/api/order/products/all/1"
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "additional",
+              "item": [
+                {
+                  "name": "List Additionals",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "url": "{{API_GATEWAY}}/api/order/additional/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create Additional",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\":\"psdkoadasdds\",\n    \"price\": 0.50,\n    \"image\": \"dsadsad.png\",\n    \"description\": \"descriptinosdnaspdna n aosdin aonss\",\n    \"establishmentId\":1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/additional"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Update Additional",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\":\"Descartáveis\",\n    \"price\": 1.50,\n    \"image\": \"\",\n    \"description\": \"descriptinosdnaspdna n aosdin aonss\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/additional/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete Additional",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\":\"Descartáveis\",\n    \"price\": 1.50,\n    \"image\": \"\",\n    \"description\": \"descriptinosdnaspdna n aosdin aonss\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/additional/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Handler (ADD/REMOVE) Additional Products",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"productID\": 1,\n    \"additionalID\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/additional/product"
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "categories",
+              "item": [
+                {
+                  "name": "Create Category",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\": \"Teste\",\n    \"image\": \"asdasddas.png\",\n    \"establishmentId\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/categories/create"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Update Category",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\": \"Testes\",\n    \"image\": \"asdasddas.png\",\n    \"establishmentId\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/categories/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete Category",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "url": "{{API_GATEWAY}}/api/order/categories/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get Categories by EstablishmentId",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "url": "{{API_GATEWAY}}/api/order/categories/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get Products group Categories by EstablishmentId",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "url": "{{API_GATEWAY}}/api/order/categories/product/1"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Handler (ADD/REMOVE)  Vinculo Product Category",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "{{AUTH_TOKEN}}",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"productId\": 3,\n    \"categoryId\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": "{{API_GATEWAY}}/api/order/categories/product"
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Delivery",
+          "item": [
+            {
+              "name": "Alter Taxe Delivery",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"establishmentId\": 1,\n  \"fixedTaxa\": 2.5,\n  \"perKm\": 0.50\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/order/delivery"
+              },
+              "response": []
+            },
+            {
+              "name": "Calculate Delivery",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"distance\": 0.5,\n  \"establishmentId\": 1\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/order/delivery/calculate-delivery-value"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Orders",
+          "item": [
+            {
+              "name": "Orders by EstablishmentId",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{API_GATEWAY}}/api/order/orders/1"
+              },
+              "response": []
+            },
+            {
+              "name": "Orders By EstablishmentID & Phone",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{API_GATEWAY}}/api/order/orders/1/(11) 98844-4499"
+              },
+              "response": []
+            },
+            {
+              "name": "Orders By Phone",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "http://127.0.0.1:3000/orders/list-phone/(11) 98844-4499"
+              },
+              "response": []
+            },
+            {
+              "name": "Create Order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"cart\": [\n        {\n            \"item\": {\n                \"ID\": 1,\n                \"Name\": \"Pizza Margherita\",\n                \"Description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n                \"Price\": 19.99,\n                \"Image\": \"https://exemplo.com/pizza_margherita.jpg\",\n                \"EstablishmentID\": 1,\n                \"Categories\": null,\n                \"Additional\": [\n                    {\n                        \"ID\": 1,\n                        \"Name\": \"Borda Recheada\",\n                        \"Price\": 10,\n                        \"Image\": \"dsadsad.png\",\n                        \"Description\": \"descriptinosdnaspdna n aosdin aonss\"\n                    }\n                ]\n            },\n            \"additionals\": [],\n            \"quantity\": 1,\n            \"id\": \"UTG5ksjsMUNBcqZ\"\n        }\n    ],\n    \"distance\": 1.1365938003231386,\n    \"location\": {\n        \"cep\": \"01001-000\",\n        \"logradouro\": \"Praça da Sé\",\n        \"complemento\": null,\n        \"bairro\": \"Sé\",\n        \"localidade\": \"São Paulo\",\n        \"uf\": \"SP\",\n        \"ibge\": \"3550308\",\n        \"gia\": \"1004\",\n        \"ddd\": \"11\",\n        \"siafi\": \"7107\",\n        \"numero\": \"6\",\n        \"coords\":{\n            \"latitude\": -22.745589467912965,\n            \"longitude\": -41.322124539284329\n        }\n    },\n    \"paymentMethod\": {\n        \"type\": \"credit\",\n        \"icon\": \"credit-score\"\n    },\n    \"deliveryValue\": 3.12,\n    \"user\": {     \n        \"phone\": \"(11) 98844-7777\",\n        \"nome\": \"Ronan Silva\" \n    },\n    \"establishmentId\" : 1\n\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/order/orders"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Status Order",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"66002baa5de0dc376ee35c11\",\n    \"status\": \"APPROVED\" // AWAIT_APPROVE, APPROVED, DONE, FINSIHED// FINISHED\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{API_GATEWAY}}/api/order/orders/status"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Delivery",
+      "item": [
+        {
+          "name": "Report",
+          "item": [
+            {
+              "name": "Extract",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{AUTH_TOKEN}}",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{API_GATEWAY}}/api/delivery/deliveryman/has-active/1"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "HandShake   Order -> Deliveryman",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{AUTH_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"order_id\": \"65f5ea0a2652dc9424efb023\",\n    \"deliveryman\":{\"email\": \"admin@admin.com\", \"exp\": 1711215384, \"id\": 1, \"name\": \"DeliveryMan\"}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{API_GATEWAY}}/api/delivery/solicitation-orders/hand-shake"
+          },
+          "response": []
+        },
+        {
+          "name": "Orders",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{AUTH_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{API_GATEWAY}}/api/delivery/solicitation-orders?latitude=-23.778131&longitude=-43.367493&limitDistance=50",
+              "host": ["{{API_GATEWAY}}"],
+              "path": ["api", "delivery", "solicitation-orders"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "-23.778131"
+                },
+                {
+                  "key": "longitude",
+                  "value": "-43.367493"
+                },
+                {
+                  "key": "limitDistance",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Orders by EstablishmentId Copy 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{AUTH_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"order_id\": \"65f5ea0a2652dc9424efb023\",\n    \"deliveryman\":{\n        \"id\": 1,\n        \"status\":\"AWAIT_COLECT\"/// IN_ROUTE_COLECT, AWAIT_COLECT, IN_ROUTE_DELIVERY, FINISH\n    }\n}\n\n ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{API_GATEWAY}}/api/delivery/deliveryman/status"
+          },
+          "response": []
+        },
+        {
+          "name": "Has Active",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{AUTH_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": "{{API_GATEWAY}}/api/delivery/deliveryman/has-active/1"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "AUTH_TOKEN",
+      "value": ""
+    }
+  ]
 }

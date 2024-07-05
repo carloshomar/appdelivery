@@ -4,8 +4,8 @@ version: '3.8'
 x-common-variables: &common-variables
   API_BASE_URL: http://192.168.100.142
   EXPO_QR_GEN: 192.168.100.142
-  EXPO_USERNAME: 
-  EXPO_PASSWORD: 
+  EXPO_USERNAME:
+  EXPO_PASSWORD:
 
 services:
   expo-app-entrega:
@@ -29,6 +29,9 @@ services:
       - /usr/src/app/node_modules
     environment:
       <<: *common-variables
+    depends_on:
+      - expo-app-entrega
+
 
   web-restaurant:
     container_name: web-restaurant
