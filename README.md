@@ -116,7 +116,7 @@ No arquivo <a href="Frontend/docker-compose.yml">Frontend/docker-compose.yml</a>
 
 Ainda no arquivo <a href="Frontend/docker-compose.yml">Frontend/docker-compose.yml</a>, adicione as credenciais de acesso do Expo nas variáveis `EXPO_USERNAME` e `EXPO_PASSWORD`. Para obtê-las, basta se cadastrar em: <a href="https://expo.dev">https://expo.dev</a>. Adicione também seu IP local na variável `EXPO_QR_GEN` para que os QR codes dos apps sejam gerados corretamente.
 
-Nos arquivos <a href="Frontend/AppComida/services/api.tsx">Frontend/AppComida/services/api.tsx</a>, <a href="Frontend/AppEntrega/services/api.tsx">Frontend/AppEntrega/services/api.tsx</a> e <a href="Frontend/WebRestaurant/services/api.tsx">Frontend/WebRestaurant/services/api.tsx</a>, faça alterações na URL para apontar para o backend que você subiu.
+Nos arquivos <a href="Frontend/AppComida/services/api.tsx">Frontend/AppComida/services/api.tsx</a>, <a href="Frontend/AppEntrega/services/api.tsx">Frontend/AppEntrega/services/api.tsx</a> e <a href="Frontend/WebRestaurant/services/api.js">Frontend/WebRestaurant/services/api.js</a>, faça alterações na URL para apontar para o backend que você subiu.
 
 
 _É importante já ter o docker instalado no sistema operacional._
