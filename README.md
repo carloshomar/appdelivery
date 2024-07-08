@@ -198,7 +198,7 @@ No arquivo <a href="Frontend/AppComida/config/config.tsx">_Frontend/AppComida/co
 
 #### Cadastrar Entregador:
 
-- Cada entregador deve estar devidamente cadastrado. Essa documentação do Postman pode ser encontrada em `Auth/DeliveryMan/Register Deliveryman`.
+- Cada entregador deve estar devidamente cadastrado, no próprio AppEntregas tem uma pagina de cadastro básica, somente para uso de testes.
 
 
 #### Configuração de APPComida:
