@@ -18,6 +18,44 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+
+func CreateDeliveryOrder(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
+	var request dto.RequestPayload
+
+	if err := c.BodyParser(&request); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Erro ao fazer parsing do corpo da requisição",
+		})
+	}
+
+
+	/// Diferentemente do createOrder padrão que precisa da aceitação do restaunrate.
+	/// Na entrega avulsa você consegue solicitar só a parte de entrega, se restaurantes.
+	request.Status = "DONE"
+
+
+	collection := models.MongoDabase.Collection("orders")
+
+	insertResult, err := collection.InsertOne(context.Background(), request)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Erro ao inserir a ordem no banco de dados",
+		})
+	}
+
+	jsonData, _ := json.Marshal(request)
+	if err := sendMessageToClient(0, jsonData); err != nil {
+		return err
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "Ordem criada com sucesso",
+		"orderId": insertResult.InsertedID,
+		"data":request,
+	})
+
+}
+
 func CreateOrder(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
 	var request dto.RequestPayload
 

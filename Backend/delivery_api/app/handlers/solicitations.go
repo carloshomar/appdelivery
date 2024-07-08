@@ -18,6 +18,7 @@ import (
 func CreateSolicitation(msg string, sendMessageToClient func(clientID int64, message []byte) error) error {
 	var orderDTO dto.OrderDTO
 
+
 	err := json.Unmarshal([]byte(msg), &orderDTO)
 	if err != nil {
 		log.Printf("Erro ao decodificar a mensagem JSON: %s", err)

@@ -34,7 +34,7 @@ export default function TabTwoScreen() {
 
   return (
     <View style={styles.container}>
-      {orders.length === 0 && !load ? (
+      {orders?.length === 0 && !load ? (
         <View style={styles.errocontainer}>
           <Text style={styles.errotext}>{Texts.notfound_extract}</Text>
         </View>
