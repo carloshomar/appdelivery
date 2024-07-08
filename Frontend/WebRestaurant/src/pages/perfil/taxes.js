@@ -1,12 +1,11 @@
 import { FiSave } from "react-icons/fi";
 import MenuLayout from "../../components/Menu";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import deliveryModel from "../../services/delivery.model";
 import { toast } from "react-toastify";
 import Texts from "../../constants/Texts";
 
-/// Somente a parte de update está funcionando, ainda não fiz o Get para retornar o valor atual.
 function Taxes() {
   const { getUser } = useAuth();
 
@@ -15,6 +14,17 @@ function Taxes() {
     fixedTaxa: 0,
     perKm: 0,
   });
+
+  const start = async () => {
+    const resp = await deliveryModel.getDeilvery(getUser().id);
+    setBody({
+      fixedTaxa: resp.FixedTaxa,
+      perKm: resp.PerKm,
+    });
+  };
+  useEffect(() => {
+    start();
+  }, []);
 
   const save = async (e) => {
     e.preventDefault();
@@ -40,8 +50,8 @@ function Taxes() {
                 htmlFor="name"
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               >
-                Taxa de Serviço{" "}
-                <span className="text-xs font-extrabold">(valor fixo)</span>
+                Taxa de Serviço - R${" "}
+                <span className="text-xs font-extrabold">(Valor Fixo)</span>
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -58,7 +68,7 @@ function Taxes() {
                 htmlFor="email"
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               >
-                Valor por Kilometro
+                Valor por Kilometro - R$
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"

@@ -8,7 +8,7 @@ function formatCurrency(value) {
 
     return formattedValue;
   } catch (e) {
-    return "";
+    return value;
   }
 }
 

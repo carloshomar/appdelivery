@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+
 	"github.com/carloshomar/vercardapio/app/models"
 	"github.com/gofiber/fiber/v2"
 )
@@ -65,4 +67,28 @@ func InsertDelivery(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"delivery": newDelivery,
 	})
+}
+
+
+func GetDeliveryByEstablishmentID(c *fiber.Ctx) error {
+	// Extrair o establishmentId dos parâmetros da URL
+	establishmentID := c.Params("establishmentId")
+
+	// Converter o establishmentId para o tipo correto (int64)
+	var id int64
+	if _, err := fmt.Sscanf(establishmentID, "%d", &id); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid establishmentId format",
+		})
+	}
+
+	// Buscar as informações de entrega no banco de dados
+	var delivery models.Delivery
+	if err := models.DB.Where("establishment_id = ?", id).First(&delivery).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"error": "Delivery settings not found for the establishment",
+		})
+	}
+
+	return c.JSON(delivery)
 }
