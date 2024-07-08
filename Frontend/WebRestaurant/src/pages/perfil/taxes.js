@@ -17,9 +17,10 @@ function Taxes() {
 
   const start = async () => {
     const resp = await deliveryModel.getDeilvery(getUser().id);
+
     setBody({
-      fixedTaxa: resp.FixedTaxa,
-      perKm: resp.PerKm,
+      fixedTaxa: resp?.FixedTaxa ?? 0,
+      perKm: resp?.PerKm ?? 0,
     });
   };
   useEffect(() => {

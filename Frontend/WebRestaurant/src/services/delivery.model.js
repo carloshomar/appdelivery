@@ -22,7 +22,7 @@ async function getDeilvery(establishmentId) {
     return data;
   } catch (e) {
     console.log(e);
-    return false;
+    return { fixedTaxa: 0, perKm: 0 };
   }
 }
 
