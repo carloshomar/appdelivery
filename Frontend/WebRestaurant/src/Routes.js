@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Cardapio from "./pages/cardapio/products/Cardapio";
 import Perfil from "./pages/perfil";
+import Taxes from "./pages/perfil/taxes";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/perfil",
     element: <Perfil />,
+  },
+  {
+    path: "/taxas",
+    element: <Taxes />,
   },
 ]);
 

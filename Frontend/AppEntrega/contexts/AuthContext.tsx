@@ -7,6 +7,7 @@ import useWebSocket from "react-use-websocket";
 import Strings from "@/constants/Strings";
 import { useNavigation } from "expo-router";
 import * as React from "react";
+import { Alert } from "react-native";
 
 interface User {
   email: string;
@@ -169,7 +170,11 @@ const AuthProvider = ({ children }: any) => {
       nav.navigate("index");
       setIsLoading(false);
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      Alert.alert(
+        "",
+        "Tivemos um problema ao fazer o cadastro, verifique se o e-mail já está cadastrado e tente novamente."
+      );
+      console.error(error);
       throw error;
     }
   };

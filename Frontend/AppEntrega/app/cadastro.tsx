@@ -9,6 +9,7 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 
 const RegisterScreen = ({ setRegister }: any) => {
@@ -16,10 +17,13 @@ const RegisterScreen = ({ setRegister }: any) => {
   const [password, setPassword] = useState("admin123");
   const [name, setName] = useState("Delivery man");
   const [phone, setPhone] = useState("31982442222");
+  const [load, setLoad] = useState(false);
   const { register } = useAuthApi();
 
   const handleLogin = async () => {
+    setLoad(true);
     register(email, password, name, phone);
+    setLoad(false);
   };
 
   return (
@@ -50,8 +54,20 @@ const RegisterScreen = ({ setRegister }: any) => {
           value={phone}
           placeholder="Telefone"
         />
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.loginButtonText}>Entrar</Text>
+        <TouchableOpacity
+          disabled={load}
+          style={styles.loginButton}
+          onPress={handleLogin}
+        >
+          {!load ? (
+            <Text style={styles.loginButtonText}>Entrar</Text>
+          ) : (
+            <ActivityIndicator
+              size={20}
+              color={Colors.light.white}
+              style={{ alignSelf: "center" }}
+            />
+          )}
         </TouchableOpacity>
 
         <TouchableOpacity

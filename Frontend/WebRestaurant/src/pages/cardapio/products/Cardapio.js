@@ -60,10 +60,12 @@ const Cardapio = () => {
 
   return (
     <MenuLayout>
+      <div className="ml-6">
+        <h3 className="font-bold">{Texts.gestor_cardapio}</h3>
+        <span className="font-light italic text-xs">{Texts.cardapio_desc}</span>
+      </div>
       <div className="">
-        <h2 className="font-bold text-lg pl-4 mb-4">{Texts.gestor_ca}</h2>
-
-        <div className="mb-6 ml-4 pr-6 mt-6 flex row-auto gap-2 w-full justify-between">
+        <div className="mb-6 ml-4 pr-6 mt-4 flex row-auto gap-2 w-full justify-between">
           <SearchInput onSearch={handleSearch} />
           <AddButton
             onClick={() => {

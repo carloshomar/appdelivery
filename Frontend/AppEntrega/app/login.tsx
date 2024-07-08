@@ -9,6 +9,7 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import RegisterScreen from "./cadastro";
 
@@ -17,9 +18,12 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("admin123");
   const { login } = useAuthApi();
   const [register, setRegister] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const handleLogin = async () => {
+    setLoad(true);
     login(email, password);
+    setLoad(false);
   };
   if (register) {
     return <RegisterScreen setRegister={setRegister} />;
@@ -41,8 +45,20 @@ const LoginScreen = () => {
           placeholder="Senha"
           secureTextEntry={true}
         />
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.loginButtonText}>Entrar</Text>
+        <TouchableOpacity
+          disabled={load}
+          style={styles.loginButton}
+          onPress={handleLogin}
+        >
+          {!load ? (
+            <Text style={styles.loginButtonText}>Entrar</Text>
+          ) : (
+            <ActivityIndicator
+              size={20}
+              color={Colors.light.white}
+              style={{ alignSelf: "center" }}
+            />
+          )}
         </TouchableOpacity>
 
         <TouchableOpacity
