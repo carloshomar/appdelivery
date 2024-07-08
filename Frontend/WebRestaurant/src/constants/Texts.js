@@ -24,6 +24,7 @@ export default {
   restaurant_error:
     "Ouve um problema ao atualizar o estabelecimento, tente novamente.",
   itens_carrinho: "Itens no Carrinho",
+  delivery_conf: "Configurações de Delivery",
   ocultar_itens: "Ocultar Itens",
   vizualizar_itens: "Visualizar Itens",
   salve_primeiro: "Por favor, salve o produto antes de fazer essa operação.",
@@ -43,10 +44,17 @@ export default {
   meus_pedidos: "Meus Pedidos",
   email_end: "Endereço de e-mail",
   text_login: "Faça login na sua conta",
+  delivery_update: "O valor do seu delivery foi atualizado com sucesso!",
+  delivery_error:
+    "Ouve um erro ao atualizar o valor do seu delivery, verifique os campos e tente novamente.",
   categorias: "Categorias",
   password: "Senha",
   esqueceu_senha: "Esqueceu sua senha?",
   entrar: "Entrar",
   additional: "Adicionais",
   alteracao_aplicada: "Atualização aplicada.",
+  cardapio_desc:
+    " Faça as configurações do seu cardápio, suportando também adicionais e categorias.",
+  taxes_desc:
+    "Faça as configurações de delivery do seu restaurante, para que o entregador consiga fazer a entrega com base nos seus preços.",
 };

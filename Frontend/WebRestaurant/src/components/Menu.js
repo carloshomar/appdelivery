@@ -8,13 +8,14 @@ import {
   FiPower,
   FiSettings,
 } from "react-icons/fi";
-import { FaStore, FaStoreSlash } from "react-icons/fa";
+import { FaBiking, FaStore, FaStoreSlash } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import ToggleSwitch from "../components/ToggleSwitch";
 import { toast } from "react-toastify";
 import Texts from "../constants/Texts";
 import api from "../services/api";
 import helper from "../helpers/helper";
+import { MdDeliveryDining, MdOutlineDeliveryDining } from "react-icons/md";
 
 const TopMenu = ({ toggleMenu, isOpen }) => {
   const { getUser, openEstablishment, refreshOpenawait } = useAuth();
@@ -84,12 +85,12 @@ const SideMenu = ({ isOpen }) => {
         <FiBox className={`h-6 w-6 ${isOpen ? "mr-4" : ""} cursor-pointer`} />
       ),
     },
-
     {
-      title: "Relatórios",
+      title: "Delivery",
+      href: "/taxas",
       icon: (
-        <FiHardDrive
-          className={`h-6 w-6 ${isOpen ? "mr-4" : ""} cursor-pointer`}
+        <MdOutlineDeliveryDining
+          className={`h-7 w-7 ${isOpen ? "mr-4" : ""} cursor-pointer`}
         />
       ),
     },
@@ -102,6 +103,16 @@ const SideMenu = ({ isOpen }) => {
         />
       ),
     },
+
+    {
+      title: "Relatórios",
+      icon: (
+        <FiHardDrive
+          className={`h-6 w-6 ${isOpen ? "mr-4" : ""} cursor-pointer`}
+        />
+      ),
+    },
+
     {
       title: "Sair",
       bottom: true,

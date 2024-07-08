@@ -306,7 +306,7 @@ function Perfil() {
             />
           </div>
         </div>
-        <div className="mt-8 w-full">
+        <div className="mt-4 w-full">
           <button
             type="submit"
             disabled={loading}
