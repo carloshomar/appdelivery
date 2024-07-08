@@ -4,8 +4,8 @@ version: '3.8'
 x-common-variables: &common-variables
   API_BASE_URL: http://192.168.100.142
   EXPO_QR_GEN: 192.168.100.142
-  EXPO_USERNAME:
-  EXPO_PASSWORD:
+  EXPO_USERNAME:  ## ADICIONE SEU USERNAME DO EXPO
+  EXPO_PASSWORD:  ## ADICIONE SUA SENHA DO EXPO
 
 services:
   expo-app-entrega:
