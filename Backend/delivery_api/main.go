@@ -161,6 +161,7 @@ func startQueueListener() {
 		// Processar mensagens recebidas
 		for msg := range msgs {
 			bodyStr := string(msg.Body)
+			log.Printf("\n MENSAGEM ", bodyStr)
 			handlers.CreateSolicitation(bodyStr, sendMessageToClient)
 		}
 	}

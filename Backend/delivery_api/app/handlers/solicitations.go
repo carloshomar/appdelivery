@@ -18,7 +18,6 @@ import (
 func CreateSolicitation(msg string, sendMessageToClient func(clientID int64, message []byte) error) error {
 	var orderDTO dto.OrderDTO
 
-
 	err := json.Unmarshal([]byte(msg), &orderDTO)
 	if err != nil {
 		log.Printf("Erro ao decodificar a mensagem JSON: %s", err)
@@ -26,6 +25,7 @@ func CreateSolicitation(msg string, sendMessageToClient func(clientID int64, mes
 	}
 
 	collection := models.MongoDabase.Collection("solicitations")
+	log.Println(orderDTO)
 
 	filter := bson.M{"orderid": orderDTO.OrderId}
 
@@ -153,8 +153,8 @@ func GetApprovedSolicitations(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	defer cur.Close(context.Background())
 
+	defer cur.Close(context.Background())
 	for cur.Next(context.Background()) {
 		var orderDTO dto.OrderDTO
 		err := cur.Decode(&orderDTO)
@@ -166,6 +166,7 @@ func GetApprovedSolicitations(c *fiber.Ctx) error {
 		distance := calculateDistance(latitude, longitude, orderDTO.Establishment.Lat, orderDTO.Establishment.Long)
 
 		// Se a distância for menor ou igual ao limite de distância, adiciona a solicitação à lista
+
 		if distance <= limitDist {
 			approvedSolicitations = append(approvedSolicitations, orderDTO)
 		}

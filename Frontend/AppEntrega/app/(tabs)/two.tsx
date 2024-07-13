@@ -1,6 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
 import SolicitationList from "@/componentes/SolicitationList";
 import Colors from "@/constants/Colors";
 import { useEffect, useState } from "react";
