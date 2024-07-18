@@ -31,6 +31,8 @@ export default function ConfirmGenerical() {
   }
 
   function verify() {
+    console.log("Codigos: ", hasCode, code);
+
     if (hasCode === code) {
       handlerConfirm();
     } else {

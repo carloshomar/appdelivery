@@ -235,6 +235,7 @@ _Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por sere
 - É permitida somente uma entrega por vez, por entregador. **_(Existe a possibilidade de adição de uma fila de pedidos para entrega no AppEntrega por se tratar de um array, pretendo adicionar como feature futura)_**
 - No endpoint Delivery/Orders, o entregador envia sua localização e recebe os pedidos ao redor, todos os entregadores enviam um "sinal de vida" com sua localização. **_(Pretendo utilizar esse endpoint para rastreio das localizações percorridas pelo entregador, inclusive seu caminho percorrido para mapear a locomoção, cálculos de gastos calóricos e etc.)_**
 - Caso a entrega seja cancelada/removida, ou o entregador seja removido da entrega (**somente via banco, no mongoDB**), no próximo "sinal de vida" essa condição será refletida no app do mesmo e ele volta a ficar disponível para novas entregas. Sendo assim, existe a possiblidade da feature de remoção/sobreposição de um entregador em uma respectiva entrega, más não pretendo desenvolver. 
+- Existe a possibilidade de fazer entregas que não estejam vinculadas ao restaurante, exemplo: transporte/entrega de pacotes e documentos, nesse caso vai haver somente a necessidade de código no momento da entrega, diferente de quando vinculado ao restaurante onde o código do restaurante também é necessário. 
 
 #### Restaurante:
 
@@ -245,7 +246,7 @@ _Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por sere
 - A visualização do cliente é composta primeiro das categorias exibindo produtos agrupados, na página do restaurante, no AppComida e após as categorias vem uma listagem geral.
 - Os adicionais podem ou não possuir algum valor, que em caso de existência é refletido no valor do pedido.
 
-#### Etapas de Entrega:
+#### Etapas de Entrega com restaurante:
 
 - O restaurante faz o cadastramento de todos os seus produtos e "abre o estabelecimento" na aplicação WEBRestaurante.
 - O cliente realiza o pedido e indica a forma de pagamento, que pode ser feita na entrega. Atualmente, não temos integração com APIs de pagamento, mas isso pode ser implementado em qualquer linguagem e facilmente devido à arquitetura.
@@ -256,9 +257,18 @@ _Utilizei o algoritimo de Haversine para evitar o uso de APIs de mapas, por sere
 - Ao receber o pedido, o entregador pode se locomover ao encontro do cliente e, ao entregar o pedido, solicitar o respectivo código de entrega (código de quatro dígitos disponível na área de pedidos no APP do Cliente).
 - _**Disclamer**: no código atual da **main**, adicionei o Código do Cliente (em vermelho) no card do pedido, isso é para facilitar os teste, em caso de publicação o ideal é remover o **Código do Cliente** da Visualização do Restaurante (Quadro Kanban), más pode variar de acordo com a regra de negócio._
 - Após a entrega, o pedido sai do Painel Principal (Quadro Kanban) do restaurante, e a entrega é salva na tela de  **Extrato do entregador**.
+- O resumo da entrega fica disponivel para o entregador na aba Extrato.
 
 
 **_O fluxo acima de Etapas de Entrega pode ser visualizado no primeiro video._**
+
+#### Etapas de Entrega sem restaurante:
+
+- Por meio do WebRestaurante o cliente solicita uma entrega avulsa.
+- A solicitação segue o mesmo fluxo com a parte do entregador, onde a mesma aparece no AppEntregas para os entregadores ao redor.
+- O entregador se locomove até o local de coleta e pega o pacote com o solicitante.
+- O entregador se locomove até o local de entrega e solicita o Código ao destinatário, a entrega só pode ser finalizada com o Código.
+- O resumo da entrega fica disponivel para o entregador na aba Extrato.
 
 
 #### Publicação:

@@ -40,6 +40,12 @@ func SetupRoutes(app *fiber.App, sendMessageToClient func(clientID int64, messag
 		return handlers.CreateOrder(c, sendMessageToClient)
 	})
 
+
+	app.Post("/orders-single", func(c *fiber.Ctx) error {
+		return handlers.CreateDeliveryOrder(c, sendMessageToClient)
+	})
+
+
 	app.Put("/orders/status", func(c *fiber.Ctx) error {
 		return handlers.UpdateOrderStatus(c, sendMessageToClient)
 	})
