@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import MenuLayout from "../../components/Menu";
 import Strings from "../../constants/Strings";
-import Texts from "../../constants/Texts";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
-import api from "../../services/api";
+import Step5 from "./Step5";
+import localizationModel from "../../services/localization.model";
 
 function Delivery() {
   const [formData, setFormData] = useState(Strings.orderAvulsa);
@@ -30,7 +30,7 @@ function Delivery() {
   const handleChange = (e, section, key) => {
     const value = e.target?.value ?? e;
 
-    if (key === "cep" && value.length > 2) {
+    if (key === "busca" && value.length > 2) {
       consultaCep(value);
     }
 
@@ -51,15 +51,14 @@ function Delivery() {
     }));
   };
 
-  const consultaCep = async (cep) => {
+  const consultaCep = async (busca) => {
     try {
-      const { data } = await api.get(
-        `/api/order/localization/get-location?address=${cep}`
-      );
+      const data = await localizationModel.getLocalization(busca);
       if (!data) {
         return;
       }
       handleChange(data.bairro, "location", "bairro");
+      handleChange(data.cep, "location", "cep");
       handleChange(data.logradouro, "location", "logradouro");
       handleChange(data.uf, "location", "uf");
       handleChange(data.localidade, "location", "localidade");
@@ -73,8 +72,8 @@ function Delivery() {
         location: {
           ...prevState.location,
           coords: {
-            latitude: data.coords.latitude,
-            longitude: data.coords.longitude,
+            latitude: parseFloat(data?.coords?.latitude ?? 0),
+            longitude: parseFloat(data?.coords?.longitude ?? 0),
           },
         },
       }));
@@ -118,42 +117,48 @@ function Delivery() {
         return <Step3 formData={formData} handleChange={handleChange} />;
       case 4:
         return <Step4 formData={formData} handleChange={handleChange} />;
+      case 5:
+        return <Step5 formData={formData} />;
     }
   };
 
   return (
     <MenuLayout>
-      <div className="ml-6">
-        <h3 className="font-bold">Delivery Avulso</h3>{" "}
+      <div className="ml-4 md:ml-6 lg:ml-8 mb-4">
+        <h3 className="text-lg md:text-xl lg:text-2xl font-bold">
+          Delivery Avulso
+        </h3>
       </div>
-      <div className="">
-        <form onSubmit={handleSubmit} className="p-8 pt-4 space-y-6">
+      <div className="px-4 md:px-6 lg:px-8">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {renderStep()}
-          <div className="flex justify-between">
-            {step > 1 && (
+          <div className="flex flex-col md:flex-row justify-between mt-6">
+            {step < 5 && (
               <button
                 type="button"
-                className="bg-gray-500 text-white py-2 px-4"
-                onClick={prevStep}
-              >
-                Anterior
-              </button>
-            )}
-            {step < 4 && (
-              <button
-                type="button"
-                className="bg-green-500 text-white py-2 px-4"
+                className="bg-green-500 text-white py-2 px-4 rounded-md mb-2 md:mb-0"
                 onClick={nextStep}
               >
                 Próximo
               </button>
             )}
-            {step === 4 && (
+
+            {step === 5 && (
               <button
                 type="submit"
-                className="bg-green-500 text-white py-2 px-4"
+                className="bg-green-500 text-white py-2 px-4 rounded-md mb-2 md:mb-0"
               >
                 Solicitar Entrega
+              </button>
+            )}
+
+            {step > 1 && (
+              <button
+                type="button"
+                className="bg-gray-500 text-white py-2 px-4 rounded-md mb-2 md:mb-0 sm:mt-6"
+                onClick={prevStep}
+              >
+                Anterior
               </button>
             )}
           </div>
