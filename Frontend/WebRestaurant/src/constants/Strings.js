@@ -39,7 +39,7 @@ const orderAvulsa = {
     type: "",
     icon: "",
   },
-  deliveryValue: "",
+  deliveryValue: 10,
   user: {
     phone: "",
     nome: "",

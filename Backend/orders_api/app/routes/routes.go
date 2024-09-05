@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"fmt"
+
 	"github.com/carloshomar/vercardapio/app/handlers"
 	"github.com/gofiber/fiber/v2"
 )
@@ -35,16 +37,13 @@ func SetupRoutes(app *fiber.App, sendMessageToClient func(clientID int64, messag
 	app.Post("/delivery/calculate-delivery-value", handlers.CalculateDeliveryValue)
 	app.Get("/delivery/value/:establishmentId", handlers.GetDeliveryByEstablishmentID)
 
-
 	app.Post("/orders", func(c *fiber.Ctx) error {
 		return handlers.CreateOrder(c, sendMessageToClient)
 	})
 
-
 	app.Post("/orders-single", func(c *fiber.Ctx) error {
 		return handlers.CreateDeliveryOrder(c, sendMessageToClient)
 	})
-
 
 	app.Put("/orders/status", func(c *fiber.Ctx) error {
 		return handlers.UpdateOrderStatus(c, sendMessageToClient)
@@ -53,5 +52,23 @@ func SetupRoutes(app *fiber.App, sendMessageToClient func(clientID int64, messag
 	app.Get("/orders/list-phone/:phone", handlers.ListOrdersByPhone)
 	app.Get("/orders/:establishmentId", handlers.ListOrdersByEstablishmentID)
 	app.Get("/orders/:establishmentId/:phoneNumber", handlers.ListOrdersByEstablishmentIDAndPhone)
+
+	app.Get("/localization/get-location", func(c *fiber.Ctx) error {
+		address := c.Query("address")
+		if address == "" {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "Address query parameter is required",
+			})
+		}
+
+		location, err := handlers.GetLocationDetails(address)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"error": fmt.Sprintf("Failed to get location details: %v", err),
+			})
+		}
+
+		return c.JSON(location)
+	})
 
 }
