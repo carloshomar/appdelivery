@@ -29,26 +29,21 @@ type Location struct {
 }
 
 func GetLocationDetails(address string) (*Location, error) {
-	// Substitua com sua chave de API do Google Maps
 	apiKey := os.Getenv("GOOGLE_MAPS_API_KEY")
 
-	// Construir a URL da API com o endereço fornecido e a chave da API
 	apiURL := "https://maps.googleapis.com/maps/api/geocode/json"
 	reqURL := fmt.Sprintf("%s?address=%s&key=%s", apiURL, url.QueryEscape(address), apiKey)
 
-	// Fazer a requisição HTTP
 	resp, err := http.Get(reqURL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to make request: %v", err)
 	}
 	defer resp.Body.Close()
 
-	// Verificar se a requisição foi bem-sucedida
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("received non-200 response code: %d", resp.StatusCode)
 	}
 
-	// Estruturas para parsing do JSON
 	var geocodeResponse struct {
 		Results []struct {
 			AddressComponents []struct {
@@ -62,11 +57,11 @@ func GetLocationDetails(address string) (*Location, error) {
 					Lng float64 `json:"lng"`
 				} `json:"location"`
 			} `json:"geometry"`
+			FormattedAddress string `json:"formatted_address"`
 		} `json:"results"`
 		Status string `json:"status"`
 	}
 
-	// Decodificar a resposta JSON
 	if err := json.NewDecoder(resp.Body).Decode(&geocodeResponse); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %v", err)
 	}
@@ -75,7 +70,7 @@ func GetLocationDetails(address string) (*Location, error) {
 		return nil, fmt.Errorf("geocoding API error: %s", geocodeResponse.Status)
 	}
 
-	// Extrair as informações necessárias do primeiro resultado
+	// Extrair as informações do primeiro resultado
 	result := geocodeResponse.Results[0]
 	location := &Location{}
 
@@ -86,16 +81,12 @@ func GetLocationDetails(address string) (*Location, error) {
 				location.Cep = component.LongName
 			case "route":
 				location.Logradouro = component.LongName
-			case "sublocality", "political":
+			case "sublocality", "sublocality_level_1", "political":
 				location.Bairro = component.LongName
-			case "locality":
+			case "administrative_area_level_2":
 				location.Localidade = component.LongName
 			case "administrative_area_level_1":
 				location.Uf = component.ShortName
-			case "country":
-				location.Ibge = component.ShortName
-			case "establishment":
-				location.Numero = component.LongName
 			}
 		}
 	}

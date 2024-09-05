@@ -69,6 +69,7 @@ services:
       - RABBIT_DELIVERY_QUEUE=MS_DELIVERY_QUEUE
       - RABBIT_ORDER_QUEUE=RABBIT_ORDER_QUEUE
       - URL_GET_ESTABLISHMENT_ID=http://api-gateway/api/auth/establishments/%d
+      - GOOGLE_MAPS_API_KEY=
     networks:
       - gateway-network
     ports:

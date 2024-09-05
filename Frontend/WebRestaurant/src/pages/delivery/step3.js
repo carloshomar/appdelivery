@@ -7,39 +7,12 @@ function Step3({ formData, handleChange }) {
       <div className="grid grid-cols-2 gap-4">
         <input
           type="text"
-          placeholder="CEP"
+          placeholder="Endereço Completo"
           value={formData.location.cep}
           onChange={(e) => handleChange(e, "location", "cep")}
           className="border p-2"
         />
-        <input
-          type="text"
-          placeholder="Logradouro"
-          value={formData.location.logradouro}
-          onChange={(e) => handleChange(e, "location", "logradouro")}
-          className="border p-2"
-        />
-        <input
-          type="text"
-          placeholder="Bairro"
-          value={formData.location.bairro}
-          onChange={(e) => handleChange(e, "location", "bairro")}
-          className="border p-2"
-        />
-        <input
-          type="text"
-          placeholder="Cidade"
-          value={formData.location.localidade}
-          onChange={(e) => handleChange(e, "location", "localidade")}
-          className="border p-2"
-        />
-        <input
-          type="text"
-          placeholder="UF"
-          value={formData.location.uf}
-          onChange={(e) => handleChange(e, "location", "uf")}
-          className="border p-2"
-        />
+        <br />
         <input
           type="text"
           placeholder="Número"
@@ -54,7 +27,7 @@ function Step3({ formData, handleChange }) {
           onChange={(e) => handleChange(e, "location", "complemento")}
           className="border p-2"
         />
-        <input
+        {/* <input
           type="text"
           placeholder="Latitude"
           value={formData.location.coords.latitude}
@@ -67,7 +40,7 @@ function Step3({ formData, handleChange }) {
           value={formData.location.coords.longitude}
           onChange={(e) => handleChange(e, "location", "longitude")}
           className="border p-2"
-        />
+        /> */}
       </div>
     </div>
   );

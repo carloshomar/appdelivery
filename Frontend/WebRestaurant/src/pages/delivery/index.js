@@ -30,7 +30,7 @@ function Delivery() {
   const handleChange = (e, section, key) => {
     const value = e.target?.value ?? e;
 
-    if (key === "cep" && value.length === 8) {
+    if (key === "cep" && value.length > 2) {
       consultaCep(value);
     }
 
@@ -53,12 +53,31 @@ function Delivery() {
 
   const consultaCep = async (cep) => {
     try {
-      const { data } = await api.get(`http://viacep.com.br/ws/${cep}/json/`);
-      console.log(data);
+      const { data } = await api.get(
+        `/api/order/localization/get-location?address=${cep}`
+      );
+      if (!data) {
+        return;
+      }
       handleChange(data.bairro, "location", "bairro");
       handleChange(data.logradouro, "location", "logradouro");
       handleChange(data.uf, "location", "uf");
       handleChange(data.localidade, "location", "localidade");
+
+      if (data.numero) handleChange(data.numero, "location", "numero");
+      if (data.complemento)
+        handleChange(data.complemento, "location", "complemento");
+
+      setFormData((prevState) => ({
+        ...prevState,
+        location: {
+          ...prevState.location,
+          coords: {
+            latitude: data.coords.latitude,
+            longitude: data.coords.longitude,
+          },
+        },
+      }));
     } catch (e) {
       console.log(e);
     }
