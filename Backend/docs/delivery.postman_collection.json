@@ -1438,6 +1438,40 @@
 							"response": []
 						},
 						{
+							"name": "Create Delivery - Avulso",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cart\": [\n        {\n            \"item\": {\n                \"ID\": 0,\n                \"Name\": \"Pizza Margherita\",\n                \"Description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n                \"Price\": 0,\n                \"Image\": \"\",\n                \"EstablishmentID\": 0,\n                \"Categories\": null,\n                \"Additional\": []\n            },\n            \"additionals\": [],\n            \"quantity\": 1,\n            \"id\": \"UTG5ksjsMUNBcqZ\"\n        }\n    ],\n    \"distance\": 1.1365938003231386,\n    \"location\": {\n        \"cep\": \"01001-000\",\n        \"logradouro\": \"Praça da Sé\",\n        \"complemento\": null,\n        \"bairro\": \"Sé\",\n        \"localidade\": \"São Paulo\",\n        \"uf\": \"SP\",\n        \"ibge\": \"3550308\",\n        \"gia\": \"1004\",\n        \"ddd\": \"11\",\n        \"siafi\": \"7107\",\n        \"numero\": \"6\",\n        \"coords\": {\n            \"latitude\": -21.7725387727999,\n            \"longitude\": -43.35824173879191\n        }\n    },\n    \"paymentMethod\": {\n        \"type\": \"credit\",\n        \"icon\": \"credit-score\"\n    },\n    \"deliveryValue\": 3.12,\n    \"user\": {\n        \"phone\": \"(11) 98844-9999\",\n        \"nome\": \"Ronan Silva\"\n    },\n    \"establishmentId\": 0,\n    \"establishment\": {\n        \"HorarioFuncionamento\": \"\",\n        \"Id\": 1,\n        \"Image\": \"https://cdn.pixabay.com/photo/2020/05/25/08/40/food-delivery-5217579_1280.png\",\n        \"lat\": -21.7725387727999,\n        \"long\": -43.35824173879191,\n        \"max_distance_delivery\": 99999,\n        \"name\": \"Luana Carla da Silva\",\n        \"owner_id\": 1,\n        \"primary_color\": \"#8B0000\",\n        \"secondary_color\": \"#F0F8FF\",\n        \"location_string\": \"Av. Atlântica, 1642 - Cavaleiros, Macaé - RJ, 27920-390, Brazil\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/order/orders-single",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"order",
+										"orders-single"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Update Status Order",
 							"request": {
 								"method": "PUT",
@@ -1467,6 +1501,40 @@
 										"order",
 										"orders",
 										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Orders Single - Avulsa sem restaurante",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cart\": [\n        {\n            \"item\": {\n                \"ID\": 0,\n                \"Name\": \"Pizza Margherita\",\n                \"Description\": \"Uma deliciosa pizza com molho de tomate, queijo mozzarella e folhas de manjericão fresco.\",\n                \"Price\": 0,\n                \"Image\": \"\",\n                \"EstablishmentID\": 0,\n                \"Categories\": null,\n                \"Additional\": []\n            },\n            \"additionals\": [],\n            \"quantity\": 1,\n            \"id\": \"UTG5ksjsMUNBcqZ\"\n        }\n    ],\n    \"distance\": 1.1365938003231386,\n    \"location\": {\n        \"cep\": \"01001-000\",\n        \"logradouro\": \"Praça da Sé\",\n        \"complemento\": null,\n        \"bairro\": \"Sé\",\n        \"localidade\": \"São Paulo\",\n        \"uf\": \"SP\",\n        \"ibge\": \"3550308\",\n        \"gia\": \"1004\",\n        \"ddd\": \"11\",\n        \"siafi\": \"7107\",\n        \"numero\": \"6\",\n        \"coords\": {\n            \"latitude\": -21.7725387727999,\n            \"longitude\": -43.35824173879191\n        }\n    },\n    \"paymentMethod\": {\n        \"type\": \"credit\",\n        \"icon\": \"credit-score\"\n    },\n    \"deliveryValue\": 20.00,\n    \"user\": {\n        \"phone\": \"(11) 98844-9999\",\n        \"nome\": \"Ronan Silva\"\n    },\n    \"establishment\": {\n        \"horarioFuncionamento\": \"\",\n        \"image\": \"https://cdn.pixabay.com/photo/2020/05/25/08/40/food-delivery-5217579_1280.png\",\n        \"lat\": -21.7725387727991,\n        \"long\": -43.35824173879191,\n        \"max_distance_delivery\": 1000,\n        \"name\": \"Luana Carla da Silva\",\n        \"owner_id\": 0,\n        \"primary_color\": \"#8B0000\",\n        \"secondary_color\": \"#F0F8FF\",\n        \"location_string\": \"Av. Atlântica, 1642 - Cavaleiros, Macaé - RJ, 27920-390, Brazil\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_GATEWAY}}/api/order/orders-single",
+									"host": [
+										"{{API_GATEWAY}}"
+									],
+									"path": [
+										"api",
+										"order",
+										"orders-single"
 									]
 								}
 							},

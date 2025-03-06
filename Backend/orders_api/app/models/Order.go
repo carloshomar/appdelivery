@@ -5,5 +5,5 @@ type Order struct {
 	UserID          uint `gorm:"foreignKey:IDUsuario"`
 	EstablishmentID uint
 	OrderDate       string
-	Status          string // Pending, In Progress, Delivered, etc.
+	Status          string
 }

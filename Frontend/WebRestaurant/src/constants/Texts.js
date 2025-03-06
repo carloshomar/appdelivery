@@ -14,6 +14,7 @@ export default {
   nome: "Nome",
   status: "Status",
   preco: "Preço",
+  entregaAvulsta: "Entrega Avulsa",
   acoes: "Ações",
   remover_produto: "Remover Produto",
   search_placeholer: "Buscar...",
