@@ -79,7 +79,6 @@ _Uma arquitetura baseada em microserviços_
 ## Como Rodar Backend
 
 _É importante já ter o docker instalado no sistema operacional._
-_Somente o backend inicia via docker, as aplicações frontend devem ser rodadas separadamente._
 
 Rode no terminal:
 ```bash
