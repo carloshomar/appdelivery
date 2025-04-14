@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -18,6 +20,61 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+func gerarHex(n int) (string, error) {
+	bytes := make([]byte, n)
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(bytes), nil
+}
+
+func CreateDeliveryOrder(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
+	var request dto.RequestPayload
+
+	if err := c.BodyParser(&request); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Erro ao fazer parsing do corpo da requisição",
+		})
+	}
+
+	/// Diferentemente do createOrder padrão que precisa da aceitação do restaunrate.
+	/// Na entrega avulsa você consegue solicitar só a parte de entrega, se restaurantes.
+	request.Status = "DONE"
+
+	collection := models.MongoDabase.Collection("orders")
+
+	insertResult, err := collection.InsertOne(context.Background(), request)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Erro ao inserir a ordem no banco de dados",
+		})
+	}
+
+	if oid, ok := insertResult.InsertedID.(primitive.ObjectID); ok {
+		request.OrderId = oid.Hex()
+	}
+
+	jsonData, _ := json.Marshal(request)
+
+	if err := sendMessageToClient(0, jsonData); err != nil {
+		return err
+	}
+
+	requestBytes, _ := json.Marshal(&request)
+
+	err = PublishMessage(requestBytes)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "Ordem criada com sucesso",
+		"orderId": insertResult.InsertedID,
+	})
+
+}
+
+// Esse método não publica na fila do delivery, pois ele precisa de aprovação do estabelecimento.
 func CreateOrder(c *fiber.Ctx, sendMessageToClient func(clientID int64, message []byte) error) error {
 	var request dto.RequestPayload
 
@@ -104,13 +161,13 @@ func UpdateOrderStatus(c *fiber.Ctx, sendMessageToClient func(clientID int64, me
 	}
 
 	var order dto.RequestPayload
-	collection.FindOne(context.Background(), filter).Decode(&order)
+	_ = collection.FindOne(context.Background(), filter).Decode(&order)
 	if requestBody.Status != "REQUEST_APPROVE" {
 		order.OrderId = orderID.Hex()
 		order.Status = requestBody.Status
 		orderBytes, err := json.Marshal(&order)
 		if err == nil {
-			PublishMessage(orderBytes)
+			_ = PublishMessage(orderBytes)
 		}
 	}
 
@@ -207,7 +264,7 @@ func ListOrdersByEstablishmentIDAndPhone(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "ID do estabelecimento inválido"})
 	}
 
-	phoneNumber, err := url.QueryUnescape(phoneNumberEncoded)
+	phoneNumber, _ := url.QueryUnescape(phoneNumberEncoded)
 	filter := bson.M{
 		"establishmentid": establishmentIDInt,
 		"user.phone":      phoneNumber,

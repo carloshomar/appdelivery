@@ -120,7 +120,7 @@ func PublishMessage(body []byte) error {
 		return err
 	}
 
-	// log.Printf(" [x] Sent %s", body)
+	log.Printf(" [x] Sent %s", body)
 
 	return nil
 }
