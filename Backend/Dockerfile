@@ -1,4 +1,4 @@
-FROM openresty/openresty:latest
+FROM openresty/openresty:1.27.1.2-0-alpine
 
 # Instala o curl
 RUN apt-get update && apt-get install -y curl
