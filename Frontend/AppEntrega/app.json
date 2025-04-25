@@ -17,7 +17,11 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.coopdelivery.delivery"
+      "bundleIdentifier": "com.coopdelivery.delivery",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app needs access to your location to provide personalized recommendations.",
+        "NSLocationAlwaysUsageDescription": "This app needs access to your location at all times to track your fitness activities."
+      }
     },
     "android": {
       "package": "com.coopdelivery.delivery",
