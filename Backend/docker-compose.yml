@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   api-gateway:
     image: nginx:latest
@@ -15,6 +13,7 @@ services:
       - auth-api
       - orders-api
       - delivery-api
+    platform: linux/arm64 # Use this line if you are on an ARM64 architecture (like M1/M2 Macs)
     build:
       dockerfile: Dockerfile
       args:

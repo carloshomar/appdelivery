@@ -1,8 +1,8 @@
-FROM openresty/openresty:latest
+FROM openresty/openresty:1.27.1.2-0-alpine
 
 # Instala o curl
-RUN apt-get update && apt-get install -y curl
-RUN apt-get install nano -y
+RUN apk update && apk add --no-cache curl
+RUN apk add --no-cache nano
 
 # Baixa o lua-resty-jwt do GitHub
 RUN curl -L https://github.com/SkyLothar/lua-resty-jwt/releases/download/v0.1.11/lua-resty-jwt-0.1.11.tar.gz | tar xvz -C /tmp \
