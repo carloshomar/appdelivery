@@ -6,6 +6,12 @@ _Discord: anypercent__ fique à vontade para esclarecer duvidas!<br/>
 _Sinta-se à vontade para Adicionar, Modificar, Comercializar e Distribuir!_ <br/>
 _Contribuições são sempre bem-vindas!_
 
+##### Agradecimentos Especiais 
+_<a target="_blank" href="https://www.youtube.com/@TecnologiaeClasse">Lucas Zawacki</a>_
+_<a target="_blank" href="https://soberana.tv">Coletivo Soberana</a>_
+
+
+
 ##### <a href="https://github.com/carloshomar/appdelivery/issues">Backlog e Andamento do Projeto</a>
 
 #### Videos
