@@ -6,9 +6,9 @@ _Discord: anypercent__ fique à vontade para esclarecer duvidas!<br/>
 _Sinta-se à vontade para Adicionar, Modificar, Comercializar e Distribuir!_ <br/>
 _Contribuições são sempre bem-vindas!_
 
-#### Se quiser apoiar nosso trabalho, contribua via Pix: `loja.soberanatv@gmail.com`. 
-#### Agradecemos seu apoio!
-
+<br/>
+#### Se quiser apoiar nosso trabalho, contribua via Pix: `loja.soberanatv@gmail.com` . Agradecemos seu apoio!
+<br/>
 
 ##### Agradecimentos Especiais 
 _<a target="_blank" href="https://www.youtube.com/@TecnologiaeClasse">Lucas Zawacki</a>_<br/>
