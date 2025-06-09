@@ -8,7 +8,7 @@ _Contribuições são sempre bem-vindas!_
 
 
 
-#### Se quiser apoiar nosso trabalho, contribua via Pix: `loja.soberanatv@gmail.com` . Agradecemos seu apoio!
+#### Se quiser apoiar nosso trabalho, contribua via Pix: `loja.soberanatv@gmail.com`. Agradecemos seu apoio!
 
 
 
