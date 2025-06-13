@@ -79,6 +79,14 @@ export default function DeliveryMode({ showIcon }: any) {
         break;
     }
 
+    // O cenário desse if só acontece para casos de entrega desvinculadas do restaurante (pacotes), onde establishment vem zerado
+    if (
+      deliveryman.status === "AWAIT_COLECT" &&
+      order?.establishment?.Id === 0
+    ) {
+      code = false;
+    }
+
     nav.navigate("confirm_generical", {
       onConfirm: awaitCollect,
       hasCode: code,

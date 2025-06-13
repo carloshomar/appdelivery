@@ -1,6 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
 import SolicitationList from "@/componentes/SolicitationList";
 import Colors from "@/constants/Colors";
 import { useEffect, useState } from "react";
@@ -34,7 +33,7 @@ export default function TabTwoScreen() {
 
   return (
     <View style={styles.container}>
-      {orders.length === 0 && !load ? (
+      {orders?.length === 0 && !load ? (
         <View style={styles.errocontainer}>
           <Text style={styles.errotext}>{Texts.notfound_extract}</Text>
         </View>

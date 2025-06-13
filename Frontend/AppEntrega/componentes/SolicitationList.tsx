@@ -14,7 +14,7 @@ const OrderList = ({ orders }: any) => {
   const nav = useNavigation();
   const groupOrdersByDate = () => {
     const groupedOrders = {} as any;
-    orders.forEach((order: any) => {
+    orders?.forEach((order: any) => {
       const day = helper.formatDateNoHour(order.operationDate);
       if (!groupedOrders[day]) {
         groupedOrders[day] = [];

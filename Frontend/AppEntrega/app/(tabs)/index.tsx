@@ -16,6 +16,6 @@ function index() {
     if (isFocused) nav.setOptions({ title: Strings.inicio });
   }, [isFocused]);
 
-  return inWork.status ? <HomeDelivery /> : <Home />;
+  return inWork?.status ? <HomeDelivery /> : <Home />;
 }
 export default index;

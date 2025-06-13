@@ -25,6 +25,7 @@ import Strings from "@/constants/Strings";
 import { useIsFocused } from "@react-navigation/native";
 import { useAuthApi } from "@/contexts/AuthContext";
 import Config from "@/constants/Config";
+import deliveryModel from "@/services/delivery.model";
 
 export default function Home() {
   const {
@@ -53,12 +54,13 @@ export default function Home() {
         latitude: 0,
         longitude: 0,
       };
-      mapViewRef.current?.animateToRegion({
-        latitude,
-        longitude,
-        latitudeDelta: 0.05,
-        longitudeDelta: 0.003,
-      });
+      if (mapViewRef.current)
+        mapViewRef.current?.animateToRegion({
+          latitude,
+          longitude,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.003,
+        });
     }
   };
 
@@ -103,37 +105,17 @@ export default function Home() {
 
   async function disponify(focused = true, loader = true) {
     if (loader) setLoading(true);
-    try {
-      const { data } = await api.get(
-        `/api/delivery/solicitation-orders?latitude=${mylocation.coords.latitude}&longitude=${mylocation.coords.longitude}&limitDistance=${Strings.distance_delivery_distance}`
-      );
 
-      const marks = data.map((mak: any) => {
-        return {
-          id: mak.establishmentId,
-          name: mak.establishment.name,
-          location_string: mak.establishment.location_string,
-          coordinates: {
-            latitude: mak.establishment?.lat ?? 0,
-            longitude: mak.establishment?.long ?? 0,
-          },
-          isEstablishment: true,
-          valueDelivery: mak.deliveryValue,
-          distance: mak.distance,
-          order_id: mak.order_id,
-        };
-      });
+    const marks = await deliveryModel.getLocation(mylocation);
+    console.log(marks);
+    const final = [...(marks ?? []), helper.getMarkerUser(mylocation)];
+    setMarkers(final);
 
-      const final = [...marks, helper.getMarkerUser(mylocation)];
-
-      setMarkers(final);
-      if (focused) {
-        centerMapOnUser();
-      }
-    } catch (e) {
-      setMarkers([helper.getMarkerUser(mylocation)]);
+    if (focused) {
+      centerMapOnUser();
     }
-    if (loader) setLoading(false);
+
+    setLoading(false);
   }
 
   async function clearMap() {
@@ -195,7 +177,7 @@ export default function Home() {
         <MapView
           ref={mapViewRef}
           style={styles.map}
-          googleMapId="6cba0e311b251b4c"
+          googleMapId="googleMapId"
           initialRegion={{
             latitude: mylocation?.coords.latitude || 0,
             longitude: mylocation?.coords.longitude || 0,
